@@ -1,0 +1,11 @@
+{
+  "json.schemaDownload.enable": true,
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "editor.renderWhitespace": "boundary",
+  "vscode-color-picker.languages": ["scss", "json"],
+  "[json][jsonc][typescript][javascript][html][css][scss][sass]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.indentSize": 2
+  }
+}
