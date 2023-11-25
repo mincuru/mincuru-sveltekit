@@ -4,6 +4,7 @@
     "ms-ceintl.vscode-language-pack-ja",
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "svelte.svelte-vscode"
+    "svelte.svelte-vscode",
+    "bradlc.vscode-tailwindcss"
   ]
 }
