@@ -1,21 +1,44 @@
+<script>
+  // import Checkbox from '$lib/component/Checkbox.svelte';
+  import { Checkbox } from 'flowbite-svelte';
+
+  let checked = true;
+  const parentFunc = function (value, checked) {
+    console.log('parentFunc', value, checked);
+    console.log(value, checked);
+  };
+  function onClicked(value, checked) {
+    console.log(value, checked);
+  }
+</script>
+
 <div class="flex flex-row">
   <!-- sidenav -->
   <div class="w-60">
     <h2>
       <span>メーカー名</span>
     </h2>
-    <label class="table h-10 w-full hover:bg-slate-200 active:bg-slate-300">
-      <input class="table-cell h-10 w-4 align-middle accent-red-600" type="checkbox" id="mazda" />
-      <div class="table-cell w-full align-middle" for="mazda">マツダ</div>
-    </label>
-    <label class="table h-10 w-full hover:bg-slate-200 active:bg-slate-300">
-      <input class="table-cell h-10 w-4 align-middle" type="checkbox" id="toyota" />
-      <div class="table-cell w-full align-middle" for="toyota">トヨタ</div>
-    </label>
-    <label class="table h-10 w-full hover:bg-slate-200 active:bg-slate-300">
-      <input class="table-cell h-10 w-4 align-middle" type="checkbox" id="nissan" />
-      <div class="table-cell w-full align-middle" for="nissan">日産</div>
-    </label>
+    <Checkbox spacing="mr-2" value="マツダ" {checked} onClicked={parentFunc}>マツダ</Checkbox>
+
+    <Checkbox custom>
+      <input class="h-5 w-5" type="checkbox" />
+      <label>マツダ</label>
+    </Checkbox>
+
+    <div class="flex h-12 items-center hover:bg-slate-200 active:bg-slate-300" for="mazda">
+      <input class="h-5 w-5 rounded text-pink-500" type="checkbox" id="mazda" />
+      <label class="w-full" for="mazda">マツダ</label>
+    </div>
+
+    <div class="flex h-12 items-center hover:bg-slate-200 active:bg-slate-300">
+      <input class="h-5 w-5 rounded text-pink-500" type="checkbox" id="toyota" />
+      <label class="w-full" for="toyota">トヨタ</label>
+    </div>
+
+    <div class="flex h-12 items-center hover:bg-slate-200 active:bg-slate-300">
+      <input class="h-5 w-5 rounded text-pink-500" type="checkbox" id="nissan" />
+      <label class="w-full" for="nissan">日産</label>
+    </div>
   </div>
   <!-- main -->
   <div class="flex-auto bg-yellow-500">gggg</div>
