@@ -1,7 +1,9 @@
 <script lang="ts">
-  import Checkbox from '$lib/component/Checkbox.svelte';
-  import Accordion from '$lib/component/Accordion.svelte';
+  import TagArea from './TagArea.svelte';
+  import SideNav from './SideNav.svelte';
+  import CarsGrid from './CarsGrid.svelte';
   import type { CarsFilter } from './cars-filter';
+  import type { Car } from '$lib/model/car';
 
   // let checked = true;
   const onCheckboxClicked = function (value, checked) {
@@ -39,144 +41,130 @@
       { title: 'RR', value: 'RR', checked: false }
     ]
   };
+
+  let cars: Car[] = [
+    {
+      id: 1,
+      modelName: 'CX-5',
+      makerName: 'マツダ',
+      url: 'https://www.mazda.co.jp/cars/cx-5/',
+      imageUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/8/85/2017_Mazda_CX-5_%28KF%29_Maxx_2WD_wagon_%282018-11-02%29_01.jpg',
+      price: 3200000,
+      body: {
+        // type: 'SUV',
+        length: 4747,
+        width: 1850,
+        height: 1690
+      },
+      powerTrain: 'ICE',
+      driveSystem: 'AWD',
+      fuelType: 'REGULAR'
+    },
+    {
+      id: 2,
+      modelName: 'カローラツーリング',
+      makerName: 'トヨタ',
+      url: 'https://toyota.jp/corollatouring/',
+      imageUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/8/8a/Toyota_COROLLA_TOURING_HYBRID_W%C3%97B_2WD_%286AA-ZWE211W-AWXSB%29_front.jpg',
+      price: 2678500,
+      body: {
+        // type: 'STATION_WAGON',
+        length: 4495,
+        width: 1745,
+        height: 1460
+      },
+      powerTrain: 'StrHV',
+      driveSystem: 'AWD',
+      fuelType: 'REGULAR'
+    },
+    {
+      id: 3,
+      modelName: 'NSX',
+      makerName: 'ホンダ',
+      url: 'https://www.honda.co.jp/NSX/types/',
+      imageUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/e/ea/2019_Honda_NSX_3.5_CAA-NC1_%2820190722%29_01.jpg',
+      price: 27940000,
+      body: {
+        // type: 'COUPE',
+        length: 4535,
+        width: 1940,
+        height: 1215
+      },
+      powerTrain: 'MldHV',
+      driveSystem: 'AWD',
+      fuelType: 'PREMIUM'
+    },
+    {
+      id: 4,
+      modelName: 'Honda e',
+      makerName: 'ホンダ',
+      url: 'https://www.honda.co.jp/honda-e/',
+      imageUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/9/9e/Honda_e_Advance_%28ZAA-ZC7%29_front.jpg',
+      price: 4950000,
+      body: {
+        // type: 'HATCHBACK',
+        length: 3895,
+        width: 1750,
+        height: 1510
+      },
+      powerTrain: 'BEV',
+      driveSystem: 'RR',
+      fuelType: ''
+      // new FuelType("")
+    },
+    {
+      id: 5,
+      modelName: 'ノート',
+      makerName: '日産',
+      url: 'https://www3.nissan.co.jp/vehicles/new/note.html',
+      imageUrl:
+        'https://upload.wikimedia.org/wikipedia/commons/0/0a/Nissan_Note_e-POWER_%28E13%29%2C_2021%2C_front-left.jpg',
+      price: 2445300,
+      body: {
+        // type: 'HATCHBACK',
+        length: 4045,
+        width: 1695,
+        height: 1520
+      },
+      powerTrain: 'SerHV',
+      driveSystem: 'FF',
+      fuelType: 'REGULAR'
+    },
+    {
+      id: 6,
+      modelName: '3シリーズツーリング',
+      makerName: 'BMW',
+      url: 'https://www.bmw.co.jp/ja/all-models/3-series/touring/2019/bmw-3-series-touring-inspire.html',
+      imageUrl: '',
+      price: 6340000,
+      body: {
+        // type: 'STATION_WAGON',
+        length: 4715,
+        width: 1825,
+        height: 1475
+      },
+      powerTrain: 'ICE',
+      driveSystem: 'AWD',
+      fuelType: 'DIESEL'
+    }
+  ];
 </script>
 
 <div class="flex flex-row">
   <!-- sidenav -->
-  <div class="w-60">
-    <Accordion title="メーカー名">
-      <ul>
-        {#each filter.makers as maker}
-          <li>
-            <Checkbox
-              title={maker.title}
-              value={maker.value}
-              bind:checked={maker.checked}
-              onClicked={onCheckboxClicked}
-            />
-          </li>
-        {/each}
-      </ul>
-    </Accordion>
-
-    <Accordion title="ボディタイプ">
-      <ul>
-        {#each filter.bodyTypes as bodyType}
-          <li>
-            <Checkbox
-              title={bodyType.title}
-              value={bodyType.value}
-              bind:checked={bodyType.checked}
-              onClicked={onCheckboxClicked}
-            />
-          </li>
-        {/each}
-      </ul>
-    </Accordion>
-
-    <Accordion title="パワートレーン">
-      <ul>
-        {#each filter.powerTrains as powerTrain}
-          <li>
-            <Checkbox
-              title={powerTrain.title}
-              value={powerTrain.value}
-              bind:checked={powerTrain.checked}
-              onClicked={onCheckboxClicked}
-            />
-          </li>
-        {/each}
-      </ul>
-    </Accordion>
-
-    <Accordion title="駆動方式">
-      <ul>
-        {#each filter.driveSystems as driveSystem}
-          <li>
-            <Checkbox
-              title={driveSystem.title}
-              value={driveSystem.value}
-              bind:checked={driveSystem.checked}
-              onClicked={onCheckboxClicked}
-            />
-          </li>
-        {/each}
-      </ul>
-    </Accordion>
+  <div class="w-60 flex-none shadow-md">
+    <SideNav bind:filter {onCheckboxClicked} />
   </div>
 
   <!-- main -->
-  <div class="flex-auto bg-yellow-500">gggg</div>
+  <div class="flex-auto">
+    <div class="flex flex-col">
+      <TagArea {filter} />
+      <CarsGrid class="flex-auto" bind:cars />
+    </div>
+  </div>
 </div>
-
-<h1 class="text-3xl font-bold underline">Hello World</h1>
-<button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">...</button>
-<button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">...</button>
-
-<!-- <script>
-    import App from './App.svelte';
-    import Counter from './Counter.svelte';
-    import welcome from '$lib/images/svelte-welcome.webp';
-    import welcome_fallback from '$lib/images/svelte-welcome.png';
-  </script>
-  
-  <svelte:head>
-    <title>Home</title>
-    <meta name="description" content="Svelte demo app" />
-  </svelte:head>
-  
-  <section>
-    <h1>
-      <span class="welcome">
-        <picture>
-          <source srcset={welcome} type="image/webp" />
-          <img src={welcome_fallback} alt="Welcome" />
-        </picture>
-      </span>
-  
-      to your new<br />SvelteKit app
-    </h1>
-  
-    <h2>
-      try editing <strong>src/routes/+page.svelte</strong>
-    </h2>
-  
-    <Counter />
-    <App />
-  </section>
-  
-  <style>
-    section {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      flex: 0.6;
-    }
-  
-    h1 {
-      width: 100%;
-    }
-  
-    .welcome {
-      display: block;
-      position: relative;
-      width: 100%;
-      height: 0;
-      padding: 0 0 calc(100% * 495 / 2048) 0;
-    }
-  
-    .welcome img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      display: block;
-    }
-  </style> -->
-
-<style lang="postcss">
-  :global(html) {
-    background-color: theme(colors.gray.100);
-  }
-</style>
