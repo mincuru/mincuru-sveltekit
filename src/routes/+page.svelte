@@ -1,6 +1,6 @@
 <script>
-  // import Checkbox from '$lib/component/Checkbox.svelte';
-  import { Checkbox } from 'flowbite-svelte';
+  import Checkbox from '$lib/component/Checkbox.svelte';
+  // import { Checkbox } from 'flowbite-svelte';
 
   let checked = true;
   const parentFunc = function (value, checked) {

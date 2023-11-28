@@ -1,7 +1,9 @@
 <script lang="ts">
   import TagArea from './TagArea.svelte';
   import SideNav from './SideNav.svelte';
+  import SideNavToggle from './SideNavToggle.svelte';
   import CarsGrid from './CarsGrid.svelte';
+  import { slide } from 'svelte/transition';
   import type { CarsFilter } from './cars-filter';
   import type { Car } from '$lib/model/car';
 
@@ -13,6 +15,7 @@
     console.log('toggleFunc', isOpen);
   };
 
+  let showSideNav: true;
   // function onClicked(value, checked) {
   //   console.log(value, checked);
   // }
@@ -156,14 +159,25 @@
 
 <div class="flex flex-row">
   <!-- sidenav -->
-  <div class="w-60 flex-none shadow-md">
-    <SideNav bind:filter {onCheckboxClicked} />
-  </div>
+  {#if showSideNav}
+    <div
+      class="fixed w-60 flex-none bg-white shadow-md lg:static {showSideNav ? 'show' : 'hidden'}"
+      in:slide={{ axis: 'x' }}
+      out:slide={{ axis: 'x' }}
+    >
+      <SideNav bind:filter bind:showSideNav {onCheckboxClicked} />
+    </div>
+  {/if}
 
   <!-- main -->
   <div class="flex-auto">
     <div class="flex flex-col">
-      <TagArea {filter} />
+      <div class="flex flex-row">
+        <div class={showSideNav ? 'hidden' : 'show'}>
+          <SideNavToggle bind:showSideNav />
+        </div>
+        <TagArea {filter} />
+      </div>
       <CarsGrid class="flex-auto" bind:cars />
     </div>
   </div>

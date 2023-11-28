@@ -1,11 +1,14 @@
 <script lang="ts">
   import Checkbox from '$lib/component/Checkbox.svelte';
   import Accordion from '$lib/component/Accordion.svelte';
+  import SideNavToggle from './SideNavToggle.svelte';
   import type { CarsFilter } from './cars-filter';
   export let filter: CarsFilter;
   export let onCheckboxClicked = null;
+  export let showSideNav: boolean;
 </script>
 
+<SideNavToggle bind:showSideNav />
 <Accordion title="メーカー名">
   <ul>
     {#each filter.makers as maker}
