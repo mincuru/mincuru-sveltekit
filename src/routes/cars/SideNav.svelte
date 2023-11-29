@@ -1,24 +1,21 @@
 <script lang="ts">
-  import Checkbox from '$lib/component/Checkbox.svelte';
   import Accordion from '$lib/component/Accordion.svelte';
-  import SideNavToggle from './SideNavToggle.svelte';
   import type { CarsFilter } from './cars-filter';
   export let filter: CarsFilter;
   export let onCheckboxClicked = null;
   export let showSideNav: boolean;
 </script>
 
-<SideNavToggle bind:showSideNav />
 <Accordion title="メーカー名">
   <ul>
     {#each filter.makers as maker}
       <li>
-        <Checkbox
-          title={maker.title}
-          value={maker.value}
-          bind:checked={maker.checked}
-          onClicked={onCheckboxClicked}
-        />
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <input type="checkbox" bind:checked={maker.checked} class="checkbox" />
+            <span class="label-text">{maker.title}</span>
+          </label>
+        </div>
       </li>
     {/each}
   </ul>
@@ -28,12 +25,12 @@
   <ul>
     {#each filter.bodyTypes as bodyType}
       <li>
-        <Checkbox
-          title={bodyType.title}
-          value={bodyType.value}
-          bind:checked={bodyType.checked}
-          onClicked={onCheckboxClicked}
-        />
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <input type="checkbox" bind:checked={bodyType.checked} class="checkbox" />
+            <span class="label-text">{bodyType.title}</span>
+          </label>
+        </div>
       </li>
     {/each}
   </ul>
@@ -43,12 +40,12 @@
   <ul>
     {#each filter.powerTrains as powerTrain}
       <li>
-        <Checkbox
-          title={powerTrain.title}
-          value={powerTrain.value}
-          bind:checked={powerTrain.checked}
-          onClicked={onCheckboxClicked}
-        />
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <input type="checkbox" bind:checked={powerTrain.checked} class="checkbox" />
+            <span class="label-text">{powerTrain.title}</span>
+          </label>
+        </div>
       </li>
     {/each}
   </ul>
@@ -58,12 +55,12 @@
   <ul>
     {#each filter.driveSystems as driveSystem}
       <li>
-        <Checkbox
-          title={driveSystem.title}
-          value={driveSystem.value}
-          bind:checked={driveSystem.checked}
-          onClicked={onCheckboxClicked}
-        />
+        <div class="form-control">
+          <label class="label cursor-pointer">
+            <input type="checkbox" bind:checked={driveSystem.checked} class="checkbox" />
+            <span class="label-text">{driveSystem.title}</span>
+          </label>
+        </div>
       </li>
     {/each}
   </ul>

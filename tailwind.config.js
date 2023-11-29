@@ -5,8 +5,9 @@ export default {
     extend: {}
   },
   plugins: [
-    require('@tailwindcss/forms')({
-      strategy: 'base' // only generate global styles
-    })
+    require('daisyui')
+    //    require('@tailwindcss/forms')({
+    //      strategy: 'base' // only generate global styles
+    //    })
   ]
 };

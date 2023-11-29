@@ -5,7 +5,7 @@
 </script>
 
 <div
-  class="flex w-fit cursor-pointer flex-row items-center gap-1 rounded-full border-2 border-gray-200 bg-gray-100 px-2 py-1 hover:bg-slate-200 active:bg-slate-300"
+  class="btn btn-ghost flex w-fit cursor-pointer flex-row items-center gap-1 rounded-full border-2 border-gray-200 bg-gray-100 px-2 py-1"
 >
   <span>
     {title}

@@ -8,14 +8,15 @@
   };
 </script>
 
-<button
-  type="button"
-  on:click={onClicked}
-  class="flex h-12 w-full items-center px-2 text-left hover:bg-slate-200 active:bg-slate-300"
->
-  <span class="flex-auto align-middle">{title}</span>
-  <Icon src={isOpen ? ChevronUp : ChevronDown} size="16" />
-</button>
+<div class="form-control">
+  <a
+    on:click={onClicked}
+    class="btn btn-ghost flex h-12 w-full items-center rounded-lg px-2 text-left"
+  >
+    <span class="flex-auto align-middle">{title}</span>
+    <Icon src={isOpen ? ChevronUp : ChevronDown} size="16" />
+  </a>
+</div>
 {#if isOpen}
   <div class="z-0 pl-2 {isOpen ? 'show' : 'hidden'}" in:slide out:slide>
     <slot />

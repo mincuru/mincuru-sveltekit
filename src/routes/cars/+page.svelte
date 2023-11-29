@@ -157,9 +157,33 @@
   ];
 </script>
 
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col items-center justify-center">
+    <!-- Page content here -->
+    <div class="flex-auto">
+      <div class="flex flex-col">
+        <TagArea {filter} />
+        <CarsGrid bind:cars />
+      </div>
+    </div>
+
+    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 text-base-content min-h-full w-64 p-4">
+      <!-- Sidebar content here -->
+      <SideNav bind:filter bind:showSideNav {onCheckboxClicked} />
+      <!-- <li><a>Sidebar Item 1</a></li>
+      <li><a>Sidebar Item 2</a></li> -->
+    </ul>
+  </div>
+</div>
+
+<!-- sidenav -->
 <div class="flex flex-row">
-  <!-- sidenav -->
-  {#if showSideNav}
+  <!-- {#if showSideNav}
     <div
       class="fixed w-60 flex-none bg-white shadow-md lg:static {showSideNav ? 'show' : 'hidden'}"
       in:slide={{ axis: 'x' }}
@@ -167,10 +191,10 @@
     >
       <SideNav bind:filter bind:showSideNav {onCheckboxClicked} />
     </div>
-  {/if}
+  {/if} -->
 
   <!-- main -->
-  <div class="flex-auto">
+  <!-- <div class="flex-auto">
     <div class="flex flex-col">
       <div class="flex flex-row">
         <div class={showSideNav ? 'hidden' : 'show'}>
@@ -180,5 +204,5 @@
       </div>
       <CarsGrid class="flex-auto" bind:cars />
     </div>
-  </div>
+  </div> -->
 </div>
