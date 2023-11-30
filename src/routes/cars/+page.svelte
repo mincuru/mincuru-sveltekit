@@ -1,7 +1,6 @@
 <script lang="ts">
   import TagArea from './TagArea.svelte';
   import SideNav from './SideNav.svelte';
-  import SideNavToggle from './SideNavToggle.svelte';
   import CarsGrid from './CarsGrid.svelte';
   import { slide } from 'svelte/transition';
   import type { CarsFilter } from './cars-filter';
@@ -155,6 +154,13 @@
       fuelType: 'DIESEL'
     }
   ];
+
+  let account: Account = {
+    id: 1,
+    name: 'test',
+    email: '',
+    favorites: []
+  };
 </script>
 
 <div class="drawer lg:drawer-open">
@@ -164,7 +170,7 @@
     <div class="flex-auto">
       <div class="flex flex-col">
         <TagArea {filter} />
-        <CarsGrid bind:cars />
+        <CarsGrid bind:cars bind:favorites={account.favorites} />
       </div>
     </div>
 
@@ -175,8 +181,6 @@
     <ul class="menu bg-base-200 text-base-content min-h-full w-64 p-4">
       <!-- Sidebar content here -->
       <SideNav bind:filter bind:showSideNav {onCheckboxClicked} />
-      <!-- <li><a>Sidebar Item 1</a></li>
-      <li><a>Sidebar Item 2</a></li> -->
     </ul>
   </div>
 </div>
