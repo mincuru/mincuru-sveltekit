@@ -2,8 +2,6 @@
   import Accordion from '$lib/component/Accordion.svelte';
   import type { CarsFilter } from './cars-filter';
   export let filter: CarsFilter;
-  export let onCheckboxClicked = null;
-  export let showSideNav: boolean;
 </script>
 
 <Accordion title="メーカー名">

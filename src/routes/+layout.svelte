@@ -6,9 +6,9 @@
 <!-- header -->
 <div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50">
   <div class="flex-none">
-    <button class="btn btn-square btn-ghost">
+    <label for="my-drawer-2" class="btn btn-square btn-ghost drawer-button">
       <Icon src={Bars3} size="24" />
-    </button>
+    </label>
   </div>
   <div class="flex-1">
     <a class="btn btn-ghost text-xl">みんクル</a>

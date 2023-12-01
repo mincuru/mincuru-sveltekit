@@ -6,18 +6,6 @@
   import type { CarsFilter } from './cars-filter';
   import type { Car } from '$lib/model/car';
 
-  // let checked = true;
-  const onCheckboxClicked = function (value, checked) {
-    console.log('parentFunc', filter.makers);
-  };
-  const toggleFunc = function (isOpen) {
-    console.log('toggleFunc', isOpen);
-  };
-
-  let showSideNav: true;
-  // function onClicked(value, checked) {
-  //   console.log(value, checked);
-  // }
   let filter: CarsFilter = {
     makers: [
       { title: 'マツダ', value: 'マツダ', checked: false },
@@ -173,14 +161,12 @@
         <CarsGrid bind:cars bind:favorites={account.favorites} />
       </div>
     </div>
-
-    <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
   </div>
   <div class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-64 p-4">
       <!-- Sidebar content here -->
-      <SideNav bind:filter bind:showSideNav {onCheckboxClicked} />
+      <SideNav bind:filter />
     </ul>
   </div>
 </div>

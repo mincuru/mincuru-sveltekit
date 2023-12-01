@@ -3,9 +3,7 @@
   export let car: Car;
   export let favorite: boolean;
   export let updateFavorite;
-  function toggleFavorite(newFav: boolean) {
-    updateFavorite(car.id, newFav);
-  }
+  const toggleFavorite = (newFav: boolean) => updateFavorite(car.id, newFav);
 </script>
 
 <div class="card card-compact bg-base-100 w-full shadow-xl sm:w-64">
