@@ -6,7 +6,9 @@
   const toggleFavorite = (newFav: boolean) => updateFavorite(car.id, newFav);
 </script>
 
-<div class="card card-compact bg-base-100 w-full shadow-xl sm:w-64">
+<div
+  class="card card-compact bg-base-100 w-full cursor-pointer shadow-xl hover:bg-[var(--fallback-bc,oklch(var(--bc)/0.2))] sm:w-64"
+>
   <figure>
     <img class="h-40 w-full object-cover" src={car.imageUrl} alt={car.modelName} />
   </figure>
@@ -19,7 +21,7 @@
     </p>
     <p>{car.powerTrain}, {car.driveSystem}, {car.fuelType}</p>
     <div class="card-actions justify-end">
-      <Favorite bind:favorite {toggleFavorite} />
+      <Favorite bind:favorite toggle={toggleFavorite} />
     </div>
   </div>
 </div>

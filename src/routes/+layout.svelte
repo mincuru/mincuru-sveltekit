@@ -6,7 +6,7 @@
 <!-- header -->
 <div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50">
   <div class="flex-none">
-    <label for="my-drawer-2" class="btn btn-square btn-ghost drawer-button">
+    <label for="my-drawer-2" class="btn btn-square btn-ghost drawer-button show lg:hidden">
       <Icon src={Bars3} size="24" />
     </label>
   </div>

@@ -19,11 +19,11 @@
       { title: 'ハッチバック', value: 'HATCHBACK', checked: false }
     ],
     powerTrains: [
-      { title: 'エンジン', value: 'long-range', checked: false },
-      { title: 'ストロングHV', value: 'performance', checked: false },
-      { title: 'マイルドHV', value: 'performance', checked: true },
-      { title: 'バッテリーEV', value: 'performance', checked: false },
-      { title: 'シリーズHV', value: 'performance', checked: false }
+      { title: 'エンジン', value: 'ICE', checked: false },
+      { title: 'ストロングHV', value: 'StrHV', checked: false },
+      { title: 'マイルドHV', value: 'MldHV', checked: true },
+      { title: 'バッテリーEV', value: 'BEV', checked: false },
+      { title: 'シリーズHV', value: 'SerHV', checked: false }
     ],
     driveSystems: [
       { title: 'FF', value: 'FF', checked: false },
@@ -157,7 +157,7 @@
     <!-- Page content here -->
     <div class="flex-auto">
       <div class="flex flex-col">
-        <TagArea {filter} />
+        <TagArea bind:filter />
         <CarsGrid bind:cars bind:favorites={account.favorites} />
       </div>
     </div>
@@ -169,30 +169,4 @@
       <SideNav bind:filter />
     </ul>
   </div>
-</div>
-
-<!-- sidenav -->
-<div class="flex flex-row">
-  <!-- {#if showSideNav}
-    <div
-      class="fixed w-60 flex-none bg-white shadow-md lg:static {showSideNav ? 'show' : 'hidden'}"
-      in:slide={{ axis: 'x' }}
-      out:slide={{ axis: 'x' }}
-    >
-      <SideNav bind:filter bind:showSideNav {onCheckboxClicked} />
-    </div>
-  {/if} -->
-
-  <!-- main -->
-  <!-- <div class="flex-auto">
-    <div class="flex flex-col">
-      <div class="flex flex-row">
-        <div class={showSideNav ? 'hidden' : 'show'}>
-          <SideNavToggle bind:showSideNav />
-        </div>
-        <TagArea {filter} />
-      </div>
-      <CarsGrid class="flex-auto" bind:cars />
-    </div>
-  </div> -->
 </div>

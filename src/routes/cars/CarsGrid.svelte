@@ -8,7 +8,7 @@
     if (favorite) {
       favorites.push(id);
     } else {
-      favorites = favorites.filter((item) => item !== num);
+      favorites = favorites.filter((item) => item !== id);
     }
     console.log('updateFavorite', favorites);
   };
