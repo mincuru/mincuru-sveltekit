@@ -5,7 +5,7 @@ export interface CarsFilter {
   driveSystems: KeyValuePair[];
 }
 
-interface KeyValuePair {
+export interface KeyValuePair {
   title: string;
   value: string;
   checked: boolean;

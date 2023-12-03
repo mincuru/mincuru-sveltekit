@@ -1,6 +1,6 @@
 <script lang="ts">
   import Accordion from '$lib/component/Accordion.svelte';
-  import type { CarsFilter } from './cars-filter';
+  import type { CarsFilter } from './CarsFilter';
   export let filter: CarsFilter;
 </script>
 

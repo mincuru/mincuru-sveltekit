@@ -5,6 +5,7 @@ export default {
     extend: {}
   },
   plugins: [
+    require('@tailwindcss/typography'),
     require('daisyui')
     //    require('@tailwindcss/forms')({
     //      strategy: 'base' // only generate global styles

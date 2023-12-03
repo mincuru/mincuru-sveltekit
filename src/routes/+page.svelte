@@ -1,20 +1,21 @@
 <script>
-  import Checkbox from '$lib/component/Checkbox.svelte';
-  // import { Checkbox } from 'flowbite-svelte';
+  // import Checkbox from '$lib/component/Checkbox.svelte';
+  // // import { Checkbox } from 'flowbite-svelte';
 
-  let checked = true;
-  const parentFunc = function (value, checked) {
-    console.log('parentFunc', value, checked);
-    console.log(value, checked);
-  };
-  function onClicked(value, checked) {
-    console.log(value, checked);
-  }
+  // let checked = true;
+  // const parentFunc = function (value, checked) {
+  //   console.log('parentFunc', value, checked);
+  //   console.log(value, checked);
+  // };
+  // function onClicked(value, checked) {
+  //   console.log(value, checked);
+  // }
 </script>
 
-<div class="flex flex-row">
-  <!-- sidenav -->
-  <div class="w-60">
+<div>a</div>
+<!-- <div class="flex flex-row"> -->
+<!-- sidenav -->
+<!-- <div class="w-60">
     <h2>
       <span>メーカー名</span>
     </h2>
@@ -39,14 +40,14 @@
       <input class="h-5 w-5 rounded text-pink-500" type="checkbox" id="nissan" />
       <label class="w-full" for="nissan">日産</label>
     </div>
-  </div>
-  <!-- main -->
-  <div class="flex-auto bg-yellow-500">gggg</div>
-</div>
+  </div> -->
+<!-- main -->
+<!-- <div class="flex-auto bg-yellow-500">gggg</div>
+</div> -->
 
-<h1 class="text-3xl font-bold underline">Hello World</h1>
+<!-- <h1 class="text-3xl font-bold underline">Hello World</h1>
 <button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">...</button>
-<button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">...</button>
+<button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">...</button> -->
 
 <!-- <script>
   import App from './App.svelte';
@@ -110,8 +111,8 @@
   }
 </style> -->
 
-<style lang="postcss">
+<!-- <style lang="postcss">
   :global(html) {
     background-color: theme(colors.gray.100);
   }
-</style>
+</style> -->

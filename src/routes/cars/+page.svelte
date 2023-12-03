@@ -2,9 +2,9 @@
   import TagArea from './TagArea.svelte';
   import SideNav from './SideNav.svelte';
   import CarsGrid from './CarsGrid.svelte';
-  import { slide } from 'svelte/transition';
-  import type { CarsFilter } from './cars-filter';
-  import type { Car } from '$lib/model/car';
+  import type { CarsFilter } from './CarsFilter';
+  import type { CarSummary } from '$lib/model/CarSummary';
+  import type { Account } from '$lib/model/Account';
 
   let filter: CarsFilter = {
     makers: [
@@ -32,7 +32,7 @@
     ]
   };
 
-  let cars: Car[] = [
+  let cars: CarSummary[] = [
     {
       id: 1,
       modelName: 'CX-5',

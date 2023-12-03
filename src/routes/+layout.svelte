@@ -4,14 +4,14 @@
 </script>
 
 <!-- header -->
-<div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50">
+<div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50 shadow">
   <div class="flex-none">
     <label for="my-drawer-2" class="btn btn-square btn-ghost drawer-button show lg:hidden">
       <Icon src={Bars3} size="24" />
     </label>
   </div>
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl">みんクル</a>
+    <p class="btn btn-ghost text-xl">みんクル</p>
   </div>
   <div class="flex-none">
     <button class="btn btn-square btn-ghost">

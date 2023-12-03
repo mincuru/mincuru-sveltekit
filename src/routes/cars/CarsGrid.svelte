@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Car } from '$lib/model/car';
+  import type { CarSummary } from '$lib/model/CarSummary';
   import CarItem from './CarItem.svelte';
-  export let cars: Car[];
+  export let cars: CarSummary[];
   export let favorites: number[];
   const updateFavorite = (id: number, favorite: boolean) => {
     // ここでfavorites配列を更新したい
