@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { CarSummary } from '$lib/model/CarSummary';
+  import type { CarDisplay } from '$lib/model/CarDisplay';
   import CarItem from './CarItem.svelte';
-  export let cars: CarSummary[];
+  export let cars: CarDisplay[];
   export let favorites: number[];
   const updateFavorite = (id: number, favorite: boolean) => {
     // ここでfavorites配列を更新したい
@@ -16,6 +16,6 @@
 
 <div class="flex flex-row flex-wrap gap-2.5 p-2.5">
   {#each cars as car}
-    <CarItem {car} favorite={favorites.includes(car.id)} {updateFavorite} />
+    <CarItem {car} favorite={favorites.includes(car.data.id)} {updateFavorite} />
   {/each}
 </div>
