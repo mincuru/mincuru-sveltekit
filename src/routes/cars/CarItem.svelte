@@ -26,7 +26,7 @@
         <h2 class="card-title shrink truncate">{car.data.modelName}</h2>
       </div>
       <p>{car.data.makerName}</p>
-      <p class="text-right">{car.data.price.toLocaleString()}円</p>
+      <p class="text-right">{car.data.price?.toLocaleString()}円</p>
       <p class="line-clamp-2 w-full">
           全長:{car.data.body?.length?.toLocaleString() ?? 'N/A'}mm
           幅:{car.data.body?.width?.toLocaleString() ?? 'N/A'}mm

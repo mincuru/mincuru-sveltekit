@@ -1,10 +1,10 @@
-import type { CarSummary } from './CarSummary';
+import type { CarDetail } from './CarDetail';
 
 export class CarDisplay {
-  data: CarSummary;
+  data: CarDetail;
 
   // コンストラクタ
-  constructor(data: CarSummary) {
+  constructor(data: CarDetail) {
     this.data = data;
   }
 

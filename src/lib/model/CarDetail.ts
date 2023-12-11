@@ -1,6 +1,4 @@
-import type { PrerenderEntryGeneratorMismatchHandler } from '@sveltejs/kit';
-
-export interface CarSummary {
+export interface CarDetail {
   id: number;
   modelName: string;
   modelCode: string;
@@ -12,10 +10,10 @@ export interface CarSummary {
   imageUrl?: string;
   price?: number;
   body: Body;
-  interior: Interior;
-  steering: string;
-  suspension: Suspension;
-  break: Break;
+  interior?: Interior;
+  steering?: string;
+  suspension?: Suspension;
+  break?: Break;
   engine?: Engine;
   performance?: Performance;
 }
@@ -26,52 +24,52 @@ export interface Body {
   width?: number;
   height?: number;
   wheelBase?: number;
-  tread: Tread;
+  tread?: Tread;
   roadClearance?: number;
   weight?: number;
 }
 
 interface Tread {
-  front: number;
-  rear: number;
+  front?: number;
+  rear?: number;
 }
 
 interface Interior {
-  length: number;
-  width: number;
-  height: number;
-  ridingCap: number;
+  length?: number;
+  width?: number;
+  height?: number;
+  ridingCap?: number;
 }
 
 interface Suspension {
-  front: string;
-  rear: string;
+  front?: string;
+  rear?: string;
 }
 
 interface Break {
-  front: string;
-  rear: string;
+  front?: string;
+  rear?: string;
 }
 
 interface Engine {
-  code: string;
-  type: string;
-  cylinderNum: number;
-  cylinderLayout: string;
-  valveSystem: string;
-  displacement: number;
-  bore: number;
-  stroke: number;
-  compressionRatio: number;
-  maxOutputKw: number;
-  maxOutputLowerRpm: number;
-  maxOutputHigherRpm: number;
-  maxTorqueNm: number;
-  maxTorqueLowerRpm: number;
-  maxTorqueHigherRpm: number;
-  fuelSystem: string;
-  fuelType: FuelType;
-  fuelTankCap: number;
+  code?: string;
+  type?: string;
+  cylinderNum?: number;
+  cylinderLayout?: string;
+  valveSystem?: string;
+  displacement?: number;
+  bore?: number;
+  stroke?: number;
+  compressionRatio?: number;
+  maxOutputKw?: number;
+  maxOutputLowerRpm?: number;
+  maxOutputHigherRpm?: number;
+  maxTorqueNm?: number;
+  maxTorqueLowerRpm?: number;
+  maxTorqueHigherRpm?: number;
+  fuelSystem?: string;
+  fuelType?: FuelType;
+  fuelTankCap?: number;
 }
 
 interface Performance {
