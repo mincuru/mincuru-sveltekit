@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id          Int          @id @default(autoincrement())
+  modelName   String
+  modelCode   String
+  gradeName   String
+  makerName   String
+  powerTrain  PowerTrain?
+  driveSystem String
+  url         String?
+  imageUrl    String?
+  body        Body?
+  interior    Interior?
+  steering    String?
+  suspension  Suspension?
+  break       Break?
+  engine      Engine?
+  performance Performance?
+}
+
+model Body {
+  id            Int      @id @default(autoincrement())
+  type          BodyType
+  length        Int?
+  width         Int?
+  height        Int?
+  wheelBase     Int?
+  tread         Tread?
+  roadClearance Int?
+  weight        Int?
+  Car           Car      @relation(fields: [carId], references: [id])
+  carId         Int      @unique
+}
+
+model Tread {
+  id     Int  @id @default(autoincrement())
+  front  Int?
+  rear   Int?
+  Body   Body @relation(fields: [bodyId], references: [id])
+  bodyId Int  @unique
+}
+
+model Interior {
+  id        Int  @id @default(autoincrement())
+  length    Int?
+  width     Int?
+  height    Int?
+  ridingCap Int?
+  Car       Car  @relation(fields: [carId], references: [id])
+  carId     Int  @unique
+}
+
+model Suspension {
+  id    Int     @id @default(autoincrement())
+  front String?
+  rear  String?
+  Car   Car     @relation(fields: [carId], references: [id])
+  carId Int     @unique
+}
+
+model Break {
+  id    Int     @id @default(autoincrement())
+  front String?
+  rear  String?
+  Car   Car     @relation(fields: [carId], references: [id])
+  carId Int     @unique
+}
+
+model Engine {
+  id                  Int       @id @default(autoincrement())
+  code                String?
+  type                String?
+  cylinderNum         Int?
+  cylinderLayout      String?
+  valveSystem         String?
+  displacement        Int?
+  bore                Int?
+  stroke              Int?
+  compressionRatio    Float?
+  maxOutputKw         Float?
+  maxOutputLowerRpm   Int?
+  maxzOutputHigherRpm Int?
+  maxTorqueNm         Float?
+  maxTorqueLowerRpm   Int?
+  maxTorqueHigherRpm  Int?
+  fuelSystem          String?
+  fuelType            FuelType?
+  fuelTankdCap        Int?
+  Car                 Car       @relation(fields: [carId], references: [id])
+  carId               Int       @unique
+}
+
+model Performance {
+  id               Int      @id @default(autoincrement())
+  minTurningRadius Int?
+  fcrWltc          Float?
+  fcrWltcL         Float?
+  fcrWltcM         Float?
+  fcrWltcH         Float?
+  fcrWltcExh       Float?
+  fcrJc08          Float?
+  mpcWltc          Float?
+  ecrWltc          Float?
+  ecrWltcL         Float?
+  ecrWltcM         Float?
+  ecrWltcH         Float?
+  ecrWltcExh       Float?
+  ecrJc08          Float?
+  mpcJc08          Float?
+  fuelEfficiency   String[]
+  Car              Car      @relation(fields: [carId], references: [id])
+  carId            Int      @unique
+}
+
+enum PowerTrain {
+  ICE
+  StrHV
+  MldHV
+  SerHV
+  PHEV
+  BEV
+  RexEV
+  FCEV
+}
+
+enum FuelType {
+  DIESEL
+  REGULAR
+  PREMIUM
+  LPG
+  BIO
+  HYDROGEN
+}
+
+enum BodyType {
+  SEDAN
+  HATCHBACK
+  CROSS_COUNTRY
+  K
+  COUPE
+  STATION_WAGON
+  SUV
+  ONEBOX
+  K_OPEN
+  K_ONEBOX
+  OPEN
+  PICKUP_TRUCK
+}
