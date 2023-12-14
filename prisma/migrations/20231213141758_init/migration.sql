@@ -18,6 +18,7 @@ CREATE TABLE "Car" (
     "driveSystem" TEXT NOT NULL,
     "url" TEXT,
     "imageUrl" TEXT,
+    "price" INTEGER,
     "steering" TEXT,
 
     CONSTRAINT "Car_pkey" PRIMARY KEY ("id")
@@ -94,13 +95,13 @@ CREATE TABLE "Engine" (
     "compressionRatio" DOUBLE PRECISION,
     "maxOutputKw" DOUBLE PRECISION,
     "maxOutputLowerRpm" INTEGER,
-    "maxzOutputHigherRpm" INTEGER,
+    "maxOutputHigherRpm" INTEGER,
     "maxTorqueNm" DOUBLE PRECISION,
     "maxTorqueLowerRpm" INTEGER,
     "maxTorqueHigherRpm" INTEGER,
     "fuelSystem" TEXT,
     "fuelType" "FuelType",
-    "fuelTankdCap" INTEGER,
+    "fuelTankCap" INTEGER,
     "carId" INTEGER NOT NULL,
 
     CONSTRAINT "Engine_pkey" PRIMARY KEY ("id")

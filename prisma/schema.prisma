@@ -20,6 +20,7 @@ model Car {
   driveSystem String
   url         String?
   imageUrl    String?
+  price       Int?
   body        Body?
   interior    Interior?
   steering    String?
@@ -78,27 +79,27 @@ model Break {
 }
 
 model Engine {
-  id                  Int       @id @default(autoincrement())
-  code                String?
-  type                String?
-  cylinderNum         Int?
-  cylinderLayout      String?
-  valveSystem         String?
-  displacement        Int?
-  bore                Int?
-  stroke              Int?
-  compressionRatio    Float?
-  maxOutputKw         Float?
-  maxOutputLowerRpm   Int?
-  maxzOutputHigherRpm Int?
-  maxTorqueNm         Float?
-  maxTorqueLowerRpm   Int?
-  maxTorqueHigherRpm  Int?
-  fuelSystem          String?
-  fuelType            FuelType?
-  fuelTankdCap        Int?
-  Car                 Car       @relation(fields: [carId], references: [id])
-  carId               Int       @unique
+  id                 Int       @id @default(autoincrement())
+  code               String?
+  type               String?
+  cylinderNum        Int?
+  cylinderLayout     String?
+  valveSystem        String?
+  displacement       Int?
+  bore               Int?
+  stroke             Int?
+  compressionRatio   Float?
+  maxOutputKw        Float?
+  maxOutputLowerRpm  Int?
+  maxOutputHigherRpm Int?
+  maxTorqueNm        Float?
+  maxTorqueLowerRpm  Int?
+  maxTorqueHigherRpm Int?
+  fuelSystem         String?
+  fuelType           FuelType?
+  fuelTankCap        Int?
+  Car                Car       @relation(fields: [carId], references: [id])
+  carId              Int       @unique
 }
 
 model Performance {
