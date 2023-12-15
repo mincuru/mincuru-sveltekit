@@ -11,77 +11,40 @@ datasource db {
 }
 
 model Car {
-  id          Int          @id @default(autoincrement())
-  modelName   String
-  modelCode   String
-  gradeName   String
-  makerName   String
-  powerTrain  PowerTrain?
-  driveSystem String
-  url         String?
-  imageUrl    String?
-  price       Int?
-  body        Body?
-  interior    Interior?
-  steering    String?
-  suspension  Suspension?
-  break       Break?
-  engine      Engine?
-  performance Performance?
-}
-
-model Body {
-  id            Int      @id @default(autoincrement())
-  type          BodyType
-  length        Int?
-  width         Int?
-  height        Int?
-  wheelBase     Int?
-  tread         Tread?
-  roadClearance Int?
-  weight        Int?
-  Car           Car      @relation(fields: [carId], references: [id])
-  carId         Int      @unique
-}
-
-model Tread {
-  id     Int  @id @default(autoincrement())
-  front  Int?
-  rear   Int?
-  Body   Body @relation(fields: [bodyId], references: [id])
-  bodyId Int  @unique
-}
-
-model Interior {
-  id        Int  @id @default(autoincrement())
-  length    Int?
-  width     Int?
-  height    Int?
-  ridingCap Int?
-  Car       Car  @relation(fields: [carId], references: [id])
-  carId     Int  @unique
-}
-
-model Suspension {
-  id    Int     @id @default(autoincrement())
-  front String?
-  rear  String?
-  Car   Car     @relation(fields: [carId], references: [id])
-  carId Int     @unique
-}
-
-model Break {
-  id    Int     @id @default(autoincrement())
-  front String?
-  rear  String?
-  Car   Car     @relation(fields: [carId], references: [id])
-  carId Int     @unique
-}
-
-model Engine {
-  id                 Int       @id @default(autoincrement())
-  code               String?
-  type               String?
+  id                 Int         @id @default(autoincrement())
+  modelName          String
+  modelCode          String
+  gradeName          String
+  makerName          String
+  powerTrain         PowerTrain?
+  driveSystem        String
+  url                String?
+  imageUrl           String?
+  price              Int?
+  // body
+  bodyType           BodyType
+  bodyLength         Int?
+  bodyWidth          Int?
+  bodyHeight         Int?
+  wheelBase          Int?
+  treadFront         Int?
+  treadRear          Int?
+  roadClearance      Int?
+  weight             Int?
+  // interior
+  interiorLength     Int?
+  interiorWidth      Int?
+  interiorHeight     Int?
+  ridingCap          Int?
+  //
+  steering           String?
+  suspensionFront    String?
+  suspensionRear     String?
+  breakFront         String?
+  breakRear          String?
+  // engine
+  engineCode         String?
+  engineType         String?
   cylinderNum        Int?
   cylinderLayout     String?
   valveSystem        String?
@@ -98,30 +61,23 @@ model Engine {
   fuelSystem         String?
   fuelType           FuelType?
   fuelTankCap        Int?
-  Car                Car       @relation(fields: [carId], references: [id])
-  carId              Int       @unique
-}
-
-model Performance {
-  id               Int      @id @default(autoincrement())
-  minTurningRadius Int?
-  fcrWltc          Float?
-  fcrWltcL         Float?
-  fcrWltcM         Float?
-  fcrWltcH         Float?
-  fcrWltcExh       Float?
-  fcrJc08          Float?
-  mpcWltc          Float?
-  ecrWltc          Float?
-  ecrWltcL         Float?
-  ecrWltcM         Float?
-  ecrWltcH         Float?
-  ecrWltcExh       Float?
-  ecrJc08          Float?
-  mpcJc08          Float?
-  fuelEfficiency   String[]
-  Car              Car      @relation(fields: [carId], references: [id])
-  carId            Int      @unique
+  // performance
+  minTurningRadius   Int?
+  fcrWltc            Float?
+  fcrWltcL           Float?
+  fcrWltcM           Float?
+  fcrWltcH           Float?
+  fcrWltcExh         Float?
+  fcrJc08            Float?
+  mpcWltc            Float?
+  ecrWltc            Float?
+  ecrWltcL           Float?
+  ecrWltcM           Float?
+  ecrWltcH           Float?
+  ecrWltcExh         Float?
+  ecrJc08            Float?
+  mpcJc08            Float?
+  fuelEfficiency     String[]
 }
 
 enum PowerTrain {
