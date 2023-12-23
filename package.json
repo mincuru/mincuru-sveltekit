@@ -1,5 +1,5 @@
 {
-  "name": "mincuru-sveltekit",
+  "name": "my-turborepo",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -20,9 +20,5 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "volta": {
-    "node": "20.10.0",
-    "npm": "10.2.5"
-  }
+  ]
 }
