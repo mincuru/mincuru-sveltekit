@@ -3,7 +3,7 @@ import type { CarDetail } from '$lib/model/CarDetail';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
-export const load = (async ({ params }) => {
+export const load = (async (/*{ params }*/) => {
   const data = await prisma.car.findMany();
   if (!data) {
     throw error(404, {

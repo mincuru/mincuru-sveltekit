@@ -4,9 +4,9 @@
 </script>
 
 <!-- header -->
-<div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50 shadow">
+<div class="navbar fixed left-0 right-0 top-0 z-50 bg-base-100 shadow">
   <div class="flex-none">
-    <label for="my-drawer-2" class="btn btn-square btn-ghost drawer-button show lg:hidden">
+    <label for="my-drawer-2" class="show btn btn-square btn-ghost drawer-button lg:hidden">
       <Icon src={Bars3} size="24" />
     </label>
   </div>
@@ -37,7 +37,7 @@
 </article>
 
 <!-- footer -->
-<footer class="footer bg-neutral text-neutral-content items-center p-4">
+<footer class="footer items-center bg-neutral p-4 text-neutral-content">
   <aside class="grid-flow-col items-center">
     <svg
       width="36"

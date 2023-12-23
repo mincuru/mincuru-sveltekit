@@ -50,13 +50,13 @@
     <div class="flex-auto">
       <div class="flex flex-col">
         <TagArea bind:filter />
-        <CarsGrid cars={cars} bind:favorites={account.favorites} />
+        <CarsGrid {cars} bind:favorites={account.favorites} />
       </div>
     </div>
   </div>
   <div class="drawer-side">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu bg-base-200 text-base-content min-h-full w-64 p-4">
+    <ul class="menu min-h-full w-64 bg-base-200 p-4 text-base-content">
       <!-- Sidebar content here -->
       <SideNav bind:filter />
     </ul>

@@ -1,14 +1,14 @@
 <script lang="ts">
   import Favorite from '$lib/component/Favorite.svelte';
-  import type {CarDisplay} from '$lib/model/CarDisplay';
+  import type { CarDisplay } from '$lib/model/CarDisplay';
   export let car: CarDisplay;
   export let favorite: boolean;
-  export let updateFavorite: Function;
+  export let updateFavorite: (id: number, favorite: boolean) => void;
   const toggleFavorite = (newFav: boolean) => updateFavorite(car.data.id, newFav);
 </script>
 
 <div
-  class="card card-compact bg-base-100 w-full cursor-pointer shadow-xl hover:bg-[var(--fallback-bc,oklch(var(--bc)/0.2))] sm:w-64"
+  class="card card-compact w-full cursor-pointer bg-base-100 shadow-xl hover:bg-[var(--fallback-bc,oklch(var(--bc)/0.2))] sm:w-64"
 >
   <figure>
     <div class="relative w-full">
@@ -28,9 +28,8 @@
       <p>{car.data.makerName}</p>
       <p class="text-right">{car.data.price?.toLocaleString()}円</p>
       <p class="line-clamp-2 w-full">
-          全長:{car.data.body?.length?.toLocaleString() ?? 'N/A'}mm
-          幅:{car.data.body?.width?.toLocaleString() ?? 'N/A'}mm
-          高さ:{car.data.body?.height?.toLocaleString() ?? 'N/A'}mm
+        全長:{car.data.body?.length?.toLocaleString() ?? 'N/A'}mm 幅:{car.data.body?.width?.toLocaleString() ??
+          'N/A'}mm 高さ:{car.data.body?.height?.toLocaleString() ?? 'N/A'}mm
       </p>
       <p>{car.bodyTypeLabel} {car.powerTrainLabel} {car.data.driveSystem} {car.fuelTypeLabel}</p>
     </div>

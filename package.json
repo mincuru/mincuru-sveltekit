@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "mincuru-sveltekit",
   "private": true,
   "scripts": {
     "build": "turbo build",

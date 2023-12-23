@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Icon, Star } from 'svelte-hero-icons';
   export let favorite: boolean;
-  export let toggle: Function;
+  export let toggle: (favorite: boolean) => void;
 
   const onClick = () => {
     favorite = !favorite;

@@ -1,13 +1,13 @@
 <script lang="ts">
   import Tag from '$lib/component/Tag.svelte';
-  import type {CarsFilter} from './CarsFilter';
+  import type { CarsFilter } from './CarsFilter';
   export let filter: CarsFilter;
   const removeMakerTag = (value: string) => {
     console.log('removeMakerTag', value);
     let localFilter = filter;
     const targetToUpdate = localFilter.makers.find((i) => i.value === value);
     if (targetToUpdate) {
-      targetToUpdate.checked = false
+      targetToUpdate.checked = false;
       filter = localFilter;
     }
   };
@@ -25,7 +25,7 @@
     let localFilter = filter;
     const targetToUpdate = localFilter.powerTrains.find((i) => i.value === value);
     if (targetToUpdate) {
-      targetToUpdate.checked = false
+      targetToUpdate.checked = false;
     }
     filter = localFilter;
   };

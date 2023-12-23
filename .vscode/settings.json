@@ -1,11 +1,26 @@
 {
   "json.schemaDownload.enable": true,
   "files.eol": "\n",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.format.enable": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte"
+  ],
   "editor.formatOnSave": true,
   "editor.renderWhitespace": "boundary",
   "vscode-color-picker.languages": ["scss", "json"],
   "[json][jsonc][typescript][javascript][html][css][scss][sass]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.indentSize": 2
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode",
+    "editor.codeActionsOnSave": ["source.sortImports", "source.fixAll.eslint"]
   }
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon, ChevronUp, ChevronDown } from 'svelte-hero-icons';
+  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons';
   import { slide } from 'svelte/transition';
   export let title: string;
   let isOpen: boolean = true;
