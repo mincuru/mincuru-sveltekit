@@ -13,7 +13,7 @@
 <div class="prose mx-auto">
   <div class="breadcrumbs text-sm">
     <ul>
-      <li><a href="/">クルマ</a></li>
+      <li><a href="/cars">クルマ</a></li>
       <li>{car.data.makerName}</li>
     </ul>
   </div>
@@ -38,7 +38,13 @@
       </table>
     </div>
     <div class="w-auto px-6 md:px-0">
-      <img class="h-64 object-cover" src={car.data.imageUrl} alt={car.data.modelName} />
+      <a href={car.data.imageUrl} target="_blank">
+        <img
+          class="w-100% h-64 object-cover md:w-96"
+          src={car.data.imageUrl}
+          alt={car.data.modelName}
+        />
+      </a>
     </div>
   </div>
   <div role="tablist" class="tabs tabs-lifted px-6 md:px-0">
@@ -52,39 +58,30 @@
     />
     <div
       role="tabpanel"
-      class="tab-content divide-y divide-solid rounded-box border-base-300 bg-base-100 p-6"
+      class="tab-content rounded-box border-base-300 bg-base-100 divide-y divide-solid p-6"
     >
       {#if car.data.body}
         <table class="table">
           <tbody>
             <tr
               ><th>全長x全幅x全高</th><td
-                >{car.data.body.length?.toLocaleString() ??
-                  'N/A'}x{car.data.body.width?.toLocaleString() ??
-                  'N/A'}x{car.data.body.height?.toLocaleString() ?? 'N/A'}</td
+                >{car.data.body.length ?? 'N/A'}x{car.data.body.width ?? 'N/A'}x{car.data.body
+                  .height ?? 'N/A'}</td
               ><td>mm</td></tr
             >
             <tr
               ><th>室内寸法(長さx幅x高さ)</th><td
-                >{car.data.interior?.length?.toLocaleString() ??
-                  'N/A'}x{car.data.interior?.width?.toLocaleString() ??
-                  'N/A'}x{car.data.interior?.height?.toLocaleString() ?? 'N/A'}</td
+                >{car.data.interior?.length ?? 'N/A'}x{car.data.interior?.width ?? 'N/A'}x{car.data
+                  .interior?.height ?? 'N/A'}</td
               ><td>mm</td></tr
             >
-            <tr
-              ><th>ホイールベース</th><td>{car.data.body.wheelBase?.toLocaleString() ?? 'N/A'}</td
-              ><td>mm</td></tr
-            >
+            <tr><th>ホイールベース</th><td>{car.data.body.wheelBase ?? 'N/A'}</td><td>mm</td></tr>
             <tr
               ><th>トレッド(前/後)</th><td
-                >{car.data.body.tread?.front?.toLocaleString() ??
-                  'N/A'}/{car.data.body.tread?.rear?.toLocaleString() ?? 'N/A'}</td
+                >{car.data.body.tread?.front ?? 'N/A'}/{car.data.body.tread?.rear ?? 'N/A'}</td
               ><td>mm</td></tr
             >
-            <tr
-              ><th>最低地上高</th><td>{car.data.body.roadClearance?.toLocaleString() ?? 'N/A'}</td
-              ><td>mm</td></tr
-            >
+            <tr><th>最低地上高</th><td>{car.data.body.roadClearance ?? 'N/A'}</td><td>mm</td></tr>
             <tr><th>乗車定員</th><td>{car.data.interior?.ridingCap}</td><td>名</td></tr>
           </tbody>
         </table>
@@ -125,14 +122,14 @@
           <tr><th>圧縮比</th><td>{car.data.engine?.compressionRatio ?? 'N/A'}</td><td></td></tr>
           <tr
             ><th>最高出力 / 回転数</th><td
-              >{car.data.engine?.maxOutputKw?.toLocaleString() ?? 'N/A'} / {car.data.engine?.maxOutputLowerRpm?.toLocaleString() ??
-                'N/A'}〜{car.data.engine?.maxOutputHigherRpm?.toLocaleString() ?? 'N/A'}</td
+              >{car.data.engine?.maxOutputKw ?? 'N/A'} / {car.data.engine?.maxOutputLowerRpm ??
+                'N/A'}〜{car.data.engine?.maxOutputHigherRpm ?? 'N/A'}</td
             ><td>kW(PS) / rpm</td></tr
           >
           <tr
             ><th>最大トルク / 回転数</th><td
-              >{car.data.engine?.maxTorqueNm?.toLocaleString() ?? 'N/A'} / {car.data.engine?.maxTorqueLowerRpm?.toLocaleString() ??
-                'N/A'}〜{car.data.engine?.maxTorqueHigherRpm?.toLocaleString() ?? 'N/A'}</td
+              >{car.data.engine?.maxTorqueNm ?? 'N/A'} / {car.data.engine?.maxTorqueLowerRpm ??
+                'N/A'}〜{car.data.engine?.maxTorqueHigherRpm ?? 'N/A'}</td
             ><td>Nm(kgf・m) / rpm</td></tr
           >
           <tr><th>燃料供給装置</th><td>{car.data.engine?.fuelSystem ?? 'N/A'}</td><td></td></tr>

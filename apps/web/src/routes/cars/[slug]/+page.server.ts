@@ -3,7 +3,8 @@ import type { CarDetail } from '$lib/model/CarDetail';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
-export const load = (async ({ params }) => {
+export const load: PageServerLoad = (async ({ params }) => {
+  console.log(params);
   const data = await prisma.car.findUnique({
     where: { id: Number(params.slug) }
   });
