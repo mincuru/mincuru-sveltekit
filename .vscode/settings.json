@@ -1,6 +1,5 @@
 {
   "json.schemaDownload.enable": true,
-  "files.eol": "\n",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
@@ -16,8 +15,7 @@
   "editor.renderWhitespace": "boundary",
   "vscode-color-picker.languages": ["scss", "json"],
   "[json][jsonc][typescript][javascript][html][css][scss][sass]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.indentSize": 2
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode",
