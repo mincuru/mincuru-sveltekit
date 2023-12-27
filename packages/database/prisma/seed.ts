@@ -3,6 +3,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.user.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      id: 1,
+      email: "hoge@example.com",
+    },
+  });
+
   const cx5 = await prisma.car.upsert({
     where: { id: 1 },
     update: {},
@@ -74,7 +83,7 @@ async function main() {
   });
   console.log({ cx5 });
 
-  const corolla = await prisma.car.upsert({
+  /*const corolla = */ await prisma.car.upsert({
     where: { id: 2 },
     update: {},
     create: {
@@ -144,7 +153,7 @@ async function main() {
     },
   });
 
-  const nsx = await prisma.car.upsert({
+  /*const nsx = */ await prisma.car.upsert({
     where: { id: 3 },
     update: {},
     create: {
@@ -214,7 +223,7 @@ async function main() {
     },
   });
 
-  const hondae = await prisma.car.upsert({
+  /*const hondae =*/ await prisma.car.upsert({
     where: { id: 4 },
     update: {},
     create: {
@@ -284,7 +293,7 @@ async function main() {
     },
   });
 
-  const note = await prisma.car.upsert({
+  /*const note =*/ await prisma.car.upsert({
     where: { id: 5 },
     update: {},
     create: {
@@ -354,7 +363,7 @@ async function main() {
     },
   });
 
-  const series3 = await prisma.car.upsert({
+  /*const series3 =*/ await prisma.car.upsert({
     where: { id: 6 },
     update: {},
     create: {

@@ -114,3 +114,9 @@ enum BodyType {
   OPEN
   PICKUP_TRUCK
 }
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}
