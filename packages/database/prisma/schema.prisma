@@ -10,13 +10,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PowerTrain {
+  ICE
+  StrHV
+  MldHV
+  SerHV
+  PHEV
+  BEV
+  RexEV
+  FCEV
+}
+
+enum FuelType {
+  DIESEL
+  REGULAR
+  PREMIUM
+  LPG
+  BIO
+  HYDROGEN
+}
+
+enum BodyType {
+  SEDAN
+  HATCHBACK
+  CROSS_COUNTRY
+  K
+  COUPE
+  STATION_WAGON
+  SUV
+  ONEBOX
+  K_OPEN
+  K_ONEBOX
+  OPEN
+  PICKUP_TRUCK
+}
+
 model Car {
-  id                 Int         @id @default(autoincrement())
+  id                 Int        @id @default(autoincrement())
   modelName          String
   modelCode          String
   gradeName          String
   makerName          String
-  powerTrain         PowerTrain?
+  powerTrain         PowerTrain
   driveSystem        String
   url                String?
   imageUrl           String?
@@ -78,41 +113,6 @@ model Car {
   ecrJc08            Float?
   mpcJc08            Float?
   fuelEfficiency     String[]
-}
-
-enum PowerTrain {
-  ICE
-  StrHV
-  MldHV
-  SerHV
-  PHEV
-  BEV
-  RexEV
-  FCEV
-}
-
-enum FuelType {
-  DIESEL
-  REGULAR
-  PREMIUM
-  LPG
-  BIO
-  HYDROGEN
-}
-
-enum BodyType {
-  SEDAN
-  HATCHBACK
-  CROSS_COUNTRY
-  K
-  COUPE
-  STATION_WAGON
-  SUV
-  ONEBOX
-  K_OPEN
-  K_ONEBOX
-  OPEN
-  PICKUP_TRUCK
 }
 
 model User {

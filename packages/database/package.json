@@ -1,29 +1,24 @@
 {
-  "name": "database",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "name": "@repo/database",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
   "scripts": {
+    "build": "tsc -d",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate",
-    "build": "npx prisma migrate dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:push": "prisma db push --skip-generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint-config-custom": "*",
-    "@types/node": "^20.10.5",
-    "prisma": "^5.7.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  },
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "prisma": "^5.7.1"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.1"
+    "@prisma/client": "^5.7.1",
+    "@repo/typescript-config": "*"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/seed.ts"
   }
 }
