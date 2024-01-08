@@ -2,40 +2,42 @@
   import Tag from '$lib/component/Tag.svelte';
   import type { CarsFilter } from './CarsFilter';
   export let filter: CarsFilter;
+  export let handleChangeFilter: () => void;
+
   const removeMakerTag = (value: string) => {
-    console.log('removeMakerTag', value);
     let localFilter = filter;
     const targetToUpdate = localFilter.makers.find((i) => i.value === value);
     if (targetToUpdate) {
       targetToUpdate.checked = false;
       filter = localFilter;
+      handleChangeFilter();
     }
   };
   const removeBodyTypeTag = (value: string) => {
-    console.log('removeBodyTypeTag', value);
     let localFilter = filter;
     const targetToUpdate = localFilter.bodyTypes.find((i) => i.value === value);
     if (targetToUpdate) {
       targetToUpdate.checked = false;
       filter = localFilter;
+      handleChangeFilter();
     }
   };
   const removePowerTrainTag = (value: string) => {
-    console.log('removePowerTrainTag', value);
     let localFilter = filter;
     const targetToUpdate = localFilter.powerTrains.find((i) => i.value === value);
     if (targetToUpdate) {
       targetToUpdate.checked = false;
+      filter = localFilter;
+      handleChangeFilter();
     }
-    filter = localFilter;
   };
   const removeDriveSystemTag = (value: string) => {
-    console.log('removeDriveSystemTag', value);
     let localFilter = filter;
     const targetToUpdate = localFilter.driveSystems.find((i) => i.value === value);
     if (targetToUpdate) {
       targetToUpdate.checked = false;
       filter = localFilter;
+      handleChangeFilter();
     }
   };
 </script>

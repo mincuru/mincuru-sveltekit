@@ -8,16 +8,31 @@
   import SideNav from './SideNav.svelte';
   import TagArea from './TagArea.svelte';
   export let data: PageData;
-  const handleChangeFilter = () => {
-    console.log('handleChangeFilter');
-    console.log(
-      // titleがマツダのcheckedを取得
-      filter.makers.filter((item) => item.title == 'マツダ').map((item) => item)
-    );
-    goto('?makerName=マツダ,日産');
-    // filter = newFilter;
+
+  const handleChangeFilter = async () => {
+    const makerNames = filter.makers.filter((i) => i.checked).map((i) => i.value);
+    const bodyTypes = filter.bodyTypes.filter((i) => i.checked).map((i) => i.value);
+    const powerTrains = filter.powerTrains.filter((i) => i.checked).map((i) => i.value);
+    const driveSystems = filter.driveSystems.filter((i) => i.checked).map((i) => i.value);
+    let queryString = '?';
+    if (makerNames.length > 0) {
+      queryString += `makerNames=${makerNames.join(',')}`;
+    }
+    if (bodyTypes.length > 0) {
+      queryString += `&bodyTypes=${bodyTypes.join(',')}`;
+    }
+    if (powerTrains.length > 0) {
+      queryString += `&powerTrains=${powerTrains.join(',')}`;
+    }
+    if (driveSystems.length > 0) {
+      queryString += `&driveSystems=${driveSystems.join(',')}`;
+    }
+    await goto(queryString);
+    filter = filter;
   };
-  const cars: CarDisplay[] = data.cars.map((car) => new CarDisplay(car));
+
+  $: cars = data.cars.map((car) => new CarDisplay(car));
+
   let filter: CarsFilter = data.filter;
   // let filter: CarsFilter = {
   //   makers: [
@@ -59,7 +74,7 @@
     <!-- Page content here -->
     <div class="flex-auto">
       <div class="flex flex-col">
-        <TagArea bind:filter />
+        <TagArea bind:filter {handleChangeFilter} />
         <CarsGrid {cars} bind:favorites={account.favorites} />
       </div>
     </div>

@@ -453,17 +453,366 @@ const cars: Car[] = [
 
 const car: Car = cars[0];
 
+const makerNames = [
+  { ...car, makerName: 'マツダ' },
+  { ...car, makerName: '日産' },
+  { ...car, makerName: 'ホンダ' },
+  { ...car, makerName: 'トヨタ' },
+  { ...car, makerName: 'BMW' }
+];
+const bodyTypes = [
+  { ...car, bodyType: BodyType.SUV },
+  { ...car, bodyType: BodyType.STATION_WAGON },
+  { ...car, bodyType: BodyType.COUPE },
+  { ...car, bodyType: BodyType.HATCHBACK }
+];
+const powerTrains = [
+  { ...car, powerTrain: PowerTrain.ICE },
+  { ...car, powerTrain: PowerTrain.StrHV },
+  { ...car, powerTrain: PowerTrain.MldHV },
+  { ...car, powerTrain: PowerTrain.BEV },
+  { ...car, powerTrain: PowerTrain.SerHV }
+];
+const driveSystems = [
+  { ...car, driveSystem: 'AWD' },
+  { ...car, driveSystem: 'RR' },
+  { ...car, driveSystem: 'FF' }
+];
+
 describe('generateFilter', () => {
-  test('normal', async () => {
-    prisma.car.findMany.mockResolvedValue(cars);
+  test('with makerNames', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
     const repository = new CarsRepository(prisma);
     const url = new URL('http://example.com/cars?makerNames=マツダ,日産');
     // サーバーコンポーネントのload関数を呼び出す
     const actual = await repository.generateFilter(url);
-    expect(actual.makers.length).toBe(6);
-    // actual.makers.map((m) => {
-    //   expect(m.makerName).toBe('Toyota');
-    // });
-    // expect(add(1, 2)).toBe(3);
+    expect(actual.makers).toStrictEqual([
+      {
+        title: 'マツダ',
+        value: 'マツダ',
+        checked: true
+      },
+      {
+        title: '日産',
+        value: '日産',
+        checked: true
+      },
+      {
+        title: 'ホンダ',
+        value: 'ホンダ',
+        checked: false
+      },
+      {
+        title: 'トヨタ',
+        value: 'トヨタ',
+        checked: false
+      },
+      {
+        title: 'BMW',
+        value: 'BMW',
+        checked: false
+      }
+    ]);
+    actual.bodyTypes.forEach((b) => {
+      expect(b.checked).toBe(false);
+    });
+    actual.powerTrains.forEach((p) => {
+      expect(p.checked).toBe(false);
+    });
+    actual.driveSystems.forEach((d) => {
+      expect(d.checked).toBe(false);
+    });
+  });
+
+  test('with bodyTypes', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
+    const repository = new CarsRepository(prisma);
+    const url = new URL('http://example.com/cars?bodyTypes=SUV,COUPE');
+    // サーバーコンポーネントのload関数を呼び出す
+    const actual = await repository.generateFilter(url);
+    actual.makers.forEach((m) => {
+      expect(m.checked).toBe(false);
+    });
+    expect(actual.bodyTypes).toStrictEqual([
+      {
+        title: 'SUV',
+        value: 'SUV',
+        checked: true
+      },
+      {
+        title: 'STATION_WAGON',
+        value: 'STATION_WAGON',
+        checked: false
+      },
+      {
+        title: 'COUPE',
+        value: 'COUPE',
+        checked: true
+      },
+      {
+        title: 'HATCHBACK',
+        value: 'HATCHBACK',
+        checked: false
+      }
+    ]);
+    actual.powerTrains.forEach((p) => {
+      expect(p.checked).toBe(false);
+    });
+    actual.driveSystems.forEach((d) => {
+      expect(d.checked).toBe(false);
+    });
+  });
+
+  test('with powerTrains', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
+    const repository = new CarsRepository(prisma);
+    const url = new URL('http://example.com/cars?powerTrains=MldHV,ICE');
+    // サーバーコンポーネントのload関数を呼び出す
+    const actual = await repository.generateFilter(url);
+    actual.makers.forEach((m) => {
+      expect(m.checked).toBe(false);
+    });
+    actual.bodyTypes.forEach((b) => {
+      expect(b.checked).toBe(false);
+    });
+    expect(actual.powerTrains).toStrictEqual([
+      {
+        title: 'ICE',
+        value: 'ICE',
+        checked: true
+      },
+      {
+        title: 'StrHV',
+        value: 'StrHV',
+        checked: false
+      },
+      {
+        title: 'MldHV',
+        value: 'MldHV',
+        checked: true
+      },
+      {
+        title: 'BEV',
+        value: 'BEV',
+        checked: false
+      },
+      {
+        title: 'SerHV',
+        value: 'SerHV',
+        checked: false
+      }
+    ]);
+    actual.driveSystems.forEach((d) => {
+      expect(d.checked).toBe(false);
+    });
+  });
+
+  test('with driveSystems', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
+    const repository = new CarsRepository(prisma);
+    const url = new URL('http://example.com/cars?driveSystems=RR,FF');
+    // サーバーコンポーネントのload関数を呼び出す
+    const actual = await repository.generateFilter(url);
+    actual.makers.forEach((m) => {
+      expect(m.checked).toBe(false);
+    });
+    actual.bodyTypes.forEach((b) => {
+      expect(b.checked).toBe(false);
+    });
+    actual.powerTrains.forEach((p) => {
+      expect(p.checked).toBe(false);
+    });
+    expect(actual.driveSystems).toStrictEqual([
+      {
+        title: 'AWD',
+        value: 'AWD',
+        checked: false
+      },
+      {
+        title: 'RR',
+        value: 'RR',
+        checked: true
+      },
+      {
+        title: 'FF',
+        value: 'FF',
+        checked: true
+      }
+    ]);
+  });
+
+  test('without query string', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
+    const repository = new CarsRepository(prisma);
+    const url = new URL('http://example.com/cars');
+    // サーバーコンポーネントのload関数を呼び出す
+    const actual = await repository.generateFilter(url);
+    actual.makers.forEach((m) => {
+      expect(m.checked).toBe(false);
+    });
+    actual.bodyTypes.forEach((b) => {
+      expect(b.checked).toBe(false);
+    });
+    actual.powerTrains.forEach((p) => {
+      expect(p.checked).toBe(false);
+    });
+    actual.driveSystems.forEach((d) => {
+      expect(d.checked).toBe(false);
+    });
+  });
+
+  test('with multiple query string', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
+    const repository = new CarsRepository(prisma);
+    const url = new URL(
+      'http://example.com/cars?makerNames=マツダ,日産&bodyTypes=SUV,COUPE&powerTrains=MldHV,ICE&driveSystems=RR,FF'
+    );
+    // サーバーコンポーネントのload関数を呼び出す
+    const actual = await repository.generateFilter(url);
+    expect(actual.makers).toStrictEqual([
+      {
+        title: 'マツダ',
+        value: 'マツダ',
+        checked: true
+      },
+      {
+        title: '日産',
+        value: '日産',
+        checked: true
+      },
+      {
+        title: 'ホンダ',
+        value: 'ホンダ',
+        checked: false
+      },
+      {
+        title: 'トヨタ',
+        value: 'トヨタ',
+        checked: false
+      },
+      {
+        title: 'BMW',
+        value: 'BMW',
+        checked: false
+      }
+    ]);
+    expect(actual.bodyTypes).toStrictEqual([
+      {
+        title: 'SUV',
+        value: 'SUV',
+        checked: true
+      },
+      {
+        title: 'STATION_WAGON',
+        value: 'STATION_WAGON',
+        checked: false
+      },
+      {
+        title: 'COUPE',
+        value: 'COUPE',
+        checked: true
+      },
+      {
+        title: 'HATCHBACK',
+        value: 'HATCHBACK',
+        checked: false
+      }
+    ]);
+    expect(actual.powerTrains).toStrictEqual([
+      {
+        title: 'ICE',
+        value: 'ICE',
+        checked: true
+      },
+      {
+        title: 'StrHV',
+        value: 'StrHV',
+        checked: false
+      },
+      {
+        title: 'MldHV',
+        value: 'MldHV',
+        checked: true
+      },
+      {
+        title: 'BEV',
+        value: 'BEV',
+        checked: false
+      },
+      {
+        title: 'SerHV',
+        value: 'SerHV',
+        checked: false
+      }
+    ]);
+    expect(actual.driveSystems).toStrictEqual([
+      {
+        title: 'AWD',
+        value: 'AWD',
+        checked: false
+      },
+      {
+        title: 'RR',
+        value: 'RR',
+        checked: true
+      },
+      {
+        title: 'FF',
+        value: 'FF',
+        checked: true
+      }
+    ]);
+  });
+
+  test('with invalid query string', async () => {
+    prisma.car.findMany.mockResolvedValueOnce(makerNames);
+    prisma.car.findMany.mockResolvedValueOnce(bodyTypes);
+    prisma.car.findMany.mockResolvedValueOnce(powerTrains);
+    prisma.car.findMany.mockResolvedValueOnce(driveSystems);
+    const repository = new CarsRepository(prisma);
+    const url = new URL('http://example.com/cars?invalid=hogehoge');
+    // サーバーコンポーネントのload関数を呼び出す
+    const actual = await repository.generateFilter(url);
+    actual.makers.forEach((m) => {
+      expect(m.checked).toBe(false);
+    });
+    actual.bodyTypes.forEach((b) => {
+      expect(b.checked).toBe(false);
+    });
+    actual.powerTrains.forEach((p) => {
+      expect(p.checked).toBe(false);
+    });
+    actual.driveSystems.forEach((d) => {
+      expect(d.checked).toBe(false);
+    });
+  });
+});
+
+describe('queryCars', () => {
+  test('with makerNames', async () => {
+    prisma.car.findMany.mockResolvedValue(cars);
+    const repository = new CarsRepository(prisma);
+    const url = new URL('http://example.com/cars');
+    const filter = await repository.generateFilter(url);
+    const actual = await repository.queryCars(filter);
+    expect(actual.length).toBe(6);
   });
 });

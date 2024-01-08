@@ -1,18 +1,8 @@
 <script lang="ts">
-  // import { goto } from '$app/navigation';
   import Accordion from '$lib/component/Accordion.svelte';
   import type { CarsFilter } from './CarsFilter';
   export let filter: CarsFilter;
   export let handleChangeFilter: () => void;
-
-  // function hoge(): void {
-  //   // filter.makers;
-  //   // TODO filterからURLを生成する();
-  //   console.log('hoge');
-  //   // goto('?key=value');
-  //   handleChangeFilter();
-  //   // throw new Error('Function not implemented.');
-  // }
 </script>
 
 <Accordion title="メーカー名">
@@ -23,9 +13,9 @@
           <label class="label cursor-pointer">
             <input
               type="checkbox"
-              bind:checked={maker.checked}
               class="checkbox"
-              on:click={handleChangeFilter}
+              bind:checked={maker.checked}
+              on:change={handleChangeFilter}
             />
             <span class="label-text">{maker.title}</span>
           </label>
@@ -41,7 +31,12 @@
       <li>
         <div class="form-control">
           <label class="label cursor-pointer">
-            <input type="checkbox" bind:checked={bodyType.checked} class="checkbox" />
+            <input
+              type="checkbox"
+              class="checkbox"
+              bind:checked={bodyType.checked}
+              on:change={handleChangeFilter}
+            />
             <span class="label-text">{bodyType.title}</span>
           </label>
         </div>
@@ -56,7 +51,12 @@
       <li>
         <div class="form-control">
           <label class="label cursor-pointer">
-            <input type="checkbox" bind:checked={powerTrain.checked} class="checkbox" />
+            <input
+              type="checkbox"
+              class="checkbox"
+              bind:checked={powerTrain.checked}
+              on:change={handleChangeFilter}
+            />
             <span class="label-text">{powerTrain.title}</span>
           </label>
         </div>
@@ -71,7 +71,12 @@
       <li>
         <div class="form-control">
           <label class="label cursor-pointer">
-            <input type="checkbox" bind:checked={driveSystem.checked} class="checkbox" />
+            <input
+              type="checkbox"
+              class="checkbox"
+              bind:checked={driveSystem.checked}
+              on:change={handleChangeFilter}
+            />
             <span class="label-text">{driveSystem.title}</span>
           </label>
         </div>
