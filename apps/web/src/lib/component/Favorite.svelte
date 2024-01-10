@@ -9,7 +9,7 @@
   };
 </script>
 
-<button class="btn btn-circle" on:click={onClick}>
+<button class="btn btn-circle" on:click={onClick} aria-label="お気に入り">
   {#if favorite}
     <Icon src={Star} size="24" solid class="text-yellow-500" />
   {:else}
