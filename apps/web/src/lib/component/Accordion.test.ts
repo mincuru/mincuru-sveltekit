@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import Accordion from '$lib/component/Accordion.svelte';
 
 describe('Accordion.svelte', async () => {

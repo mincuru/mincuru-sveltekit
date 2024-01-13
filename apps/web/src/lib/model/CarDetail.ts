@@ -18,7 +18,7 @@ export interface CarDetail {
   performance: Performance | null;
 }
 
-export interface Body {
+interface Body {
   type: BodyType;
   length: number | null;
   width: number | null;
@@ -133,9 +133,8 @@ type BodyType =
   | 'K_OPEN'
   | 'K_ONEBOX'
   | 'OPEN'
-  | 'PICKUP_TRUCK'
-  | null;
+  | 'PICKUP_TRUCK';
 
-type PowerTrain = 'ICE' | 'StrHV' | 'MldHV' | 'SerHV' | 'PHEV' | 'BEV' | 'RexEV' | 'FCEV' | null;
+type PowerTrain = 'ICE' | 'StrHV' | 'MldHV' | 'SerHV' | 'PHEV' | 'BEV' | 'RexEV' | 'FCEV';
 
-type FuelType = 'DIESEL' | 'REGULAR' | 'PREMIUM' | 'LPG' | 'BIO' | 'HYDROGEN' | null;
+type FuelType = 'DIESEL' | 'REGULAR' | 'PREMIUM' | 'LPG' | 'BIO' | 'HYDROGEN';
