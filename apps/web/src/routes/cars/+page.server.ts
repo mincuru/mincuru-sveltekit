@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import prisma from '$lib/prisma';
 import { CarsRepository } from './CarsRepository';
+import type { Account } from '$lib/model/Account';
 
 export const load: PageServerLoad = (async ({ url, params, route }) => {
   const repository = new CarsRepository(prisma);
@@ -10,5 +11,12 @@ export const load: PageServerLoad = (async ({ url, params, route }) => {
 
   // filterを使ってDBからデータを取得
   const cars = await repository.queryCars(filter);
-  return { cars, filter };
+
+  const account: Account = {
+    id: 1,
+    name: 'test',
+    email: '',
+    favorites: []
+  };
+  return { cars, filter, account };
 }) satisfies PageServerLoad;

@@ -2,6 +2,8 @@
   import { goto } from '$app/navigation';
   import type { Account } from '$lib/model/Account';
   import { CarDisplay } from '$lib/model/CarDisplay';
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
   import type { PageData } from './$types';
   import type { CarsFilter } from './CarsFilter';
   import CarsGrid from './CarsGrid.svelte';
@@ -60,12 +62,10 @@
   //   ]
   // };
 
-  let account: Account = {
-    id: 1,
-    name: 'test',
-    email: '',
-    favorites: []
-  };
+  const account = writable<Account>(data.account);
+  setContext('account', account);
+  // console.log('+page.svelte');
+  // console.log(data.account);
 </script>
 
 <div class="drawer lg:drawer-open">
@@ -75,7 +75,7 @@
     <div class="flex-auto">
       <div class="flex flex-col">
         <TagArea bind:filter {handleChangeFilter} />
-        <CarsGrid {cars} bind:favorites={account.favorites} />
+        <CarsGrid {cars} />
       </div>
     </div>
   </div>
