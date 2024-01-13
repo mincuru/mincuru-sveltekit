@@ -12,11 +12,5 @@ export const load: PageServerLoad = (async ({ url, params, route }) => {
   // filterを使ってDBからデータを取得
   const cars = await repository.queryCars(filter);
 
-  const account: Account = {
-    id: 1,
-    name: 'test',
-    email: '',
-    favorites: [1]
-  };
-  return { cars, filter, account };
+  return { cars, filter };
 }) satisfies PageServerLoad;

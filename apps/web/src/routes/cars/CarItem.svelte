@@ -9,6 +9,7 @@
 
 <div
   class="card card-compact bg-base-100 w-full cursor-pointer shadow-xl hover:bg-[var(--fallback-bc,oklch(var(--bc)/0.2))] sm:w-64"
+  data-testid="card-car"
 >
   <figure>
     <div class="relative w-full">

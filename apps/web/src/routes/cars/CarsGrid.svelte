@@ -9,7 +9,6 @@
   let account = getContext<Context>('account');
 
   const updateFavorite = (id: number, favorite: boolean) => {
-    // ここでfavorites配列を更新したい
     if (favorite) {
       $account.favorites.push(id);
     } else {

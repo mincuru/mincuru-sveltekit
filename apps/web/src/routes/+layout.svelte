@@ -1,10 +1,19 @@
-<script>
+<script lang="ts">
+  import type { Account } from '$lib/model/Account';
+  import { setContext } from 'svelte';
+  import { Bars3, Icon } from 'svelte-hero-icons';
+  import { writable } from 'svelte/store';
   import '../app.css';
-  import { Icon, Bars3 } from 'svelte-hero-icons';
+  import type { LayoutData } from './$types';
+
+  export let data: LayoutData;
+
+  const account = writable<Account>(data.account);
+  setContext('account', account);
 </script>
 
 <!-- header -->
-<div class="navbar fixed left-0 right-0 top-0 z-50 bg-base-100 shadow">
+<div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50 shadow">
   <div class="flex-none">
     <label for="my-drawer-2" class="show btn btn-square btn-ghost drawer-button lg:hidden">
       <Icon src={Bars3} size="24" />
@@ -37,7 +46,7 @@
 </article>
 
 <!-- footer -->
-<footer class="footer items-center bg-neutral p-4 text-neutral-content">
+<footer class="footer bg-neutral text-neutral-content items-center p-4">
   <aside class="grid-flow-col items-center">
     <svg
       width="36"

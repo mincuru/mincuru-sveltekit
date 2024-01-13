@@ -1,9 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import type { Account } from '$lib/model/Account';
   import { CarDisplay } from '$lib/model/CarDisplay';
-  import { setContext } from 'svelte';
-  import { writable } from 'svelte/store';
   import type { PageData } from './$types';
   import type { CarsFilter } from './CarsFilter';
   import CarsGrid from './CarsGrid.svelte';
@@ -36,36 +33,6 @@
   $: cars = data.cars.map((car) => new CarDisplay(car));
 
   let filter: CarsFilter = data.filter;
-  // let filter: CarsFilter = {
-  //   makers: [
-  //     { title: 'マツダ', value: 'マツダ', checked: false },
-  //     { title: 'トヨタ', value: 'トヨタ', checked: false },
-  //     { title: 'ホンダ', value: 'ホンダ', checked: false },
-  //     { title: '日産', value: '日産', checked: true }
-  //   ],
-  //   bodyTypes: [
-  //     { title: 'SUV', value: 'SUV', checked: false },
-  //     { title: 'Sedan', value: 'SEDAN', checked: true },
-  //     { title: 'ハッチバック', value: 'HATCHBACK', checked: false }
-  //   ],
-  //   powerTrains: [
-  //     { title: 'エンジン', value: 'ICE', checked: false },
-  //     { title: 'ストロングHV', value: 'StrHV', checked: false },
-  //     { title: 'マイルドHV', value: 'MldHV', checked: true },
-  //     { title: 'バッテリーEV', value: 'BEV', checked: false },
-  //     { title: 'シリーズHV', value: 'SerHV', checked: false }
-  //   ],
-  //   driveSystems: [
-  //     { title: 'FF', value: 'FF', checked: false },
-  //     { title: 'FR', value: 'FR', checked: true },
-  //     { title: 'RR', value: 'RR', checked: false }
-  //   ]
-  // };
-
-  const account = writable<Account>(data.account);
-  setContext('account', account);
-  // console.log('+page.svelte');
-  // console.log(data.account);
 </script>
 
 <div class="drawer lg:drawer-open">

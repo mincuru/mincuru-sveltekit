@@ -1,11 +1,20 @@
 <script lang="ts">
   import Favorite from '$lib/component/Favorite.svelte';
+  import type { Account } from '$lib/model/Account';
   import { CarDisplay } from '$lib/model/CarDisplay';
+  import { getContext } from 'svelte';
+  import type { Writable } from 'svelte/store';
   import type { PageData } from './$types';
   export let data: PageData;
-  let favorite: boolean;
-  const toggleFavorite = (/*newFav: boolean*/) => {
-    /*updateFavorite(car.data.id, newFav)*/
+  type Context = Writable<Account>;
+  let account = getContext<Context>('account');
+  const toggleFavorite = (newFav: boolean) => {
+    console.log('toggleFavorite', newFav);
+    if (newFav) {
+      $account.favorites.push(car.data.id);
+    } else {
+      $account.favorites = $account.favorites.filter((item) => item !== car.data.id);
+    }
   };
   const car: CarDisplay = new CarDisplay(data.car);
 </script>
@@ -22,7 +31,9 @@
       <h4>{car.data.makerName}</h4>
       <h2>{car.data.modelName}</h2>
     </div>
-    <div class="flex-none"><Favorite bind:favorite toggle={toggleFavorite} /></div>
+    <div class="flex-none">
+      <Favorite favorite={$account.favorites.includes(car.data.id)} toggle={toggleFavorite} />
+    </div>
   </div>
   <div class="flex flex-col md:flex-row">
     <div class="flex-auto px-6">
