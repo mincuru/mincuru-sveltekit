@@ -2,28 +2,25 @@
   import type { Account } from '$lib/model/Account';
   import type { CarDisplay } from '$lib/model/CarDisplay';
   import { getContext, onDestroy } from 'svelte';
+  import type { Writable } from 'svelte/store';
   import CarItem from './CarItem.svelte';
   export let cars: CarDisplay[];
-  let account: Account;
-  const accountContext = getContext<Account>('account');
-  const unscribe = accountContext.subscribe((value: Account) => {
-    account = value;
-  });
-  onDestroy(unscribe);
+  type Context = Writable<Account>;
+  let account = getContext<Context>('account');
 
   const updateFavorite = (id: number, favorite: boolean) => {
     // ここでfavorites配列を更新したい
     if (favorite) {
-      account.favorites.push(id);
+      $account.favorites.push(id);
     } else {
-      account.favorites = account.favorites.filter((item) => item !== id);
+      $account.favorites = $account.favorites.filter((item) => item !== id);
     }
-    console.log('updateFavorite', account.favorites);
+    console.log('updateFavorite', $account.favorites);
   };
 </script>
 
 <div class="flex flex-row flex-wrap gap-2.5 p-2.5">
   {#each cars as car}
-    <CarItem {car} favorite={account.favorites.includes(car.data.id)} {updateFavorite} />
+    <CarItem {car} favorite={$account.favorites.includes(car.data.id)} {updateFavorite} />
   {/each}
 </div>

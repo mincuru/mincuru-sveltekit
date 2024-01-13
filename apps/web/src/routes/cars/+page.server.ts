@@ -16,7 +16,7 @@ export const load: PageServerLoad = (async ({ url, params, route }) => {
     id: 1,
     name: 'test',
     email: '',
-    favorites: []
+    favorites: [1]
   };
   return { cars, filter, account };
 }) satisfies PageServerLoad;
