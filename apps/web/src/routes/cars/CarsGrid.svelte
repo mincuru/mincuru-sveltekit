@@ -20,6 +20,6 @@
 
 <div class="flex flex-row flex-wrap gap-2.5 p-2.5">
   {#each cars as car}
-    <CarItem {car} favorite={$account.favorites.includes(car.data.id)} {updateFavorite} />
+    <CarItem {car} favorite={$account.favorites.includes(car.id)} {updateFavorite} />
   {/each}
 </div>

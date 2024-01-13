@@ -1,16 +1,136 @@
-import type { CarDetail } from './CarDetail';
-
 export class CarDisplay {
-  data: CarDetail;
+  id!: number;
+  modelName!: string;
+  modelCode!: string;
+  gradeName!: string;
+  makerName!: string;
+  powerTrain!: PowerTrain;
+  driveSystem!: string;
+  url!: string | null;
+  imageUrl!: string | null;
+  price!: number | null;
+  bodyType!: BodyType;
+  bodyLength!: number | null;
+  bodyWidth!: number | null;
+  bodyHeight!: number | null;
+  wheelBase!: number | null;
+  treadFront!: number | null;
+  treadRear!: number | null;
+  roadClearance!: number | null;
+  weight!: number | null;
+  interiorLength!: number | null;
+  interiorWidth!: number | null;
+  interiorHeight!: number | null;
+  ridingCap!: number | null;
+  steering!: string | null;
+  suspensionFront!: string | null;
+  suspensionRear!: string | null;
+  breakFront!: string | null;
+  breakRear!: string | null;
+  engineCode!: string | null;
+  engineType!: string | null;
+  engineCylinderNum!: number | null;
+  engineCylinderLayout!: string | null;
+  engineValveSystem!: string | null;
+  engineDisplacement!: number | null;
+  engineBore!: number | null;
+  engineStroke!: number | null;
+  engineCompressionRatio!: number | null;
+  engineMaxOutputKw!: number | null;
+  engineMaxOutputLowerRpm!: number | null;
+  engineMaxOutputHigherRpm!: number | null;
+  engineMaxTorqueNm!: number | null;
+  engineMaxTorqueLowerRpm!: number | null;
+  engineMaxTorqueHigherRpm!: number | null;
+  fuelSystem!: string | null;
+  fuelType!: FuelType | null;
+  fuelTankCap!: number | null;
+  minTurningRadius!: number | null;
+  fcrWltc!: number | null;
+  fcrWltcL!: number | null;
+  fcrWltcM!: number | null;
+  fcrWltcH!: number | null;
+  fcrWltcExh!: number | null;
+  fcrJc08!: number | null;
+  mpcWltc!: number | null;
+  ecrWltc!: number | null;
+  ecrWltcL!: number | null;
+  ecrWltcM!: number | null;
+  ecrWltcH!: number | null;
+  ecrWltcExh!: number | null;
+  ecrJc08!: number | null;
+  mpcJc08!: number | null;
+  fuelEfficiency!: string[];
 
-  public constructor(data: CarDetail) {
-    this.data = data;
+  public constructor(props: Car) {
+    this.id = props.id;
+    this.modelName = props.modelName;
+    this.modelCode = props.modelCode;
+    this.gradeName = props.gradeName;
+    this.makerName = props.makerName;
+    this.powerTrain = props.powerTrain;
+    this.driveSystem = props.driveSystem;
+    this.url = props.url;
+    this.imageUrl = props.imageUrl;
+    this.price = props.price;
+    this.bodyType = props.bodyType;
+    this.bodyLength = props.bodyLength;
+    this.bodyWidth = props.bodyWidth;
+    this.bodyHeight = props.bodyHeight;
+    this.wheelBase = props.wheelBase;
+    this.treadFront = props.treadFront;
+    this.treadRear = props.treadRear;
+    this.roadClearance = props.roadClearance;
+    this.weight = props.weight;
+    this.interiorLength = props.interiorLength;
+    this.interiorWidth = props.interiorWidth;
+    this.interiorHeight = props.interiorHeight;
+    this.ridingCap = props.ridingCap;
+    this.steering = props.steering;
+    this.suspensionFront = props.suspensionFront;
+    this.suspensionRear = props.suspensionRear;
+    this.breakFront = props.breakFront;
+    this.breakRear = props.breakRear;
+    this.engineCode = props.engineCode;
+    this.engineType = props.engineType;
+    this.engineCylinderNum = props.engineCylinderNum;
+    this.engineCylinderLayout = props.engineCylinderLayout;
+    this.engineValveSystem = props.engineValveSystem;
+    this.engineDisplacement = props.engineDisplacement;
+    this.engineBore = props.engineBore;
+    this.engineStroke = props.engineStroke;
+    this.engineCompressionRatio = props.engineCompressionRatio;
+    this.engineMaxOutputKw = props.engineMaxOutputKw;
+    this.engineMaxOutputLowerRpm = props.engineMaxOutputLowerRpm;
+    this.engineMaxOutputHigherRpm = props.engineMaxOutputHigherRpm;
+    this.engineMaxTorqueNm = props.engineMaxTorqueNm;
+    this.engineMaxTorqueLowerRpm = props.engineMaxTorqueLowerRpm;
+    this.engineMaxTorqueHigherRpm = props.engineMaxTorqueHigherRpm;
+    this.fuelSystem = props.fuelSystem;
+    this.fuelType = props.fuelType;
+    this.fuelTankCap = props.fuelTankCap;
+    this.minTurningRadius = props.minTurningRadius;
+    this.fcrWltc = props.fcrWltc;
+    this.fcrWltcL = props.fcrWltcL;
+    this.fcrWltcM = props.fcrWltcM;
+    this.fcrWltcH = props.fcrWltcH;
+    this.fcrWltcExh = props.fcrWltcExh;
+    this.fcrJc08 = props.fcrJc08;
+    this.mpcWltc = props.mpcWltc;
+    this.ecrWltc = props.ecrWltc;
+    this.ecrWltcL = props.ecrWltcL;
+    this.ecrWltcM = props.ecrWltcM;
+    this.ecrWltcH = props.ecrWltcH;
+    this.ecrWltcExh = props.ecrWltcExh;
+    this.ecrJc08 = props.ecrJc08;
+    this.mpcJc08 = props.mpcJc08;
+    this.fuelEfficiency = props.fuelEfficiency;
   }
 
   // メソッド
   // パワートレインのラベルを返す
   get powerTrainLabel(): string {
-    switch (this.data.powerTrain) {
+    switch (this.powerTrain) {
       case 'ICE':
         return 'エンジン';
       case 'StrHV':
@@ -34,12 +154,12 @@ export class CarDisplay {
 
   // 価格ラベルを返す
   get priceLabel(): string {
-    return this.data.price?.toLocaleString() ?? 'N/A';
+    return this.price?.toLocaleString() ?? 'N/A';
   }
 
   // ボディタイプのラベルを返す
   get bodyTypeLabel(): string {
-    switch (this.data.body.type) {
+    switch (this.bodyType) {
       case 'SEDAN':
         return 'セダン';
       case 'HATCHBACK':
@@ -70,140 +190,140 @@ export class CarDisplay {
   }
 
   get bodyLengthLabel(): string {
-    return this.data.body.length?.toString() ?? 'N/A';
+    return this.bodyLength?.toString() ?? 'N/A';
   }
 
   get bodyWidthLabel(): string {
-    return this.data.body.width?.toString() ?? 'N/A';
+    return this.bodyWidth?.toString() ?? 'N/A';
   }
 
   get bodyHeightLabel(): string {
-    return this.data.body.height?.toString() ?? 'N/A';
+    return this.bodyHeight?.toString() ?? 'N/A';
   }
 
   get wheelBaseLabel(): string {
-    return this.data.body.wheelBase?.toString() ?? 'N/A';
+    return this.wheelBase?.toString() ?? 'N/A';
   }
 
   get treadFrontLabel(): string {
-    return this.data.body.tread?.front?.toString() ?? 'N/A';
+    return this.treadFront?.toString() ?? 'N/A';
   }
 
   get treadRearLabel(): string {
-    return this.data.body.tread?.rear?.toString() ?? 'N/A';
+    return this.treadRear?.toString() ?? 'N/A';
   }
 
   get roadClearanceLabel(): string {
-    return this.data.body.roadClearance?.toString() ?? 'N/A';
+    return this.roadClearance?.toString() ?? 'N/A';
   }
 
   get weightLabel(): string {
-    return this.data.body.weight?.toString() ?? 'N/A';
+    return this.weight?.toString() ?? 'N/A';
   }
 
   get interiorLengthLabel(): string {
-    return this.data.interior?.length?.toString() ?? 'N/A';
+    return this.interiorLength?.toString() ?? 'N/A';
   }
 
   get interiorWidthLabel(): string {
-    return this.data.interior?.width?.toString() ?? 'N/A';
+    return this.interiorWidth?.toString() ?? 'N/A';
   }
 
   get interiorHeightLabel(): string {
-    return this.data.interior?.height?.toString() ?? 'N/A';
+    return this.interiorHeight?.toString() ?? 'N/A';
   }
 
   get ridingCapLabel(): string {
-    return this.data.interior?.ridingCap?.toString() ?? 'N/A';
+    return this.ridingCap?.toString() ?? 'N/A';
   }
 
   get steeringLabel(): string {
-    return this.data.steering ?? 'N/A';
+    return this.steering ?? 'N/A';
   }
 
   get suspensionFrontLabel(): string {
-    return this.data.suspension?.front?.toString() ?? 'N/A';
+    return this.suspensionFront?.toString() ?? 'N/A';
   }
 
   get suspensionRearLabel(): string {
-    return this.data.suspension?.rear?.toString() ?? 'N/A';
+    return this.suspensionRear?.toString() ?? 'N/A';
   }
 
   get breakFrontLabel(): string {
-    return this.data.break?.front?.toString() ?? 'N/A';
+    return this.breakFront?.toString() ?? 'N/A';
   }
 
   get breakRearLabel(): string {
-    return this.data.break?.rear?.toString() ?? 'N/A';
+    return this.breakRear?.toString() ?? 'N/A';
   }
 
   get engineCodeLabel(): string {
-    return this.data.engine?.code ?? 'N/A';
+    return this.engineCode ?? 'N/A';
   }
 
   get engineTypeLabel(): string {
-    return this.data.engine?.type ?? 'N/A';
+    return this.engineType ?? 'N/A';
   }
 
   get engineCylinderNumLabel(): string {
-    return this.data.engine?.cylinderNum?.toString() ?? 'N/A';
+    return this.engineCylinderNum?.toString() ?? 'N/A';
   }
 
   get engineCylinderLayoutLabel(): string {
-    return this.data.engine?.cylinderLayout ?? 'N/A';
+    return this.engineCylinderLayout ?? 'N/A';
   }
 
   get engineValveSystemLabel(): string {
-    return this.data.engine?.valveSystem ?? 'N/A';
+    return this.engineValveSystem ?? 'N/A';
   }
 
   get engineDisplacementLabel(): string {
-    return this.data.engine?.displacement?.toString() ?? 'N/A';
+    return this.engineDisplacement?.toString() ?? 'N/A';
   }
 
   get engineBoreLabel(): string {
-    return this.data.engine?.bore?.toString() ?? 'N/A';
+    return this.engineBore?.toString() ?? 'N/A';
   }
 
   get engineStrokeLabel(): string {
-    return this.data.engine?.stroke?.toString() ?? 'N/A';
+    return this.engineStroke?.toString() ?? 'N/A';
   }
 
   get engineCompressionRatioLabel(): string {
-    return this.data.engine?.compressionRatio?.toString() ?? 'N/A';
+    return this.engineCompressionRatio?.toString() ?? 'N/A';
   }
 
   get engineMaxOutputKwLabel(): string {
-    return this.data.engine?.maxOutputKw?.toString() ?? 'N/A';
+    return this.engineMaxOutputKw?.toString() ?? 'N/A';
   }
 
   get engineMaxOutputLowerRpmLabel(): string {
-    return this.data.engine?.maxOutputLowerRpm?.toString() ?? 'N/A';
+    return this.engineMaxOutputLowerRpm?.toString() ?? 'N/A';
   }
 
   get engineMaxOutputHigherRpmLabel(): string {
-    return this.data.engine?.maxOutputHigherRpm?.toString() ?? 'N/A';
+    return this.engineMaxOutputHigherRpm?.toString() ?? 'N/A';
   }
 
   get engineMaxTorqueNmLabel(): string {
-    return this.data.engine?.maxTorqueNm?.toString() ?? 'N/A';
+    return this.engineMaxTorqueNm?.toString() ?? 'N/A';
   }
 
   get engineMaxTorqueLowerRpmLabel(): string {
-    return this.data.engine?.maxTorqueLowerRpm?.toString() ?? 'N/A';
+    return this.engineMaxTorqueLowerRpm?.toString() ?? 'N/A';
   }
 
   get engineMaxTorqueHigherRpmLabel(): string {
-    return this.data.engine?.maxTorqueHigherRpm?.toString() ?? 'N/A';
+    return this.engineMaxTorqueHigherRpm?.toString() ?? 'N/A';
   }
 
   get fuelSystemLabel(): string {
-    return this.data.engine?.fuelSystem ?? 'N/A';
+    return this.fuelSystem ?? 'N/A';
   }
 
   // 燃料種別のラベルを返す
   get fuelTypeLabel(): string {
-    switch (this.data.engine?.fuelType) {
+    switch (this.fuelType) {
       case 'DIESEL':
         return '軽油';
       case 'REGULAR':
@@ -222,65 +342,149 @@ export class CarDisplay {
   }
 
   get fuelTankCapLabel(): string {
-    return this.data.engine?.fuelTankCap?.toString() ?? 'N/A';
+    return this.fuelTankCap?.toString() ?? 'N/A';
   }
 
   get minTurningRadiusLabel(): string {
-    return this.data.performance?.minTurningRadius?.toString() ?? 'N/A';
+    return this.minTurningRadius?.toString() ?? 'N/A';
   }
+
   get fcrWltcLabel(): string {
-    return this.data.performance?.fcrWltc?.toString() ?? 'N/A';
+    return this.fcrWltc?.toString() ?? 'N/A';
   }
 
   get fcrWltcLLabel(): string {
-    return this.data.performance?.fcrWltcL?.toString() ?? 'N/A';
+    return this.fcrWltcL?.toString() ?? 'N/A';
   }
 
   get fcrWltcMLabel(): string {
-    return this.data.performance?.fcrWltcM?.toString() ?? 'N/A';
+    return this.fcrWltcM?.toString() ?? 'N/A';
   }
 
   get fcrWltcHLabel(): string {
-    return this.data.performance?.fcrWltcH?.toString() ?? 'N/A';
+    return this.fcrWltcH?.toString() ?? 'N/A';
   }
 
   get fcrWltcExhLabel(): string {
-    return this.data.performance?.fcrWltcExh?.toString() ?? 'N/A';
+    return this.fcrWltcExh?.toString() ?? 'N/A';
   }
 
   get fcrJc08Label(): string {
-    return this.data.performance?.fcrJc08?.toString() ?? 'N/A';
+    return this.fcrJc08?.toString() ?? 'N/A';
   }
 
   get mpcWltcLabel(): string {
-    return this.data.performance?.mpcWltc?.toString() ?? 'N/A';
+    return this.mpcWltc?.toString() ?? 'N/A';
   }
 
   get ecrWltcLabel(): string {
-    return this.data.performance?.ecrWltc?.toString() ?? 'N/A';
+    return this.ecrWltc?.toString() ?? 'N/A';
   }
 
   get ecrWltcLLabel(): string {
-    return this.data.performance?.ecrWltcL?.toString() ?? 'N/A';
+    return this.ecrWltcL?.toString() ?? 'N/A';
   }
 
   get ecrWltcMLabel(): string {
-    return this.data.performance?.ecrWltcM?.toString() ?? 'N/A';
+    return this.ecrWltcM?.toString() ?? 'N/A';
   }
 
   get ecrWltcHLabel(): string {
-    return this.data.performance?.ecrWltcH?.toString() ?? 'N/A';
+    return this.ecrWltcH?.toString() ?? 'N/A';
   }
 
   get ecrWltcExhLabel(): string {
-    return this.data.performance?.ecrWltcExh?.toString() ?? 'N/A';
+    return this.ecrWltcExh?.toString() ?? 'N/A';
   }
 
   get ecrJc08Label(): string {
-    return this.data.performance?.ecrJc08?.toString() ?? 'N/A';
+    return this.ecrJc08?.toString() ?? 'N/A';
   }
 
   get mpcJc08Label(): string {
-    return this.data.performance?.mpcJc08?.toString() ?? 'N/A';
+    return this.mpcJc08?.toString() ?? 'N/A';
   }
+}
+
+export type BodyType =
+  | 'SEDAN'
+  | 'HATCHBACK'
+  | 'CROSS_COUNTRY'
+  | 'K'
+  | 'COUPE'
+  | 'STATION_WAGON'
+  | 'SUV'
+  | 'ONEBOX'
+  | 'K_OPEN'
+  | 'K_ONEBOX'
+  | 'OPEN'
+  | 'PICKUP_TRUCK';
+
+export type PowerTrain = 'ICE' | 'StrHV' | 'MldHV' | 'SerHV' | 'PHEV' | 'BEV' | 'RexEV' | 'FCEV';
+
+export type FuelType = 'DIESEL' | 'REGULAR' | 'PREMIUM' | 'LPG' | 'BIO' | 'HYDROGEN';
+
+export interface Car {
+  id: number;
+  modelName: string;
+  modelCode: string;
+  gradeName: string;
+  makerName: string;
+  powerTrain: PowerTrain;
+  driveSystem: string;
+  url: string | null;
+  imageUrl: string | null;
+  price: number | null;
+  bodyType: BodyType;
+  bodyLength: number | null;
+  bodyWidth: number | null;
+  bodyHeight: number | null;
+  wheelBase: number | null;
+  treadFront: number | null;
+  treadRear: number | null;
+  roadClearance: number | null;
+  weight: number | null;
+  interiorLength: number | null;
+  interiorWidth: number | null;
+  interiorHeight: number | null;
+  ridingCap: number | null;
+  steering: string | null;
+  suspensionFront: string | null;
+  suspensionRear: string | null;
+  breakFront: string | null;
+  breakRear: string | null;
+  engineCode: string | null;
+  engineType: string | null;
+  engineCylinderNum: number | null;
+  engineCylinderLayout: string | null;
+  engineValveSystem: string | null;
+  engineDisplacement: number | null;
+  engineBore: number | null;
+  engineStroke: number | null;
+  engineCompressionRatio: number | null;
+  engineMaxOutputKw: number | null;
+  engineMaxOutputLowerRpm: number | null;
+  engineMaxOutputHigherRpm: number | null;
+  engineMaxTorqueNm: number | null;
+  engineMaxTorqueLowerRpm: number | null;
+  engineMaxTorqueHigherRpm: number | null;
+  fuelSystem: string | null;
+  fuelType: FuelType | null;
+  fuelTankCap: number | null;
+  minTurningRadius: number | null;
+  fcrWltc: number | null;
+  fcrWltcL: number | null;
+  fcrWltcM: number | null;
+  fcrWltcH: number | null;
+  fcrWltcExh: number | null;
+  fcrJc08: number | null;
+  mpcWltc: number | null;
+  ecrWltc: number | null;
+  ecrWltcL: number | null;
+  ecrWltcM: number | null;
+  ecrWltcH: number | null;
+  ecrWltcExh: number | null;
+  ecrJc08: number | null;
+  mpcJc08: number | null;
+  fuelEfficiency: string[];
 }

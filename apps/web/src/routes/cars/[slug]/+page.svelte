@@ -11,28 +11,28 @@
   const toggleFavorite = (newFav: boolean) => {
     console.log('toggleFavorite', newFav);
     if (newFav) {
-      $account.favorites.push(car.data.id);
+      $account.favorites.push(car.id);
     } else {
-      $account.favorites = $account.favorites.filter((item) => item !== car.data.id);
+      $account.favorites = $account.favorites.filter((item) => item !== car.id);
     }
   };
-  const car: CarDisplay = new CarDisplay(data.car);
+  const car = new CarDisplay(data.car);
 </script>
 
 <div class="prose mx-auto">
   <div class="breadcrumbs text-sm">
     <ul>
       <li><a href="/cars">クルマ</a></li>
-      <li>{car.data.makerName}</li>
+      <li>{car.makerName}</li>
     </ul>
   </div>
   <div class="flex flex-row items-center px-6 md:px-0">
     <div class="flex-auto px-6">
-      <h4>{car.data.makerName}</h4>
-      <h2>{car.data.modelName}</h2>
+      <h4>{car.makerName}</h4>
+      <h2>{car.modelName}</h2>
     </div>
     <div class="flex-none">
-      <Favorite favorite={$account.favorites.includes(car.data.id)} toggle={toggleFavorite} />
+      <Favorite favorite={$account.favorites.includes(car.id)} toggle={toggleFavorite} />
     </div>
   </div>
   <div class="flex flex-col md:flex-row">
@@ -40,21 +40,17 @@
       <table class="table">
         <tbody>
           <tr><th>車両本体(税込)</th><td>{car.priceLabel}円</td></tr>
-          <tr><th>グレード</th><td>{car.data.gradeName}</td></tr>
-          <tr><th>型式</th><td>{car.data.modelCode}</td></tr>
-          <tr><th>駆動方式</th><td>{car.data.driveSystem}</td></tr>
+          <tr><th>グレード</th><td>{car.gradeName}</td></tr>
+          <tr><th>型式</th><td>{car.modelCode}</td></tr>
+          <tr><th>駆動方式</th><td>{car.driveSystem}</td></tr>
           <tr><th>パワートレイン</th><td>{car.powerTrainLabel}</td></tr>
-          <tr><th><a href={car.data.url} target="_blank">メーカーサイト</a></th><td></td></tr>
+          <tr><th><a href={car.url} target="_blank">メーカーサイト</a></th><td></td></tr>
         </tbody>
       </table>
     </div>
     <div class="w-auto px-6 md:px-0">
-      <a href={car.data.imageUrl} target="_blank">
-        <img
-          class="w-100% h-64 object-cover md:w-96"
-          src={car.data.imageUrl}
-          alt={car.data.modelName}
-        />
+      <a href={car.imageUrl} target="_blank">
+        <img class="w-100% h-64 object-cover md:w-96" src={car.imageUrl} alt={car.modelName} />
       </a>
     </div>
   </div>
@@ -71,42 +67,40 @@
       role="tabpanel"
       class="tab-content rounded-box border-base-300 bg-base-100 divide-y divide-solid p-6"
     >
-      {#if car.data.body}
-        <table class="table">
-          <tbody>
-            <tr>
-              <th>全長x全幅x全高</th>
-              <td>{car.bodyLengthLabel}x{car.bodyWidthLabel}x{car.bodyHeightLabel}</td>
-              <td>mm</td>
-            </tr>
-            <tr>
-              <th>室内寸法(長さx幅x高さ)</th>
-              <td>{car.interiorLengthLabel}x{car.interiorWidthLabel}x{car.interiorHeightLabel}</td>
-              <td>mm</td>
-            </tr>
-            <tr>
-              <th>ホイールベース</th>
-              <td>{car.wheelBaseLabel}</td>
-              <td>mm</td>
-            </tr>
-            <tr>
-              <th>トレッド(前/後)</th>
-              <td>{car.treadFrontLabel}/{car.treadRearLabel}</td>
-              <td>mm</td>
-            </tr>
-            <tr>
-              <th>最低地上高</th>
-              <td>{car.roadClearanceLabel}</td>
-              <td>mm</td>
-            </tr>
-            <tr>
-              <th>乗車定員</th>
-              <td>{car.ridingCapLabel}</td>
-              <td>名</td>
-            </tr>
-          </tbody>
-        </table>
-      {/if}
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>全長x全幅x全高</th>
+            <td>{car.bodyLengthLabel}x{car.bodyWidthLabel}x{car.bodyHeightLabel}</td>
+            <td>mm</td>
+          </tr>
+          <tr>
+            <th>室内寸法(長さx幅x高さ)</th>
+            <td>{car.interiorLengthLabel}x{car.interiorWidthLabel}x{car.interiorHeightLabel}</td>
+            <td>mm</td>
+          </tr>
+          <tr>
+            <th>ホイールベース</th>
+            <td>{car.wheelBaseLabel}</td>
+            <td>mm</td>
+          </tr>
+          <tr>
+            <th>トレッド(前/後)</th>
+            <td>{car.treadFrontLabel}/{car.treadRearLabel}</td>
+            <td>mm</td>
+          </tr>
+          <tr>
+            <th>最低地上高</th>
+            <td>{car.roadClearanceLabel}</td>
+            <td>mm</td>
+          </tr>
+          <tr>
+            <th>乗車定員</th>
+            <td>{car.ridingCapLabel}</td>
+            <td>名</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="走行装置" />
@@ -115,7 +109,7 @@
         <tbody>
           <tr>
             <th>ステアリング</th>
-            <td>{car.data.steering}</td>
+            <td>{car.steeringLabel}</td>
           </tr>
           <tr>
             <th>サスペンション(前/後)</th>
@@ -235,7 +229,7 @@
             <th>主要燃費向上対策</th>
             <td></td>
             <td class="w-96">
-              {#each car.data.performance?.fuelEfficiency ?? [] as item}
+              {#each car.fuelEfficiency as item}
                 <div class="badge badge-primary badge-outline">{item}</div>
               {/each}
             </td>

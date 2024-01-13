@@ -4,7 +4,7 @@
   export let car: CarDisplay;
   export let favorite: boolean;
   export let updateFavorite: (id: number, favorite: boolean) => void;
-  const toggleFavorite = (newFav: boolean) => updateFavorite(car.data.id, newFav);
+  const toggleFavorite = (newFav: boolean) => updateFavorite(car.id, newFav);
 </script>
 
 <div
@@ -13,20 +13,20 @@
 >
   <figure>
     <div class="relative w-full">
-      <a href="/cars/{car.data.id}" data-testid="item-page-link">
-        <img class="h-40 w-full object-cover" src={car.data.imageUrl} alt={car.data.modelName} />
+      <a href="/cars/{car.id}" data-testid="item-page-link">
+        <img class="h-40 w-full object-cover" src={car.imageUrl} alt={car.modelName} />
       </a>
       <div class="absolute bottom-1 right-1">
         <Favorite bind:favorite toggle={toggleFavorite} />
       </div>
     </div>
   </figure>
-  <a href="/cars/{car.data.id}">
+  <a href="/cars/{car.id}">
     <div class="card-body">
       <div class="flex flex-row">
-        <h2 class="card-title shrink truncate" data-testid="title">{car.data.modelName}</h2>
+        <h2 class="card-title shrink truncate" data-testid="title">{car.modelName}</h2>
       </div>
-      <p data-testid="maker-name">{car.data.makerName}</p>
+      <p data-testid="maker-name">{car.makerName}</p>
       <p class="text-right" data-testid="price">{car.priceLabel}円</p>
       <p class="line-clamp-2 w-full" data-testid="body-size">
         全長:{car.bodyLengthLabel}mm 幅:{car.bodyWidthLabel}mm 高さ:{car.bodyHeightLabel}mm
@@ -34,7 +34,7 @@
       <p data-testid="other-text">
         {car.bodyTypeLabel}
         {car.powerTrainLabel}
-        {car.data.driveSystem}
+        {car.driveSystem}
         {car.fuelTypeLabel}
       </p>
     </div>
