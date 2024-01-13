@@ -1,4 +1,3 @@
-import { BodyType, FuelType, PowerTrain } from '@prisma/client';
 import type { CarDetail } from './CarDetail';
 
 export class CarDisplay {
@@ -12,21 +11,21 @@ export class CarDisplay {
   // パワートレインのラベルを返す
   get powerTrainLabel(): string {
     switch (this.data.powerTrain) {
-      case PowerTrain.ICE:
+      case 'ICE':
         return 'エンジン';
-      case PowerTrain.StrHV:
+      case 'StrHV':
         return 'ストロングHV';
-      case PowerTrain.MldHV:
+      case 'MldHV':
         return 'マイルドHV';
-      case PowerTrain.SerHV:
+      case 'SerHV':
         return 'シリーズHV';
-      case PowerTrain.PHEV:
+      case 'PHEV':
         return 'プラグインHV';
-      case PowerTrain.BEV:
+      case 'BEV':
         return 'バッテリーEV';
-      case PowerTrain.RexEV:
+      case 'RexEV':
         return 'レンジエクステンダーEV';
-      case PowerTrain.FCEV:
+      case 'FCEV':
         return '燃料電池車';
       default:
         return 'N/A';
@@ -41,29 +40,29 @@ export class CarDisplay {
   // ボディタイプのラベルを返す
   get bodyTypeLabel(): string {
     switch (this.data.body.type) {
-      case BodyType.SEDAN:
+      case 'SEDAN':
         return 'セダン';
-      case BodyType.HATCHBACK:
+      case 'HATCHBACK':
         return 'ハッチバック';
-      case BodyType.CROSS_COUNTRY:
+      case 'CROSS_COUNTRY':
         return 'クロスカントリー';
-      case BodyType.K:
+      case 'K':
         return 'K';
-      case BodyType.COUPE:
+      case 'COUPE':
         return 'クーペ';
-      case BodyType.STATION_WAGON:
+      case 'STATION_WAGON':
         return 'ステーションワゴン';
-      case BodyType.SUV:
+      case 'SUV':
         return 'SUV';
-      case BodyType.ONEBOX:
+      case 'ONEBOX':
         return 'ワンボックス';
-      case BodyType.K_OPEN:
+      case 'K_OPEN':
         return 'Kオープン';
-      case BodyType.K_ONEBOX:
+      case 'K_ONEBOX':
         return 'Kワンボックス';
-      case BodyType.OPEN:
+      case 'OPEN':
         return 'オープン';
-      case BodyType.PICKUP_TRUCK:
+      case 'PICKUP_TRUCK':
         return 'ピックアップトラック';
       default:
         return 'N/A';
@@ -205,17 +204,17 @@ export class CarDisplay {
   // 燃料種別のラベルを返す
   get fuelTypeLabel(): string {
     switch (this.data.engine?.fuelType) {
-      case FuelType.DIESEL:
+      case 'DIESEL':
         return '軽油';
-      case FuelType.REGULAR:
+      case 'REGULAR':
         return '無鉛レギュラーガソリン';
-      case FuelType.PREMIUM:
+      case 'PREMIUM':
         return '無鉛プレミアムガソリン';
-      case FuelType.LPG:
+      case 'LPG':
         return 'LPG';
-      case FuelType.BIO:
+      case 'BIO':
         return 'バイオ燃料';
-      case FuelType.HYDROGEN:
+      case 'HYDROGEN':
         return '水素';
       default:
         return 'N/A';
