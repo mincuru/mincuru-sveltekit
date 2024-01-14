@@ -14,7 +14,12 @@
   <figure>
     <div class="relative w-full">
       <a href="/cars/{car.id}" data-testid="item-page-link">
-        <img class="h-40 w-full object-cover" src={car.imageUrl} alt={car.modelName} />
+        <img
+          class="h-40 w-full object-cover"
+          src={car.imageUrl}
+          alt={car.modelName}
+          data-testid="image"
+        />
       </a>
       <div class="absolute bottom-1 right-1">
         <Favorite bind:favorite toggle={toggleFavorite} />

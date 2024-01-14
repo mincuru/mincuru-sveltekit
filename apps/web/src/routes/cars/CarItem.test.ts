@@ -79,17 +79,17 @@ describe('CarItem.svelte', async () => {
   });
 
   const carNull = new CarDisplay({
-    id: 1,
-    modelName: 'CX-5',
-    modelCode: '6BA-EKEP',
-    gradeName: '20S Smart Edition',
-    makerName: 'マツダ',
+    id: 7,
+    modelName: 'スタンダードカート',
+    modelCode: 'STANDARD-CART',
+    gradeName: 'SWITCH',
+    makerName: 'NTD',
     powerTrain: 'ICE',
     driveSystem: 'AWD',
     url: null,
     imageUrl: null,
     price: null,
-    bodyType: 'SUV',
+    bodyType: 'COUPE',
     bodyLength: null,
     bodyWidth: null,
     bodyHeight: null,
@@ -144,13 +144,20 @@ describe('CarItem.svelte', async () => {
   });
 
   test('render with normal value', async () => {
-    const updateFavorite = (id: number, favorite: boolean) => {};
+    // Arrange
+    const updateFavoriteMock = vi.fn();
+    // Act
     const { getByTestId } = render(CarItem, {
       car: carNormal,
       favorite: true,
-      updateFavorite: updateFavorite
+      updateFavorite: updateFavoriteMock
     });
-    expect(getByTestId('item-page-link')).not.NaN;
+    // Assert
+    expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/1');
+    expect(getByTestId('image').getAttribute('src')).toBe(
+      'https://upload.wikimedia.org/wikipedia/commons/8/85/2017_Mazda_CX-5_%28KF%29_Maxx_2WD_wagon_%282018-11-02%29_01.jpg'
+    );
+    expect(getByTestId('image').getAttribute('alt')).toBe('CX-5');
     expect(getByTestId('title').textContent).toEqual('CX-5');
     expect(getByTestId('maker-name').textContent).toEqual('マツダ');
     expect(getByTestId('price').textContent).toEqual('3,200,000円');
@@ -161,17 +168,54 @@ describe('CarItem.svelte', async () => {
   });
 
   test('render with null value', async () => {
-    const updateFavorite = (id: number, favorite: boolean) => {};
+    // Arrange
+    const updateFavoriteMock = vi.fn();
+    // Act
     const { getByTestId } = render(CarItem, {
       car: carNull,
       favorite: true,
-      updateFavorite: updateFavorite
+      updateFavorite: updateFavoriteMock
     });
-    expect(getByTestId('item-page-link')).not.NaN;
-    expect(getByTestId('title').textContent).toEqual('CX-5');
-    expect(getByTestId('maker-name').textContent).toEqual('マツダ');
+    // Assert
+    expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/7');
+    expect(getByTestId('image').getAttribute('src')).toBe(null);
+    expect(getByTestId('image').getAttribute('alt')).toBe('スタンダードカート');
+    expect(getByTestId('title').textContent).toEqual('スタンダードカート');
+    expect(getByTestId('maker-name').textContent).toEqual('NTD');
     expect(getByTestId('price').textContent).toEqual('N/A円');
     expect(getByTestId('body-size').textContent).toEqual('全長:N/Amm 幅:N/Amm 高さ:N/Amm');
-    expect(getByTestId('other-text').textContent).toEqual('SUV エンジン AWD N/A');
+    expect(getByTestId('other-text').textContent).toEqual('クーペ エンジン AWD N/A');
+  });
+
+  test('click favorite from true', async () => {
+    // Arrange
+    const updateFavoriteMock = vi.fn();
+    const { getByLabelText } = render(CarItem, {
+      car: carNull,
+      favorite: true,
+      updateFavorite: updateFavoriteMock
+    });
+    const button1 = getByLabelText('お気に入り');
+    // Act
+    await fireEvent.click(button1);
+    // Assert
+    expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
+    expect(updateFavoriteMock).toHaveBeenCalledWith(7, false);
+  });
+
+  test('click favorite from false', async () => {
+    // Arrange
+    const updateFavoriteMock = vi.fn();
+    const { getByLabelText } = render(CarItem, {
+      car: carNull,
+      favorite: false,
+      updateFavorite: updateFavoriteMock
+    });
+    const button1 = getByLabelText('お気に入り');
+    // Act
+    await fireEvent.click(button1);
+    // Assert
+    expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
+    expect(updateFavoriteMock).toHaveBeenCalledWith(7, true);
   });
 });

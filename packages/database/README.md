@@ -19,6 +19,15 @@ $ git pull
 $ npx prisma migrate dev
 ```
 
+# データベースのリセット
+
+以下のコマンドを実行する。
+DB初期化後、初期レコードを挿入する。
+
+```
+$ npx prisma migrate reset dev
+```
+
 # 初期レコードの作成
 
 マイグレーション初回実行時に初期レコードを作成するには、 `prisma/seed.ts` ファイルに更新処理を記述する。

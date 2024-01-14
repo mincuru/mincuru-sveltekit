@@ -190,23 +190,23 @@ export class CarDisplay {
   }
 
   get bodyLengthLabel(): string {
-    return this.bodyLength?.toString() ?? 'N/A';
+    return this.bodyLength?.toFixed(0) ?? 'N/A';
   }
 
   get bodyWidthLabel(): string {
-    return this.bodyWidth?.toString() ?? 'N/A';
+    return this.bodyWidth?.toFixed(0) ?? 'N/A';
   }
 
   get bodyHeightLabel(): string {
-    return this.bodyHeight?.toString() ?? 'N/A';
+    return this.bodyHeight?.toFixed(0) ?? 'N/A';
   }
 
   get wheelBaseLabel(): string {
-    return this.wheelBase?.toString() ?? 'N/A';
+    return this.wheelBase?.toFixed(0) ?? 'N/A';
   }
 
   get treadFrontLabel(): string {
-    return this.treadFront?.toString() ?? 'N/A';
+    return this.treadFront?.toFixed(0) ?? 'N/A';
   }
 
   get treadRearLabel(): string {
@@ -214,27 +214,27 @@ export class CarDisplay {
   }
 
   get roadClearanceLabel(): string {
-    return this.roadClearance?.toString() ?? 'N/A';
+    return this.roadClearance?.toFixed(0) ?? 'N/A';
   }
 
   get weightLabel(): string {
-    return this.weight?.toString() ?? 'N/A';
+    return this.weight?.toFixed(0) ?? 'N/A';
   }
 
   get interiorLengthLabel(): string {
-    return this.interiorLength?.toString() ?? 'N/A';
+    return this.interiorLength?.toFixed(0) ?? 'N/A';
   }
 
   get interiorWidthLabel(): string {
-    return this.interiorWidth?.toString() ?? 'N/A';
+    return this.interiorWidth?.toFixed(0) ?? 'N/A';
   }
 
   get interiorHeightLabel(): string {
-    return this.interiorHeight?.toString() ?? 'N/A';
+    return this.interiorHeight?.toFixed(0) ?? 'N/A';
   }
 
   get ridingCapLabel(): string {
-    return this.ridingCap?.toString() ?? 'N/A';
+    return this.ridingCap?.toFixed(0) ?? 'N/A';
   }
 
   get steeringLabel(): string {
@@ -242,19 +242,19 @@ export class CarDisplay {
   }
 
   get suspensionFrontLabel(): string {
-    return this.suspensionFront?.toString() ?? 'N/A';
+    return this.suspensionFront ?? 'N/A';
   }
 
   get suspensionRearLabel(): string {
-    return this.suspensionRear?.toString() ?? 'N/A';
+    return this.suspensionRear ?? 'N/A';
   }
 
   get breakFrontLabel(): string {
-    return this.breakFront?.toString() ?? 'N/A';
+    return this.breakFront ?? 'N/A';
   }
 
   get breakRearLabel(): string {
-    return this.breakRear?.toString() ?? 'N/A';
+    return this.breakRear ?? 'N/A';
   }
 
   get engineCodeLabel(): string {
@@ -266,7 +266,7 @@ export class CarDisplay {
   }
 
   get engineCylinderNumLabel(): string {
-    return this.engineCylinderNum?.toString() ?? 'N/A';
+    return this.engineCylinderNum?.toFixed(0) ?? 'N/A';
   }
 
   get engineCylinderLayoutLabel(): string {
@@ -278,43 +278,43 @@ export class CarDisplay {
   }
 
   get engineDisplacementLabel(): string {
-    return this.engineDisplacement?.toString() ?? 'N/A';
+    return this.engineDisplacement?.toFixed(3) ?? 'N/A';
   }
 
   get engineBoreLabel(): string {
-    return this.engineBore?.toString() ?? 'N/A';
+    return this.engineBore?.toFixed(1) ?? 'N/A';
   }
 
   get engineStrokeLabel(): string {
-    return this.engineStroke?.toString() ?? 'N/A';
+    return this.engineStroke?.toFixed(1) ?? 'N/A';
   }
 
   get engineCompressionRatioLabel(): string {
-    return this.engineCompressionRatio?.toString() ?? 'N/A';
+    return this.engineCompressionRatio?.toFixed(1) ?? 'N/A';
   }
 
   get engineMaxOutputKwLabel(): string {
-    return this.engineMaxOutputKw?.toString() ?? 'N/A';
+    return this.engineMaxOutputKw?.toFixed(0) ?? 'N/A';
   }
 
   get engineMaxOutputLowerRpmLabel(): string {
-    return this.engineMaxOutputLowerRpm?.toString() ?? 'N/A';
+    return this.engineMaxOutputLowerRpm?.toFixed(0) ?? 'N/A';
   }
 
   get engineMaxOutputHigherRpmLabel(): string {
-    return this.engineMaxOutputHigherRpm?.toString() ?? 'N/A';
+    return this.engineMaxOutputHigherRpm?.toFixed(0) ?? 'N/A';
   }
 
   get engineMaxTorqueNmLabel(): string {
-    return this.engineMaxTorqueNm?.toString() ?? 'N/A';
+    return this.engineMaxTorqueNm?.toFixed(0) ?? 'N/A';
   }
 
   get engineMaxTorqueLowerRpmLabel(): string {
-    return this.engineMaxTorqueLowerRpm?.toString() ?? 'N/A';
+    return this.engineMaxTorqueLowerRpm?.toFixed(0) ?? 'N/A';
   }
 
   get engineMaxTorqueHigherRpmLabel(): string {
-    return this.engineMaxTorqueHigherRpm?.toString() ?? 'N/A';
+    return this.engineMaxTorqueHigherRpm?.toFixed(0) ?? 'N/A';
   }
 
   get fuelSystemLabel(): string {
@@ -342,67 +342,71 @@ export class CarDisplay {
   }
 
   get fuelTankCapLabel(): string {
-    return this.fuelTankCap?.toString() ?? 'N/A';
+    return this.fuelTankCap?.toFixed(0) ?? 'N/A';
   }
 
   get minTurningRadiusLabel(): string {
-    return this.minTurningRadius?.toString() ?? 'N/A';
+    return this.minTurningRadius?.toFixed(1) ?? 'N/A';
   }
 
   get fcrWltcLabel(): string {
-    return this.fcrWltc?.toString() ?? 'N/A';
+    return this.fcrWltc?.toFixed(1) ?? 'N/A';
   }
 
   get fcrWltcLLabel(): string {
-    return this.fcrWltcL?.toString() ?? 'N/A';
+    return this.fcrWltcL?.toFixed(1) ?? 'N/A';
   }
 
   get fcrWltcMLabel(): string {
-    return this.fcrWltcM?.toString() ?? 'N/A';
+    return this.fcrWltcM?.toFixed(1) ?? 'N/A';
   }
 
   get fcrWltcHLabel(): string {
-    return this.fcrWltcH?.toString() ?? 'N/A';
+    return this.fcrWltcH?.toFixed(1) ?? 'N/A';
   }
 
   get fcrWltcExhLabel(): string {
-    return this.fcrWltcExh?.toString() ?? 'N/A';
+    return this.fcrWltcExh?.toFixed(1) ?? 'N/A';
   }
 
   get fcrJc08Label(): string {
-    return this.fcrJc08?.toString() ?? 'N/A';
+    return this.fcrJc08?.toFixed(1) ?? 'N/A';
   }
 
   get mpcWltcLabel(): string {
-    return this.mpcWltc?.toString() ?? 'N/A';
+    return this.mpcWltc?.toFixed(1) ?? 'N/A';
   }
 
   get ecrWltcLabel(): string {
-    return this.ecrWltc?.toString() ?? 'N/A';
+    return this.ecrWltc?.toFixed(1) ?? 'N/A';
   }
 
   get ecrWltcLLabel(): string {
-    return this.ecrWltcL?.toString() ?? 'N/A';
+    return this.ecrWltcL?.toFixed(1) ?? 'N/A';
   }
 
   get ecrWltcMLabel(): string {
-    return this.ecrWltcM?.toString() ?? 'N/A';
+    return this.ecrWltcM?.toFixed(1) ?? 'N/A';
   }
 
   get ecrWltcHLabel(): string {
-    return this.ecrWltcH?.toString() ?? 'N/A';
+    return this.ecrWltcH?.toFixed(1) ?? 'N/A';
   }
 
   get ecrWltcExhLabel(): string {
-    return this.ecrWltcExh?.toString() ?? 'N/A';
+    return this.ecrWltcExh?.toFixed(1) ?? 'N/A';
   }
 
   get ecrJc08Label(): string {
-    return this.ecrJc08?.toString() ?? 'N/A';
+    return this.ecrJc08?.toFixed(1) ?? 'N/A';
   }
 
   get mpcJc08Label(): string {
-    return this.mpcJc08?.toString() ?? 'N/A';
+    return this.mpcJc08?.toFixed(1) ?? 'N/A';
+  }
+
+  get fuelEfficiencyLabel(): string {
+    return this.fuelEfficiency.join(', ');
   }
 }
 
