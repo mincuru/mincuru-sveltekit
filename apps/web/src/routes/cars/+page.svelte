@@ -1,12 +1,18 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { CarDisplay } from '$lib/model/CarDisplay';
+  import type { Car } from '$lib/model/CarDisplay';
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
   import type { PageData } from './$types';
   import type { CarsFilter } from './CarsFilter';
   import CarsGrid from './CarsGrid.svelte';
   import SideNav from './SideNav.svelte';
   import TagArea from './TagArea.svelte';
   export let data: PageData;
+
+  const cars = writable<Car[]>(data.cars);
+  // $: cars = data.cars;
+  setContext('cars', cars);
 
   const handleChangeFilter = async () => {
     const makerNames = filter.makers.filter((i) => i.checked).map((i) => i.value);
@@ -30,8 +36,6 @@
     filter = filter;
   };
 
-  $: cars = data.cars.map((car) => new CarDisplay(car));
-
   let filter: CarsFilter = data.filter;
 </script>
 
@@ -42,7 +46,7 @@
     <div class="flex-auto">
       <div class="flex flex-col">
         <TagArea bind:filter {handleChangeFilter} />
-        <CarsGrid {cars} />
+        <CarsGrid />
       </div>
     </div>
   </div>
