@@ -11,7 +11,6 @@
   export let data: PageData;
 
   const cars = writable<Car[]>(data.cars);
-  // $: cars = data.cars;
   setContext('cars', cars);
 
   const handleChangeFilter = async () => {
@@ -34,6 +33,7 @@
     }
     await goto(queryString);
     filter = filter;
+    cars.set(data.cars);
   };
 
   let filter: CarsFilter = data.filter;
