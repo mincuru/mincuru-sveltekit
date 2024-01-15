@@ -1,7 +1,6 @@
 import type { PageServerLoad } from './$types';
 import prisma from '$lib/prisma';
 import { CarsRepository } from './CarsRepository';
-import type { Account } from '$lib/model/Account';
 
 export const load: PageServerLoad = (async ({ url, params, route }) => {
   const repository = new CarsRepository(prisma);

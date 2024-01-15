@@ -13,11 +13,14 @@
   const cars = writable<Car[]>(data.cars);
   setContext('cars', cars);
 
+  const filter = writable<CarsFilter>(data.filter);
+  setContext('filter', filter);
+
   const handleChangeFilter = async () => {
-    const makerNames = filter.makers.filter((i) => i.checked).map((i) => i.value);
-    const bodyTypes = filter.bodyTypes.filter((i) => i.checked).map((i) => i.value);
-    const powerTrains = filter.powerTrains.filter((i) => i.checked).map((i) => i.value);
-    const driveSystems = filter.driveSystems.filter((i) => i.checked).map((i) => i.value);
+    const makerNames = $filter.makers.filter((i) => i.checked).map((i) => i.value);
+    const bodyTypes = $filter.bodyTypes.filter((i) => i.checked).map((i) => i.value);
+    const powerTrains = $filter.powerTrains.filter((i) => i.checked).map((i) => i.value);
+    const driveSystems = $filter.driveSystems.filter((i) => i.checked).map((i) => i.value);
     let queryString = '?';
     if (makerNames.length > 0) {
       queryString += `makerNames=${makerNames.join(',')}`;
@@ -32,11 +35,11 @@
       queryString += `&driveSystems=${driveSystems.join(',')}`;
     }
     await goto(queryString);
-    filter = filter;
+    filter.set(data.filter); // = filter;
     cars.set(data.cars);
   };
 
-  let filter: CarsFilter = data.filter;
+  // let filter: CarsFilter = data.filter;
 </script>
 
 <div class="drawer lg:drawer-open">
@@ -45,7 +48,7 @@
     <!-- Page content here -->
     <div class="flex-auto">
       <div class="flex flex-col">
-        <TagArea bind:filter {handleChangeFilter} />
+        <TagArea {handleChangeFilter} />
         <CarsGrid />
       </div>
     </div>
@@ -54,7 +57,7 @@
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-64 p-4">
       <!-- Sidebar content here -->
-      <SideNav bind:filter {handleChangeFilter} />
+      <SideNav {handleChangeFilter} />
     </ul>
   </div>
 </div>
