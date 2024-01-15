@@ -11,7 +11,7 @@
 </script>
 
 <Accordion title="メーカー名">
-  <ul>
+  <ul data-testid="ul-makers">
     {#each $filter.makers as maker}
       <li>
         <div class="form-control">
@@ -31,7 +31,7 @@
 </Accordion>
 
 <Accordion title="ボディタイプ">
-  <ul>
+  <ul data-testid="ul-body-types">
     {#each $filter.bodyTypes as bodyType}
       <li>
         <div class="form-control">
@@ -51,7 +51,7 @@
 </Accordion>
 
 <Accordion title="パワートレーン">
-  <ul>
+  <ul data-testid="ul-power-trains">
     {#each $filter.powerTrains as powerTrain}
       <li>
         <div class="form-control">
@@ -71,7 +71,7 @@
 </Accordion>
 
 <Accordion title="駆動方式">
-  <ul>
+  <ul data-testid="ul-drive-systems">
     {#each $filter.driveSystems as driveSystem}
       <li>
         <div class="form-control">

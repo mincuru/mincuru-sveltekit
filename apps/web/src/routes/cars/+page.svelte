@@ -35,11 +35,9 @@
       queryString += `&driveSystems=${driveSystems.join(',')}`;
     }
     await goto(queryString);
-    filter.set(data.filter); // = filter;
+    filter.set(data.filter);
     cars.set(data.cars);
   };
-
-  // let filter: CarsFilter = data.filter;
 </script>
 
 <div class="drawer lg:drawer-open">
