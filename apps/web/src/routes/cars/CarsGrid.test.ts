@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/svelte';
 import CarsGrid from './CarsGrid.svelte';
 import { CarDisplay } from '$lib/model/CarDisplay';
 import type { Car, PowerTrain } from '$lib/model/CarDisplay';
-import ContextTest from '$lib/__mock__/ContextTest.svelte';
+import ContainerCarsGrid from '$lib/__mock__/ContainerCarsGrid.svelte';
 
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
@@ -474,7 +474,7 @@ describe('CarsGrid.svelte', async () => {
       { key: 'cars', value: mockCarsNormal }
     ];
     // Act
-    const { getByTestId, getAllByTestId } = render(ContextTest, {
+    const { getByTestId, getAllByTestId } = render(ContainerCarsGrid, {
       props: {
         Component: CarsGrid,
         KVPairs: kvPairs
@@ -491,7 +491,7 @@ describe('CarsGrid.svelte', async () => {
       { key: 'cars', value: mockCarsEmpty }
     ];
     // Act
-    const { getByTestId } = render(ContextTest, {
+    const { getByTestId } = render(ContainerCarsGrid, {
       props: {
         Component: CarsGrid,
         KVPairs: kvPairs

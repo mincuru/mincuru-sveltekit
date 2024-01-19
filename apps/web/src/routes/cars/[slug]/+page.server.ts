@@ -1,7 +1,6 @@
 import prisma from '$lib/prisma';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { CarDisplay } from '$lib/model/CarDisplay';
 
 export const load: PageServerLoad = (async ({ params }) => {
   console.log(params);

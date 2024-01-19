@@ -1,6 +1,6 @@
 // https://svelte-recipes.netlify.app/testing/
 import { render } from '@testing-library/svelte';
-import ContextTest from '$lib/__mock__/ContextTest.svelte';
+import ContainerTagArea from '$lib/__mock__/ContainerTagArea.svelte';
 
 import { writable } from 'svelte/store';
 import type { CarsFilter } from './CarsFilter';
@@ -18,9 +18,10 @@ describe('TagArea.svelte', async () => {
     const mockFilterEmpty = writable<CarsFilter>(filterEmpty);
     const kvPairs = [{ key: 'filter', value: mockFilterEmpty }];
     // Act
-    const { getByTestId } = render(ContextTest, {
+    const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
+        handleChangeFilter: vi.fn().mock,
         KVPairs: kvPairs
       }
     });
@@ -39,9 +40,10 @@ describe('TagArea.svelte', async () => {
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
     const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
     // Act
-    const { getByTestId } = render(ContextTest, {
+    const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
+        handleChangeFilter: vi.fn().mock,
         KVPairs: kvPairs
       }
     });
@@ -60,9 +62,10 @@ describe('TagArea.svelte', async () => {
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
     const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
     // Act
-    const { getByTestId } = render(ContextTest, {
+    const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
+        handleChangeFilter: vi.fn().mock,
         KVPairs: kvPairs
       }
     });
@@ -81,9 +84,10 @@ describe('TagArea.svelte', async () => {
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
     const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
     // Act
-    const { getByTestId } = render(ContextTest, {
+    const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
+        handleChangeFilter: vi.fn().mock,
         KVPairs: kvPairs
       }
     });

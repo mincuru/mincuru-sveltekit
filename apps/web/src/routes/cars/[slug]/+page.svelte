@@ -22,14 +22,14 @@
 <div class="prose mx-auto">
   <div class="breadcrumbs text-sm">
     <ul>
-      <li><a href="/cars">クルマ</a></li>
-      <li>{car.makerName}</li>
+      <li data-testid="bread-crumb-root"><a href="/cars">クルマ</a></li>
+      <li data-testid="bread-crumb-second">{car.makerName}</li>
     </ul>
   </div>
   <div class="flex flex-row items-center px-6 md:px-0">
     <div class="flex-auto px-6">
-      <h4>{car.makerName}</h4>
-      <h2>{car.modelName}</h2>
+      <h4 data-testid="maker-name-label">{car.makerName}</h4>
+      <h2 data-testid="model-name-label">{car.modelName}</h2>
     </div>
     <div class="flex-none">
       <Favorite favorite={$account.favorites.includes(car.id)} toggle={toggleFavorite} />
@@ -39,17 +39,23 @@
     <div class="flex-auto px-6">
       <table class="table">
         <tbody>
-          <tr><th>車両本体(税込)</th><td>{car.priceLabel}円</td></tr>
-          <tr><th>グレード</th><td>{car.gradeName}</td></tr>
-          <tr><th>型式</th><td>{car.modelCode}</td></tr>
-          <tr><th>駆動方式</th><td>{car.driveSystem}</td></tr>
-          <tr><th>パワートレイン</th><td>{car.powerTrainLabel}</td></tr>
-          <tr><th><a href={car.url} target="_blank">メーカーサイト</a></th><td></td></tr>
+          <tr><th>車両本体(税込)</th><td data-testid="price-label">{car.priceLabel}円</td></tr>
+          <tr><th>グレード</th><td data-testid="grade-name-label">{car.gradeName}</td></tr>
+          <tr><th>型式</th><td data-testid="model-code-label">{car.modelCode}</td></tr>
+          <tr><th>駆動方式</th><td data-testid="drive-system-label">{car.driveSystem}</td></tr>
+          <tr
+            ><th>パワートレイン</th><td data-testid="power-train-label">{car.powerTrainLabel}</td
+            ></tr
+          >
+          <tr
+            ><th><a data-testid="url" href={car.url} target="_blank">メーカーサイト</a></th><td
+            ></td></tr
+          >
         </tbody>
       </table>
     </div>
     <div class="w-auto px-6 md:px-0">
-      <a href={car.imageUrl} target="_blank">
+      <a data-testid="image-url" href={car.imageUrl} target="_blank">
         <img class="w-100% h-64 object-cover md:w-96" src={car.imageUrl} alt={car.modelName} />
       </a>
     </div>
@@ -71,32 +77,36 @@
         <tbody>
           <tr>
             <th>全長x全幅x全高</th>
-            <td>{car.bodyLengthLabel}x{car.bodyWidthLabel}x{car.bodyHeightLabel}</td>
+            <td data-testid="body-size-label"
+              >{car.bodyLengthLabel}x{car.bodyWidthLabel}x{car.bodyHeightLabel}</td
+            >
             <td>mm</td>
           </tr>
           <tr>
             <th>室内寸法(長さx幅x高さ)</th>
-            <td>{car.interiorLengthLabel}x{car.interiorWidthLabel}x{car.interiorHeightLabel}</td>
+            <td data-testid="interior-size-label"
+              >{car.interiorLengthLabel}x{car.interiorWidthLabel}x{car.interiorHeightLabel}</td
+            >
             <td>mm</td>
           </tr>
           <tr>
             <th>ホイールベース</th>
-            <td>{car.wheelBaseLabel}</td>
+            <td data-testid="wheel-base-label">{car.wheelBaseLabel}</td>
             <td>mm</td>
           </tr>
           <tr>
             <th>トレッド(前/後)</th>
-            <td>{car.treadFrontLabel}/{car.treadRearLabel}</td>
+            <td data-testid="tread-label">{car.treadFrontLabel}/{car.treadRearLabel}</td>
             <td>mm</td>
           </tr>
           <tr>
             <th>最低地上高</th>
-            <td>{car.roadClearanceLabel}</td>
+            <td data-testid="road-clearance-label">{car.roadClearanceLabel}</td>
             <td>mm</td>
           </tr>
           <tr>
             <th>乗車定員</th>
-            <td>{car.ridingCapLabel}</td>
+            <td data-testid="riding-cap-label">{car.ridingCapLabel}</td>
             <td>名</td>
           </tr>
         </tbody>
@@ -109,15 +119,17 @@
         <tbody>
           <tr>
             <th>ステアリング</th>
-            <td>{car.steeringLabel}</td>
+            <td data-testid="steering-label">{car.steeringLabel}</td>
           </tr>
           <tr>
             <th>サスペンション(前/後)</th>
-            <td>{car.suspensionFrontLabel} / {car.suspensionRearLabel}</td>
+            <td data-testid="suspension-label"
+              >{car.suspensionFrontLabel} / {car.suspensionRearLabel}</td
+            >
           </tr>
           <tr>
             <th>ブレーキ(前/後)</th>
-            <td>{car.breakFrontLabel} / {car.breakRearLabel}</td>
+            <td data-testid="break-label">{car.breakFrontLabel} / {car.breakRearLabel}</td>
           </tr>
         </tbody>
       </table>
@@ -129,56 +141,58 @@
         <tbody>
           <tr>
             <th>型式</th>
-            <td>{car.engineCodeLabel}</td>
+            <td data-testid="engine-code-label">{car.engineCodeLabel}</td>
             <td></td>
           </tr>
           <tr>
             <th>種類</th>
-            <td>{car.engineTypeLabel}</td>
+            <td data-testid="engine-type-label">{car.engineTypeLabel}</td>
             <td></td>
           </tr>
           <tr>
             <th>総排気量</th>
-            <td>{car.engineDisplacementLabel}</td>
+            <td data-testid="engine-displacement-label">{car.engineDisplacementLabel}</td>
             <td>L</td>
           </tr>
           <tr>
             <th>ボアxストローク</th>
-            <td>{car.engineBoreLabel}x{car.engineStrokeLabel}</td>
+            <td data-testid="engine-bore-stroke-label"
+              >{car.engineBoreLabel}x{car.engineStrokeLabel}</td
+            >
             <td>mm</td>
           </tr>
           <tr>
             <th>圧縮比</th>
-            <td>{car.engineCompressionRatioLabel}</td>
+            <td data-testid="engine-compression-ratio-label">{car.engineCompressionRatioLabel}</td>
             <td></td>
           </tr>
           <tr>
             <th>最高出力 / 回転数</th>
-            <td>
+            <td data-testid="engine-max-output-kw-label">
               {car.engineMaxOutputKwLabel} / {car.engineMaxOutputLowerRpmLabel}〜{car.engineMaxOutputHigherRpmLabel}
             </td>
             <td>kW(PS) / rpm</td>
           </tr>
           <tr>
             <th>最大トルク / 回転数</th>
-            <td>
+            <td data-testid="engine-max-torque-nm-label">
               {car.engineMaxTorqueNmLabel} / {car.engineMaxTorqueLowerRpmLabel}〜{car.engineMaxTorqueHigherRpmLabel}
             </td>
             <td>Nm(kgf・m) / rpm</td>
           </tr>
           <tr>
             <th>燃料供給装置</th>
-            <td>{car.fuelSystemLabel}</td>
+            <td data-testid="fuel-system-label">{car.fuelSystemLabel}</td>
             <td></td>
           </tr>
           <tr>
             <th>使用燃料</th>
-            <td>{car.fuelTypeLabel}</td>
+            <td data-testid="fuel-type-label">{car.fuelTypeLabel}</td>
             <td></td>
           </tr>
           <tr>
             <th>タンク容量</th>
-            <td>{car.fuelTankCapLabel}</td>
+            <td data-testid="fuel-tank-cap-label">{car.fuelTankCapLabel}</td>
             <td>L</td>
           </tr>
         </tbody>
@@ -192,43 +206,43 @@
           <tr>
             <th>WLTCモード燃費</th>
             <td></td>
-            <td>{car.fcrWltcLabel}</td>
+            <td data-testid="fcw-wltc-label">{car.fcrWltcLabel}</td>
             <td>km/L</td>
           </tr>
           <tr>
             <th></th>
             <td>市街地モード(WLTC-L)</td>
-            <td>{car.fcrWltcLLabel}</td>
+            <td data-testid="fcr-wltc-l-label">{car.fcrWltcLLabel}</td>
             <td>km/L</td>
           </tr>
           <tr>
             <th></th>
             <td>郊外モード(WLTC-M)</td>
-            <td>{car.fcrWltcMLabel}</td>
+            <td data-testid="fcr-wltc-m-label">{car.fcrWltcMLabel}</td>
             <td>km/L</td>
           </tr>
           <tr>
             <th></th>
             <td>高速道路モード(WLTC-H)</td>
-            <td>{car.fcrWltcHLabel}</td>
+            <td data-testid="fcr-wltc-h-label">{car.fcrWltcHLabel}</td>
             <td>km/L</td>
           </tr>
           <tr>
             <th>JC08モード燃費</th>
             <td></td>
-            <td>{car.fcrJc08Label}</td>
+            <td data-testid="fcr-jc08-label">{car.fcrJc08Label}</td>
             <td>km/L</td>
           </tr>
           <tr>
             <th>最小回転半径</th>
             <td></td>
-            <td>{car.minTurningRadiusLabel}</td>
+            <td data-testid="min-turning-radius-label">{car.minTurningRadiusLabel}</td>
             <td>m</td>
           </tr>
           <tr>
             <th>主要燃費向上対策</th>
             <td></td>
-            <td class="w-96">
+            <td class="w-96" data-testid="fuel-efficiency">
               {#each car.fuelEfficiency as item}
                 <div class="badge badge-primary badge-outline">{item}</div>
               {/each}
