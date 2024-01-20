@@ -1,0 +1,14 @@
+{
+  "display": "AWS Lambda",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "lib": ["es2020"],
+    "module": "node16",
+    "target": "es2020",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node16"
+  }
+}
