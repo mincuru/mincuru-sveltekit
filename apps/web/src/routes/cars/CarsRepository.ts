@@ -99,9 +99,9 @@ export class CarsRepository {
     const data = await this.prisma.car.findMany(where);
 
     if (!data) {
-      throw error(404, {
-        message: 'Not found'
-      });
+      error(404, {
+                message: 'Not found'
+              });
     }
 
     return data;

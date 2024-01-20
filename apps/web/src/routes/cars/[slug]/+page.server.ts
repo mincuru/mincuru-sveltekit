@@ -8,9 +8,9 @@ export const load: PageServerLoad = (async ({ params }) => {
     where: { id: Number(params.slug) }
   });
   if (!car) {
-    throw error(404, {
-      message: 'Not found'
-    });
+    error(404, {
+            message: 'Not found'
+          });
   }
 
   return { car };

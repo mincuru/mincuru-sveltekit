@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Icon, Star } from 'svelte-hero-icons';
+  import { Star, StarBorder } from '@steeze-ui/material-design-icons';
+  import { Icon } from '@steeze-ui/svelte-icon';
   export let favorite: boolean;
   export let toggle: (favorite: boolean) => void;
 
@@ -11,8 +12,8 @@
 
 <button class="btn btn-circle" on:click={onClick} aria-label="お気に入り">
   {#if favorite}
-    <Icon src={Star} size="24" solid class="text-yellow-500" />
+    <Icon src={Star} size="24" class="text-yellow-500" />
   {:else}
-    <Icon src={Star} size="24" />
+    <Icon src={StarBorder} size="24" />
   {/if}
 </button>

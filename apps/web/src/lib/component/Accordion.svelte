@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { ChevronDown, ChevronUp, Icon } from 'svelte-hero-icons';
+  import { ExpandLess, ExpandMore } from '@steeze-ui/material-design-icons';
+  import { Icon } from '@steeze-ui/svelte-icon';
   import { slide } from 'svelte/transition';
   export let title: string;
   let isOpen: boolean = true;
@@ -14,7 +15,7 @@
     class="btn btn-ghost flex h-12 w-full items-center rounded-lg px-2 text-left"
   >
     <span class="flex-auto align-middle" aria-label="toggle-button-label">{title}</span>
-    <Icon src={isOpen ? ChevronUp : ChevronDown} size="16" />
+    <Icon src={isOpen ? ExpandLess : ExpandMore} size="16" />
   </button>
 </div>
 <div aria-label="slot-container">

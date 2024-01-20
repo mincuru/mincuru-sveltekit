@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Icon, XMark } from 'svelte-hero-icons';
+  import { Close } from '@steeze-ui/material-design-icons';
+  import { Icon } from '@steeze-ui/svelte-icon';
   export let title: string;
   export let value: string;
   export let removeTag: (value: string) => void;
@@ -13,5 +14,5 @@
   <span>
     {title}
   </span>
-  <Icon src={XMark} size="16" />
+  <Icon src={Close} size="16" />
 </button>
