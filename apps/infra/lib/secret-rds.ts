@@ -10,7 +10,7 @@ export class SecretRds extends Construct {
     super(scope, id);
 
     this.secret = new cdk.aws_secretsmanager.Secret(this, "SecretRds", {
-      secretName: "MincuruteRds",
+      secretName: "MincuruRds",
       generateSecretString: {
         generateStringKey: "password",
         excludePunctuation: true,

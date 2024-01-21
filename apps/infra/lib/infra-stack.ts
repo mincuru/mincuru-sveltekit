@@ -3,8 +3,10 @@ import { Construct } from "constructs";
 import { Vpc } from "./vpc";
 import { Rds } from "./rds";
 import { SecretRds } from "./secret-rds";
-import { EcrWeb } from "./ecr-web";
-import { EcsWeb } from "./ecs-web";
+import { WebEcr } from "./web-ecr";
+import { WebEcs } from "./web-ecs";
+import { MigrateEcr } from "./migrate-ecr";
+import { MigrateEcs } from "./migrate-ecs";
 
 export class InfraStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -16,11 +18,17 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       secret: secretRds.secret,
     });
-    const ecrWeb = new EcrWeb(this, "EcrWeb", {});
-    const ecsWeb = new EcsWeb(this, "EcsWeb", {
-      vpc: vpc.vpc,
-      ecr: ecrWeb.repo,
-      secretRds: secretRds.secret,
-    });
+    // const webEcr = new WebEcr(this, "EcrWeb", {});
+    // const webEcs = new WebEcs(this, "EcsWeb", {
+    //   vpc: vpc.vpc,
+    //   ecr: webEcr.repo,
+    //   secretRds: secretRds.secret,
+    // });
+    // const migrateEcr = new MigrateEcr(this, "MigrateEcr", {});
+    // const migrateEcs = new MigrateEcs(this, "MigrateEcs", {
+    //   vpc: vpc.vpc,
+    //   ecr: migrateEcr.repo,
+    //   secretRds: secretRds.secret,
+    // });
   }
 }

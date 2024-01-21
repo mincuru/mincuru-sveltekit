@@ -1,23 +1,23 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 
-export interface EcsWebProps {
+export interface WebEcsProps {
   vpc: cdk.aws_ec2.Vpc;
   ecr: cdk.aws_ecr.Repository;
   secretRds: cdk.aws_secretsmanager.Secret;
 }
 
-export class EcsWeb extends Construct {
-  constructor(scope: Construct, id: string, props: EcsWebProps) {
+export class WebEcs extends Construct {
+  constructor(scope: Construct, id: string, props: WebEcsProps) {
     super(scope, id);
 
-    // ECS
-    new cdk.aws_ecs.Cluster(this, "ClusterWeb", {
+    // ECSクラスター
+    new cdk.aws_ecs.Cluster(this, "WebCluster", {
       vpc: props.vpc,
       enableFargateCapacityProviders: true,
     });
 
-    // タスク実行ロール
+    // タスク実行ポリシー
     // const taskExecutionPolicy = new cdk.aws_iam.Policy(this, "TaskExecutionPolicy");
     // taskExecutionPolicy.addStatements(
     //   new cdk.aws_iam.PolicyStatement({
@@ -32,19 +32,24 @@ export class EcsWeb extends Construct {
     //   }      )
     // );
 
-    const taskExecutionRole = new cdk.aws_iam.Role(this, "TaskExecutionRole", {
-      assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
-      managedPolicies: [
-        cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AmazonECSTaskExecutionRolePolicy"
-        ),
-      ],
-    });
+    // タスク実行ロール
+    const taskExecutionRole = new cdk.aws_iam.Role(
+      this,
+      "WebTaskExecutionRole",
+      {
+        assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
+        managedPolicies: [
+          cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
+            "service-role/AmazonECSTaskExecutionRolePolicy"
+          ),
+        ],
+      }
+    );
 
     // タスク定義
     const taskDefinition = new cdk.aws_ecs.FargateTaskDefinition(
       this,
-      "TaskDefinitionWeb",
+      "WebTaskDefinition",
       {
         cpu: 256,
         memoryLimitMiB: 512,
@@ -76,7 +81,7 @@ export class EcsWeb extends Construct {
       },
       logging: new cdk.aws_ecs.AwsLogDriver({
         streamPrefix: "web",
-        logGroup: new cdk.aws_logs.LogGroup(this, "LogGroupWeb", {
+        logGroup: new cdk.aws_logs.LogGroup(this, "WebLogGroup", {
           logGroupName: "/aws/ecs/web",
           removalPolicy: cdk.RemovalPolicy.DESTROY,
         }),

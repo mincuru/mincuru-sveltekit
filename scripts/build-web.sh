@@ -1,0 +1,1 @@
+docker build -f ./apps/web/docker/Dockerfile -t mincuru/web . 
