@@ -1,13 +1,11 @@
 {
   "name": "@repo/database",
   "version": "0.0.1",
-  "main": "./dist/index.js",
-  "types": "./src/index.ts",
   "scripts": {
-    "build": "tsc -d",
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate",
-    "db:migrate": "prisma migrate deploy"
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "prisma db seed"
   },
   "keywords": [],
   "author": "",

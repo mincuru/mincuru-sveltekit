@@ -8,8 +8,11 @@ COPY ./apps/web ./apps/web
 COPY ./packages/database ./packages/database
 COPY ./packages/typescript-config ./packages/typescript-config
 COPY ./packages/eslint-config ./packages/eslint-config
-RUN npm ci --omit dev
-# COPY npm install
-# RUN npm run build
+RUN npm install
+RUN npm run db:generate -w packages/database
+RUN npm run build -w apps/web
 
-CMD ["node", "build"]
+COPY ./apps/web/scripts/run.sh ./run.sh
+RUN chmod +x ./run.sh
+
+ENTRYPOINT [ "/run.sh" ]

@@ -16,7 +16,5 @@ DB_NAME=$(echo $SECRET | jq -r .dbname)
 # DATABASE_URLを生成
 export DATABASE_URL="postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public"
 
-# Prismaマイグレーションを実行
-npm run db:migrate
-# npx prisma migrate deploy
-# npx prisma db seed
+# SvelteKit Standalone server起動
+node apps/web/build

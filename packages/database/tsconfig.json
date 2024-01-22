@@ -1,9 +1,0 @@
-{
-  "extends": "@repo/typescript-config/server-side.json",
-  "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist"
-  },
-  "include": ["src/**/*"],
-  "exclude": ["dist", "node_modules"]
-}
