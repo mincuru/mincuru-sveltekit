@@ -1,0 +1,28 @@
+name: Pipeline
+on:
+  push:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - run: npm run build -w packages/database
+      - run: npm test:coverage -w apps/web
+    #   - name: Upload coverage to S3
+    #     run: |
+    #       aws s3 sync ./coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
+    #       echo "* [カバレッジレポート](https://d13gral2ttxoih.cloudfront.net/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/lcov-report/index.html)" >> $GITHUB_STEP_SUMMARY
