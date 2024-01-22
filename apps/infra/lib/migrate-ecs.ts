@@ -36,8 +36,8 @@ export class MigrateEcs extends Construct {
       this,
       "MigrateTaskDefinition",
       {
-        cpu: 3072,
-        memoryLimitMiB: 1024,
+        cpu: 2048,
+        memoryLimitMiB: 4096,
         executionRole: taskExecutionRole,
       }
     );
