@@ -8,6 +8,7 @@ import { WebEcs } from "./web-ecs";
 import { MigrateEcr } from "./migrate-ecr";
 import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
+import { CoverageReportS3 } from "./coverage-report-s3";
 
 export class InfraStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -32,5 +33,7 @@ export class InfraStack extends Stack {
       ecr: migrateEcr.repo,
       secretRds: secretRds.secret,
     });
+
+    const coverageReportS3 = new CoverageReportS3(this, "CoverageReportS3", {});
   }
 }

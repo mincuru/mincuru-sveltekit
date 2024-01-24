@@ -17,7 +17,7 @@ export class DeployRole extends Construct {
             "repo:mincuru/mincuru-sveltekit:*",
         },
       }),
-      roleName: "DeployGitHub", // 任意のロール名
+      roleName: "DeployGitHub",
     });
   }
 }

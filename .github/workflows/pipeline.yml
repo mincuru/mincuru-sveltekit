@@ -22,7 +22,6 @@ jobs:
           aws-region: ap-northeast-1
       - run: npm run db:generate -w packages/database
       - run: npm run test:coverage -w apps/web
-    #   - name: Upload coverage to S3
-    #     run: |
-    #       aws s3 sync ./coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
-    #       echo "* [カバレッジレポート](https://d13gral2ttxoih.cloudfront.net/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/lcov-report/index.html)" >> $GITHUB_STEP_SUMMARY
+      - name: Upload coverage to S3
+        run: |
+          aws s3 sync ./apps/web/coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
