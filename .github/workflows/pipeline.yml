@@ -12,7 +12,7 @@ env:
   MIGRATE_ECS_CLUSTER: MigrateCluster
   MIGRATE_SEURITY_GROUP: SourceSecurityGroup
 
-  permissions:
+permissions:
   id-token: write
   contents: read
 
