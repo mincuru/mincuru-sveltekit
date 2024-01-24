@@ -2,6 +2,8 @@ name: Pipeline
 on:
   push:
 
+env:
+  AWS_CLOUDFRONT_DISTRIBUTION_NAME: d15dl6nco69pbe.cloudfront.net
 permissions:
   id-token: write
   contents: read
@@ -25,4 +27,4 @@ jobs:
       - name: Upload coverage to S3
         run: |
           aws s3 sync ./apps/web/coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
-          echo "* [カバレッジレポート](https://${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+          echo "* [カバレッジレポート](https://${{ env.AWS_CLOUDFRONT_DISTRIBUTION_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
