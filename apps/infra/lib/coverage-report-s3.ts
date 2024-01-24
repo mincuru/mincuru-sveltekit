@@ -4,11 +4,12 @@ import { Construct } from "constructs";
 export interface CoverageReportS3Props {}
 
 export class CoverageReportS3 extends Construct {
+  readonly bucket: cdk.aws_s3.Bucket;
   constructor(scope: Construct, id: string, props: CoverageReportS3Props) {
     super(scope, id);
 
     // S3
-    const bucket = new cdk.aws_s3.Bucket(this, "CoverageReportS3", {
+    this.bucket = new cdk.aws_s3.Bucket(this, "CoverageReportS3", {
       bucketName: "mincuru-coverage-report",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
@@ -27,9 +28,9 @@ export class CoverageReportS3 extends Construct {
       principals: [
         new cdk.aws_iam.ServicePrincipal("cloudfront.amazonaws.com"),
       ],
-      resources: [`${bucket.bucketArn}/*`],
+      resources: [`${this.bucket.bucketArn}/*`],
     });
-    bucket.addToResourcePolicy(bucketPolicyStatement);
+    this.bucket.addToResourcePolicy(bucketPolicyStatement);
 
     // Distribution
     const distribution = new cdk.aws_cloudfront.Distribution(
@@ -44,7 +45,7 @@ export class CoverageReportS3 extends Construct {
           cachePolicy: cdk.aws_cloudfront.CachePolicy.CACHING_OPTIMIZED,
           viewerProtocolPolicy:
             cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          origin: new cdk.aws_cloudfront_origins.S3Origin(bucket, {
+          origin: new cdk.aws_cloudfront_origins.S3Origin(this.bucket, {
             originAccessIdentity: oai,
           }),
         },
@@ -60,7 +61,7 @@ export class CoverageReportS3 extends Construct {
           "<html><body><h1>Test</h1></body></html>"
         ),
       ],
-      destinationBucket: bucket,
+      destinationBucket: this.bucket,
       distribution: distribution,
       distributionPaths: ["/*"],
     });

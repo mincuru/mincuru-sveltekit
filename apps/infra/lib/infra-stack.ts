@@ -14,7 +14,6 @@ export class InfraStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    new DeployRole(this, "DeployRole", {});
     const vpc = new Vpc(this, "Vpc", {});
     const secretRds = new SecretRds(this, "SecretRds", {});
     const rds = new Rds(this, "Rds", {
@@ -35,5 +34,8 @@ export class InfraStack extends Stack {
     });
 
     const coverageReportS3 = new CoverageReportS3(this, "CoverageReportS3", {});
+    new DeployRole(this, "DeployRole", {
+      coverageReportBucket: coverageReportS3.bucket,
+    });
   }
 }
