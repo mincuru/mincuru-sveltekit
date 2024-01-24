@@ -39,9 +39,11 @@ export class MigrateEcs extends Construct {
         cpu: 2048,
         memoryLimitMiB: 4096,
         executionRole: taskExecutionRole,
+        family: "MigrateTaskDefinition",
       }
     );
     taskDefinition.addContainer("MigrateContainer", {
+      containerName: "MigrateContainer",
       image: cdk.aws_ecs.ContainerImage.fromRegistry(
         props.ecr.repositoryUri + ":latest"
       ),

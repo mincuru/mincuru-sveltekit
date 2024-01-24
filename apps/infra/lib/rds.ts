@@ -10,6 +10,32 @@ export class Rds extends Construct {
   constructor(scope: Construct, id: string, props: RdsProps) {
     super(scope, id);
 
+    // アクセス元セキュリティグループ（マイグレーション実行時に使用）
+    const sourceSecurityGroup = new cdk.aws_ec2.SecurityGroup(
+      this,
+      "SourceSecurityGroup",
+      {
+        securityGroupName: "SourceSecurityGroup",
+        vpc: props.vpc,
+      }
+    );
+
+    // ターゲットセキュリティグループ（RDSに設定するセキュリティグループ）
+    const targetSecurityGroup = new cdk.aws_ec2.SecurityGroup(
+      this,
+      "RdsSecurityGroup",
+      {
+        vpc: props.vpc,
+        securityGroupName: "RdsSecurityGroup",
+        allowAllOutbound: true,
+      }
+    );
+    targetSecurityGroup.addIngressRule(
+      cdk.aws_ec2.Peer.securityGroupId(sourceSecurityGroup.securityGroupId),
+      cdk.aws_ec2.Port.tcp(5432),
+      ""
+    );
+
     new cdk.aws_rds.DatabaseInstance(this, "Rds", {
       engine: cdk.aws_rds.DatabaseInstanceEngine.POSTGRES,
       instanceType: cdk.aws_ec2.InstanceType.of(
@@ -26,6 +52,7 @@ export class Rds extends Construct {
       credentials: cdk.aws_rds.Credentials.fromSecret(props.secret),
       databaseName: "mincuru",
       caCertificate: cdk.aws_rds.CaCertificate.RDS_CA_RDS4096_G1,
+      securityGroups: [targetSecurityGroup],
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       deletionProtection: false,
     });

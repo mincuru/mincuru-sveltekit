@@ -54,6 +54,7 @@ export class WebEcs extends Construct {
         cpu: 256,
         memoryLimitMiB: 512,
         taskRole: taskExecutionRole,
+        family: "WebTaskDefinition",
       }
     );
     taskDefinition.addContainer("WebContainer", {
