@@ -4,7 +4,7 @@ on:
 
 env:
   AWS_CLOUDFRONT_DISTRIBUTION_NAME: d15dl6nco69pbe.cloudfront.net
-  MIGRATE_ECR_REPOSITORY: migrate
+  MIGRATE_ECR_REPOSITORY: mincuru/migrate
   MIGRATE_TASK_DEFINITION: MigrateTaskDefinition
   MIGRATE_CONTAINER_NAME: MigrateContainer
   MIGRATE_ECS_SERVICE: MigrateService
