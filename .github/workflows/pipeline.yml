@@ -86,12 +86,12 @@ jobs:
       #   run: |
       #     rm -rf /tmp/.buildx-cache
       #     mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      # - name: Run Migration
-      #   uses: noelzubin/aws-ecs-run-task@v1.0
-      #   with:
-      #     cluster: MigrateCluster
-      #     task-definition: ${{ env.MIGRATE_TASK_DEFINITION}}
-      #     subnets: ${{ secrets.PRIVATE_SUBNET }}
-      #     security-groups: ${{ env.MIGRATE_SEURITY_GROUP }}
-      #     assign-public-ip: ENABLED
-      #     override-container: ${{ env.MIGRATE_CONTAINER_NAME }}
+      - name: Run Migration
+        uses: noelzubin/aws-ecs-run-task@v1.0
+        with:
+          cluster: MigrateCluster
+          task-definition: ${{ env.MIGRATE_TASK_DEFINITION}}
+          subnets: ${{ secrets.PRIVATE_SUBNET }}
+          security-groups: ${{ env.MIGRATE_SEURITY_GROUP }}
+          assign-public-ip: ENABLED
+          override-container: ${{ env.MIGRATE_CONTAINER_NAME }}
