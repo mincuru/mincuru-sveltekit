@@ -15,6 +15,7 @@ export class WebEcs extends Construct {
     new cdk.aws_ecs.Cluster(this, "WebCluster", {
       vpc: props.vpc,
       enableFargateCapacityProviders: true,
+      clusterName: "WebCluster",
     });
 
     // タスク実行ポリシー

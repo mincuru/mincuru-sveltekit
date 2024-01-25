@@ -36,6 +36,7 @@ export class InfraStack extends Stack {
     const coverageReportS3 = new CoverageReportS3(this, "CoverageReportS3", {});
     new DeployRole(this, "DeployRole", {
       coverageReportBucket: coverageReportS3.bucket,
+      taskExecutionRole: migrateEcs.taskExecutionRole,
     });
   }
 }

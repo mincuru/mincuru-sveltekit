@@ -9,7 +9,6 @@ env:
   MIGRATE_CONTAINER_NAME: MigrateContainer
   MIGRATE_ECS_SERVICE: MigrateService
   MIGRATE_ECS_CLUSTER: MigrateCluster
-  MIGRATE_SEURITY_GROUP: SourceSecurityGroup
 
 permissions:
   id-token: write
@@ -92,6 +91,6 @@ jobs:
           cluster: MigrateCluster
           task-definition: ${{ env.MIGRATE_TASK_DEFINITION}}
           subnets: ${{ secrets.PRIVATE_SUBNET }}
-          security-groups: ${{ env.MIGRATE_SEURITY_GROUP }}
+          security-groups: ${{ secrets.MIGRATE_SEURITY_GROUP }}
           assign-public-ip: ENABLED
           override-container: ${{ env.MIGRATE_CONTAINER_NAME }}

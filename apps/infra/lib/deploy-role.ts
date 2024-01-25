@@ -3,6 +3,7 @@ import { Construct } from "constructs";
 
 export interface DeployRoleProps {
   coverageReportBucket: cdk.aws_s3.Bucket;
+  taskExecutionRole: cdk.aws_iam.Role;
 }
 
 export class DeployRole extends Construct {
@@ -48,5 +49,19 @@ export class DeployRole extends Construct {
       resources: ["*"],
     });
     role.addToPolicy(policy3);
+
+    const policy4 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["ecs:RunTask"],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy4);
+
+    const policy5 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["iam:PassRole"],
+      resources: [props.taskExecutionRole.roleArn],
+    });
+    role.addToPolicy(policy5);
   }
 }

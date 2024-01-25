@@ -8,6 +8,7 @@ export interface MigrateEcsProps {
 }
 
 export class MigrateEcs extends Construct {
+  public readonly taskExecutionRole: cdk.aws_iam.Role;
   constructor(scope: Construct, id: string, props: MigrateEcsProps) {
     super(scope, id);
 
@@ -15,10 +16,11 @@ export class MigrateEcs extends Construct {
     new cdk.aws_ecs.Cluster(this, "MigrateCluster", {
       vpc: props.vpc,
       enableFargateCapacityProviders: true,
+      clusterName: "MigrateCluster",
     });
 
     // タスク実行ロール
-    const taskExecutionRole = new cdk.aws_iam.Role(
+    this.taskExecutionRole = new cdk.aws_iam.Role(
       this,
       "MigrateTaskExecutionRole",
       {
@@ -38,7 +40,8 @@ export class MigrateEcs extends Construct {
       {
         cpu: 2048,
         memoryLimitMiB: 4096,
-        executionRole: taskExecutionRole,
+        executionRole: this.taskExecutionRole,
+        taskRole: this.taskExecutionRole,
         family: "MigrateTaskDefinition",
       }
     );
