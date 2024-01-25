@@ -36,11 +36,11 @@ export class MigrateEcs extends Construct {
     // タスクロール
     const taskRole = new cdk.aws_iam.Role(this, "MigrateTaskRole", {
       assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
-      // managedPolicies: [
-      //   cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
-      //     "service-role/AmazonECSTaskExecutionRolePolicy"
-      //   ),
-      // ],
+      managedPolicies: [
+        cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
+          "service-role/AmazonECSTaskExecutionRolePolicy"
+        ),
+      ],
     });
     const taskPolicy = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
