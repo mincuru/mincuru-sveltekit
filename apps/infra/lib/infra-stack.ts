@@ -37,6 +37,7 @@ export class InfraStack extends Stack {
     new DeployRole(this, "DeployRole", {
       coverageReportBucket: coverageReportS3.bucket,
       taskExecutionRole: migrateEcs.taskExecutionRole,
+      migrateRepository: migrateEcr.repo,
     });
   }
 }

@@ -4,6 +4,7 @@ import { Construct } from "constructs";
 export interface DeployRoleProps {
   coverageReportBucket: cdk.aws_s3.Bucket;
   taskExecutionRole: cdk.aws_iam.Role;
+  migrateRepository: cdk.aws_ecr.Repository;
 }
 
 export class DeployRole extends Construct {
@@ -37,6 +38,7 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy2);
 
+    // Private ECRに対する必要最低権限
     const policy3 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: [
@@ -45,8 +47,10 @@ export class DeployRole extends Construct {
         "ecr:InitiateLayerUpload",
         "ecr:CompleteLayerUpload",
         "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer",
       ],
-      resources: ["*"],
+      resources: [props.migrateRepository.repositoryArn],
     });
     role.addToPolicy(policy3);
 
@@ -64,12 +68,11 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy5);
 
-    // TODO 権限が強力なので見直しが必要
-    // const policy6 = new cdk.aws_iam.PolicyStatement({
-    //   effect: cdk.aws_iam.Effect.ALLOW,
-    //   actions: ["*"],
-    //   resources: ["*"],
-    // });
-    // role.addToPolicy(policy6);
+    const policy6 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["ecs:DescribeTasks"],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy6);
   }
 }
