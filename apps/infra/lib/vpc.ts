@@ -29,5 +29,18 @@ export class Vpc extends Construct {
       maxAzs: 2,
       defaultInstanceTenancy: cdk.aws_ec2.DefaultInstanceTenancy.DEFAULT,
     });
+
+    // endpoint
+    const endpoint = new cdk.aws_ec2.InterfaceVpcEndpoint(
+      this,
+      "VpcEndpointSecretsManager",
+      {
+        vpc: this.vpc,
+        service: cdk.aws_ec2.InterfaceVpcEndpointAwsService.SECRETS_MANAGER,
+        subnets: {
+          subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED,
+        },
+      }
+    );
   }
 }

@@ -91,6 +91,6 @@ jobs:
           cluster: ${{ env.MIGRATE_ECS_CLUSTER }}
           task-definition: ${{ env.MIGRATE_TASK_DEFINITION}}
           subnets: ${{ secrets.PRIVATE_SUBNET }}
-          security-groups: ${{ secrets.MIGRATE_SEURITY_GROUP }}
+          security-groups: ${{ secrets.MIGRATE_SECURITY_GROUP }}
           assign-public-ip: ENABLED
           override-container: ${{ env.MIGRATE_CONTAINER_NAME }}

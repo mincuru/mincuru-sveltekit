@@ -50,7 +50,8 @@ export class MigrateEcs extends Construct {
       ],
       resources: [props.secretRds.secretArn],
     });
-    taskRole.addToPolicy(taskPolicy);
+    this.taskExecutionRole.addToPolicy(taskPolicy); // TODO どっち？
+    taskRole.addToPolicy(taskPolicy); // TODO どっち？
 
     // タスク定義
     const taskDefinition = new cdk.aws_ecs.FargateTaskDefinition(
