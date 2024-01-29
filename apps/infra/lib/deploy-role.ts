@@ -65,11 +65,11 @@ export class DeployRole extends Construct {
     role.addToPolicy(policy5);
 
     // TODO 権限が強力なので見直しが必要
-    const policy6 = new cdk.aws_iam.PolicyStatement({
-      effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["*"],
-      resources: ["*"],
-    });
-    role.addToPolicy(policy6);
+    // const policy6 = new cdk.aws_iam.PolicyStatement({
+    //   effect: cdk.aws_iam.Effect.ALLOW,
+    //   actions: ["*"],
+    //   resources: ["*"],
+    // });
+    // role.addToPolicy(policy6);
   }
 }
