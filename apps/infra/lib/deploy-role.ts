@@ -3,8 +3,12 @@ import { Construct } from "constructs";
 
 export interface DeployRoleProps {
   coverageReportBucket: cdk.aws_s3.Bucket;
-  taskExecutionRole: cdk.aws_iam.Role;
+  migrateTaskExecutionRole: cdk.aws_iam.Role;
+  migrateTaskRole: cdk.aws_iam.Role;
   migrateRepository: cdk.aws_ecr.Repository;
+  webTaskExecutionRole: cdk.aws_iam.Role;
+  webTaskRole: cdk.aws_iam.Role;
+  webRepository: cdk.aws_ecr.Repository;
 }
 
 export class DeployRole extends Construct {
@@ -50,7 +54,10 @@ export class DeployRole extends Construct {
         "ecr:BatchGetImage",
         "ecr:GetDownloadUrlForLayer",
       ],
-      resources: [props.migrateRepository.repositoryArn],
+      resources: [
+        props.migrateRepository.repositoryArn,
+        props.webRepository.repositoryArn,
+      ],
     });
     role.addToPolicy(policy3);
 
@@ -64,7 +71,12 @@ export class DeployRole extends Construct {
     const policy5 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: ["iam:PassRole"],
-      resources: [props.taskExecutionRole.roleArn],
+      resources: [
+        props.migrateTaskExecutionRole.roleArn,
+        props.migrateTaskRole.roleArn,
+        props.webTaskExecutionRole.roleArn,
+        props.webTaskRole.roleArn,
+      ],
     });
     role.addToPolicy(policy5);
 

@@ -8,6 +8,9 @@ export interface WebEcsProps {
 }
 
 export class WebEcs extends Construct {
+  public readonly taskExecutionRole: cdk.aws_iam.Role;
+  public readonly taskRole: cdk.aws_iam.Role;
+  // public readonly taskDefinition: cdk.aws_ecs.FargateTaskDefinition;
   constructor(scope: Construct, id: string, props: WebEcsProps) {
     super(scope, id);
 
@@ -18,23 +21,29 @@ export class WebEcs extends Construct {
       clusterName: "WebCluster",
     });
 
-    // タスク実行ポリシー
-    // const taskExecutionPolicy = new cdk.aws_iam.Policy(this, "TaskExecutionPolicy");
-    // taskExecutionPolicy.addStatements(
-    //   new cdk.aws_iam.PolicyStatement({
-    //     effect: cdk.aws_iam.Effect.ALLOW,
-    //     actions: [
-    //       "logs:CreateLogGroup",
-    //       "logs:CreateLogStream",
-    //       "logs:PutLogEvents",
-    //       "logs:DescribeLogStreams",
-    //     ],
-    //     resources: ["*"],
-    //   }      )
-    // );
+    // タスクロール
+    this.taskRole = new cdk.aws_iam.Role(this, "WebTaskRole", {
+      assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
+    });
+    const taskPolicy = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["logs:CreateLogStream", "logs:PutLogEvents"],
+      resources: ["*"],
+    });
+    this.taskRole.addToPolicy(taskPolicy);
+
+    const taskPolicy2 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret",
+      ],
+      resources: [props.secretRds.secretArn],
+    });
+    this.taskRole.addToPolicy(taskPolicy2);
 
     // タスク実行ロール
-    const taskExecutionRole = new cdk.aws_iam.Role(
+    this.taskExecutionRole = new cdk.aws_iam.Role(
       this,
       "WebTaskExecutionRole",
       {
@@ -54,7 +63,8 @@ export class WebEcs extends Construct {
       {
         cpu: 256,
         memoryLimitMiB: 512,
-        taskRole: taskExecutionRole,
+        executionRole: this.taskExecutionRole,
+        taskRole: this.taskRole,
         family: "WebTaskDefinition",
       }
     );

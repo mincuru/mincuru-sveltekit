@@ -9,6 +9,8 @@ export interface MigrateEcsProps {
 
 export class MigrateEcs extends Construct {
   public readonly taskExecutionRole: cdk.aws_iam.Role;
+  public readonly taskRole: cdk.aws_iam.Role;
+  // public readonly taskDefinition: cdk.aws_ecs.FargateTaskDefinition;
   constructor(scope: Construct, id: string, props: MigrateEcsProps) {
     super(scope, id);
 
@@ -18,6 +20,28 @@ export class MigrateEcs extends Construct {
       enableFargateCapacityProviders: true,
       clusterName: "MigrateCluster",
     });
+
+    // タスクロール
+    this.taskRole = new cdk.aws_iam.Role(this, "MigrateTaskRole1", {
+      // TODO 名称修正
+      assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
+    });
+    const taskPolicy = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["logs:CreateLogStream", "logs:PutLogEvents"],
+      resources: ["*"],
+    });
+    this.taskRole.addToPolicy(taskPolicy);
+
+    const taskPolicy2 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret",
+      ],
+      resources: [props.secretRds.secretArn],
+    });
+    this.taskRole.addToPolicy(taskPolicy2);
 
     // タスク実行ロール
     this.taskExecutionRole = new cdk.aws_iam.Role(
@@ -33,26 +57,6 @@ export class MigrateEcs extends Construct {
       }
     );
 
-    // タスクロール
-    const taskRole = new cdk.aws_iam.Role(this, "MigrateTaskRole", {
-      assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
-      managedPolicies: [
-        cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
-          "service-role/AmazonECSTaskExecutionRolePolicy"
-        ),
-      ],
-    });
-    const taskPolicy = new cdk.aws_iam.PolicyStatement({
-      effect: cdk.aws_iam.Effect.ALLOW,
-      actions: [
-        "secretsmanager:GetSecretValue",
-        "secretsmanager:DescribeSecret",
-      ],
-      resources: [props.secretRds.secretArn],
-    });
-    this.taskExecutionRole.addToPolicy(taskPolicy); // TODO どっち？
-    taskRole.addToPolicy(taskPolicy); // TODO どっち？
-
     // タスク定義
     const taskDefinition = new cdk.aws_ecs.FargateTaskDefinition(
       this,
@@ -61,7 +65,7 @@ export class MigrateEcs extends Construct {
         cpu: 2048,
         memoryLimitMiB: 4096,
         executionRole: this.taskExecutionRole,
-        taskRole: this.taskExecutionRole,
+        taskRole: this.taskRole,
         family: "MigrateTaskDefinition",
       }
     );
