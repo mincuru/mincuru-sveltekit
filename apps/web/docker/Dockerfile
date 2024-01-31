@@ -12,6 +12,9 @@ RUN npm install
 RUN npm run db:generate -w packages/database
 RUN npm run build -w apps/web
 
+# jq
+RUN curl -o /usr/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x /usr/bin/jq
+
 COPY ./apps/web/scripts/run.sh ./run.sh
 RUN chmod +x ./run.sh
 

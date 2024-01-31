@@ -1,4 +1,6 @@
 import * as cdk from "aws-cdk-lib";
+import * as ecsp from "aws-cdk-lib/aws-ecs-patterns";
+import * as ecs from "aws-cdk-lib/aws-ecs";
 import { Construct } from "constructs";
 
 export interface WebEcsProps {
@@ -13,13 +15,6 @@ export class WebEcs extends Construct {
   // public readonly taskDefinition: cdk.aws_ecs.FargateTaskDefinition;
   constructor(scope: Construct, id: string, props: WebEcsProps) {
     super(scope, id);
-
-    // ECSクラスター
-    new cdk.aws_ecs.Cluster(this, "WebCluster", {
-      vpc: props.vpc,
-      enableFargateCapacityProviders: true,
-      clusterName: "WebCluster",
-    });
 
     // タスクロール
     this.taskRole = new cdk.aws_iam.Role(this, "WebTaskRole", {
@@ -99,5 +94,32 @@ export class WebEcs extends Construct {
         }),
       }),
     });
+
+    // ECSクラスター
+    const cluster = new cdk.aws_ecs.Cluster(this, "WebCluster", {
+      vpc: props.vpc,
+      enableFargateCapacityProviders: true,
+      clusterName: "WebCluster",
+    });
+
+    // サービス
+    // new cdk.aws_ecs.FargateService(this, "WebService", {
+    //   cluster: cluster,
+    //   taskDefinition: taskDefinition,
+    //   desiredCount: 1,
+    //   assignPublicIp: true,
+    //   serviceName: "WebService",
+    // });
+
+    // new ecsp.ApplicationLoadBalancedFargateService(
+    //   this,
+    //   "WebAlbFargateService",
+    //   {
+    //     taskImageOptions: {
+    //       image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
+    //     },
+    //     publicLoadBalancer: true,
+    //   }
+    // );
   }
 }

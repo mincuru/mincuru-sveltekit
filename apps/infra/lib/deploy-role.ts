@@ -82,7 +82,12 @@ export class DeployRole extends Construct {
 
     const policy6 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["ecs:DescribeTasks"],
+      actions: [
+        "ecs:DescribeTasks",
+        "ecs:DescribeTaskDefinition",
+        "ecs:RegisterTaskDefinition",
+        "ecs:DescribeServices",
+      ],
       resources: ["*"],
     });
     role.addToPolicy(policy6);
