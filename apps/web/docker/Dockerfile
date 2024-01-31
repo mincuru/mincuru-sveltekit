@@ -12,6 +12,12 @@ RUN npm install
 RUN npm run db:generate -w packages/database
 RUN npm run build -w apps/web
 
+# awscli
+WORKDIR /aws
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
+
 # jq
 RUN curl -o /usr/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x /usr/bin/jq
 

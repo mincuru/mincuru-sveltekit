@@ -87,6 +87,7 @@ export class DeployRole extends Construct {
         "ecs:DescribeTaskDefinition",
         "ecs:RegisterTaskDefinition",
         "ecs:DescribeServices",
+        "ecs:UpdateService",
       ],
       resources: ["*"],
     });
