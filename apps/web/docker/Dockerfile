@@ -13,7 +13,6 @@ RUN npm run db:generate -w packages/database
 RUN npm run build -w apps/web
 
 # awscli
-WORKDIR /aws
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 RUN unzip awscliv2.zip
 RUN ./aws/install
