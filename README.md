@@ -53,3 +53,9 @@ npm run cdk deploy -w apps/infra
 - `packages/database`: Prisma ORM
 - `@repo/eslint-config`: `eslint` 設定
 - `@repo/typescript-config`: `tsconfig.json` 共通設定
+
+## TODO
+
+- GitHub Actionsでcdk deployのデプロイ
+- 環境に応じてcdk deploryのパラメータを切り替える
+- 開発環境にdeployする際はSeed実行する
