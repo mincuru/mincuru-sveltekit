@@ -7,11 +7,12 @@ export interface RdsProps {
 }
 
 export class Rds extends Construct {
+  public readonly securityGroupSourceRds: cdk.aws_ec2.SecurityGroup;
   constructor(scope: Construct, id: string, props: RdsProps) {
     super(scope, id);
 
     // アクセス元セキュリティグループ（マイグレーション実行時に使用）
-    const sourceSecurityGroup = new cdk.aws_ec2.SecurityGroup(
+    this.securityGroupSourceRds = new cdk.aws_ec2.SecurityGroup(
       this,
       "SourceSecurityGroup",
       {
@@ -19,6 +20,10 @@ export class Rds extends Construct {
         vpc: props.vpc,
       }
     );
+    // ログ出力
+    new cdk.CfnOutput(this, "SourceSecurityGroupId", {
+      value: this.securityGroupSourceRds.securityGroupId,
+    });
 
     // ターゲットセキュリティグループ（RDSに設定するセキュリティグループ）
     const targetSecurityGroup = new cdk.aws_ec2.SecurityGroup(
@@ -31,7 +36,9 @@ export class Rds extends Construct {
       }
     );
     targetSecurityGroup.addIngressRule(
-      cdk.aws_ec2.Peer.securityGroupId(sourceSecurityGroup.securityGroupId),
+      cdk.aws_ec2.Peer.securityGroupId(
+        this.securityGroupSourceRds.securityGroupId
+      ),
       cdk.aws_ec2.Port.tcp(5432),
       ""
     );

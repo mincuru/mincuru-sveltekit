@@ -7,6 +7,7 @@ export interface WebEcsProps {
   vpc: cdk.aws_ec2.Vpc;
   ecr: cdk.aws_ecr.Repository;
   secretRds: cdk.aws_secretsmanager.Secret;
+  securityGroupSourceRds: cdk.aws_ec2.SecurityGroup;
 }
 
 export class WebEcs extends Construct {
@@ -65,7 +66,7 @@ export class WebEcs extends Construct {
     );
     taskDefinition.addContainer("WebContainer", {
       image: cdk.aws_ecs.ContainerImage.fromRegistry(
-        props.ecr.repositoryUri + ":latest"
+        props.ecr.repositoryUri // + ":latest"
       ),
       secrets: {
         DB_USERNAME: cdk.aws_ecs.Secret.fromSecretsManager(
@@ -83,6 +84,13 @@ export class WebEcs extends Construct {
           "dbname"
         ),
       },
+      portMappings: [
+        {
+          containerPort: 3000,
+          hostPort: 3000,
+          protocol: ecs.Protocol.TCP,
+        },
+      ],
       environment: {
         DATABASE_URL: "",
       },
@@ -103,23 +111,34 @@ export class WebEcs extends Construct {
     });
 
     // サービス
-    // new cdk.aws_ecs.FargateService(this, "WebService", {
-    //   cluster: cluster,
-    //   taskDefinition: taskDefinition,
-    //   desiredCount: 1,
-    //   assignPublicIp: true,
-    //   serviceName: "WebService",
-    // });
+    new cdk.aws_ecs.FargateService(this, "WebService", {
+      cluster: cluster,
+      taskDefinition: taskDefinition,
+      taskDefinitionRevision: cdk.aws_ecs.TaskDefinitionRevision.LATEST,
+      desiredCount: 1,
+      assignPublicIp: true,
+      serviceName: "WebService",
+      vpcSubnets: {
+        subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
+      },
+      securityGroups: [props.securityGroupSourceRds],
+    });
 
-    // new ecsp.ApplicationLoadBalancedFargateService(
-    //   this,
-    //   "WebAlbFargateService",
-    //   {
-    //     taskImageOptions: {
-    //       image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),
-    //     },
-    //     publicLoadBalancer: true,
-    //   }
-    // );
+    new cdk.aws_ecs_patterns.ApplicationLoadBalancedFargateService(
+      this,
+      "WebServiceWithALB",
+      {
+        publicLoadBalancer: true,
+        cluster: cluster,
+        taskDefinition: taskDefinition,
+        desiredCount: 1,
+        assignPublicIp: true,
+        serviceName: "WebServiceWithALB",
+        taskSubnets: {
+          subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
+        },
+        securityGroups: [props.securityGroupSourceRds],
+      }
+    );
   }
 }

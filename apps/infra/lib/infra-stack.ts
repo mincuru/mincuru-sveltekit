@@ -25,6 +25,7 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       ecr: webEcr.repo,
       secretRds: secretRds.secret,
+      securityGroupSourceRds: rds.securityGroupSourceRds,
     });
     const migrateEcr = new MigrateEcr(this, "MigrateEcr", {});
     const migrateEcs = new MigrateEcs(this, "MigrateEcs", {

@@ -38,6 +38,15 @@ cd mincuru-sveltekit
 npm run migrate
 ```
 
+## AWSへのデプロイ
+
+```sh
+cd mincuru-sveltekit
+npm run cdk deploy -w apps/infra
+# コンソール上に表示されるRdsSourceSecurityGroupIdとVpcPublicSubnetIdを、GitHubのSecretsに登録する。
+# ECS Serviceのデプロイ中に対象ECRイメージが見つからないエラーが出るので、GitHub Actionsでdeploy jobを実行すると、その処理中にECSタスク定義が更新されて、cdk deployが成功する。
+```
+
 ## プロジェクト構成
 
 - `apps/web`: SvelteKitフロントエンド
