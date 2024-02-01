@@ -12,7 +12,7 @@ env:
   WEB_ECR_REPOSITORY: mincuru/web
   WEB_TASK_DEFINITION: WebTaskDefinition
   WEB_CONTAINER_NAME: WebContainer
-  WEB_ECS_SERVICE: WebServiceWithALB
+  WEB_ECS_SERVICE: WebService
   WEB_ECS_CLUSTER: WebCluster
 
 permissions:

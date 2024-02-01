@@ -111,34 +111,38 @@ export class WebEcs extends Construct {
     });
 
     // サービス
-    new cdk.aws_ecs.FargateService(this, "WebService", {
-      cluster: cluster,
-      taskDefinition: taskDefinition,
-      taskDefinitionRevision: cdk.aws_ecs.TaskDefinitionRevision.LATEST,
-      desiredCount: 1,
-      assignPublicIp: true,
-      serviceName: "WebService",
-      vpcSubnets: {
-        subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
-      },
-      securityGroups: [props.securityGroupSourceRds],
-    });
+    // new cdk.aws_ecs.FargateService(this, "WebService", {
+    //   cluster: cluster,
+    //   taskDefinition: taskDefinition,
+    //   taskDefinitionRevision: cdk.aws_ecs.TaskDefinitionRevision.LATEST,
+    //   desiredCount: 1,
+    //   assignPublicIp: true,
+    //   serviceName: "WebService",
+    //   vpcSubnets: {
+    //     subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
+    //   },
+    //   securityGroups: [props.securityGroupSourceRds],
+    // });
 
-    new cdk.aws_ecs_patterns.ApplicationLoadBalancedFargateService(
-      this,
-      "WebServiceWithALB",
-      {
-        publicLoadBalancer: true,
-        cluster: cluster,
-        taskDefinition: taskDefinition,
-        desiredCount: 1,
-        assignPublicIp: true,
-        serviceName: "WebServiceWithALB",
-        taskSubnets: {
-          subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
-        },
-        securityGroups: [props.securityGroupSourceRds],
-      }
-    );
+    const webAlbFargateService =
+      new cdk.aws_ecs_patterns.ApplicationLoadBalancedFargateService(
+        this,
+        "WebService",
+        {
+          publicLoadBalancer: true,
+          cluster: cluster,
+          taskDefinition: taskDefinition,
+          desiredCount: 1,
+          assignPublicIp: true,
+          serviceName: "WebService",
+          taskSubnets: {
+            subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
+          },
+          securityGroups: [props.securityGroupSourceRds],
+        }
+      );
+    new cdk.CfnOutput(this, "WebServiceUrl", {
+      value: webAlbFargateService.loadBalancer.loadBalancerDnsName,
+    });
   }
 }
