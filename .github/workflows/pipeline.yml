@@ -76,13 +76,16 @@ jobs:
       - name: Describe public subnet
         id: describe-subnet
         run: echo "public_subnet=$(aws ec2 describe-subnets --filters Name=tag:Name,Values=InfraStack/Vpc/Vpc/PublicSubnet1)" >> $GITHUB_OUTPUT
+      - name: Describe source security group
+        id: describe-security-group
+        run: echo "source_security_group=$(aws ec2 describe-security-groups --filters Name=group-name,Values=SourceSecurityGroup" >> $GITHUB_OUTPUT
       - name: Run Migration
         uses: noelzubin/aws-ecs-run-task@v1.0
         with:
           cluster: ${{ env.MIGRATE_ECS_CLUSTER }}
           task-definition: ${{ env.MIGRATE_TASK_DEFINITION}}
           subnets: ${{ steps.describe-subnet.outputs.public_subnet }}
-          security-groups: ${{ secrets.MIGRATE_SECURITY_GROUP }}
+          security-groups: ${{ steps.describe-security-group.outputs.source_security_group }}
           assign-public-ip: ENABLED
           override-container: ${{ env.MIGRATE_CONTAINER_NAME }}
   deploy:
