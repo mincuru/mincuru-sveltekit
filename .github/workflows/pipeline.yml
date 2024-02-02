@@ -93,11 +93,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check changed files
-        id: files
-        uses: jitterbit/get-changed-files@v1
-      - name: Conditional step based on changed files
-        if: contains(steps.files.outputs.all, 'apps/infra/')
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'src/**'
+      - if: steps.changes.outputs.src == 'true'
         run: echo "特定のフォルダ配下のファイルが変更されました"
   deploy-web:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
