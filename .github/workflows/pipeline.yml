@@ -98,7 +98,7 @@ jobs:
         with:
           filters: |
             src:
-              - 'src/**'
+              - 'apps/infra/**'
       - if: steps.changes.outputs.src == 'true'
         run: echo "特定のフォルダ配下のファイルが変更されました"
   deploy-web:
