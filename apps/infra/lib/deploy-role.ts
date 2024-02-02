@@ -92,5 +92,13 @@ export class DeployRole extends Construct {
       resources: ["*"],
     });
     role.addToPolicy(policy6);
+
+    // VPC関連情報の取得
+    const policy7 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["ec2:DescribeSubnets", "ec2:DescribeSecurityGroups"],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy7);
   }
 }
