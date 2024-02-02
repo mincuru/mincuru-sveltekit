@@ -75,10 +75,10 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
       - name: Describe public subnet
         id: describe-subnet
-        run: echo "public_subnet=$(aws ec2 describe-subnets --filters Name=tag:Name,Values=InfraStack/Vpc/Vpc/PublicSubnet1)" >> $GITHUB_OUTPUT
+        run: echo "public_subnet=$(aws ec2 describe-subnets --filters Name=tag:Name,Values=InfraStack/Vpc/Vpc/PublicSubnet1 --query 'Subnets[0].SubnetId' --output text)" >> $GITHUB_OUTPUT
       - name: Describe source security group
         id: describe-security-group
-        run: echo "source_security_group=$(aws ec2 describe-security-groups --filters Name=group-name,Values=SourceSecurityGroup" >> $GITHUB_OUTPUT
+        run: echo "source_security_group=$(aws ec2 describe-security-groups --filters Name=group-name,Values=SourceSecurityGroup --output text" >> $GITHUB_OUTPUT
       - name: Run Migration
         uses: noelzubin/aws-ecs-run-task@v1.0
         with:
