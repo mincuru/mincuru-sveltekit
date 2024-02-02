@@ -59,3 +59,14 @@ npm run cdk deploy -w apps/infra
 - GitHub Actionsでcdk deployのデプロイ
 - 環境に応じてcdk deploryのパラメータを切り替える
 - 開発環境にdeployする際はSeed実行する
+- apiのLambdaへのデプロイ
+- deploy時の警告を解消する
+- マイグレーション時の警告を解消する
+- ドキュメントサイトを作成する
+- ドキュメントサイトをデプロイする
+- ログ整備
+- アラート整備
+- Cognito整備
+- 編集画面の作成
+- クルマデータ投入バッチの作成
+- prisma studioの整備
