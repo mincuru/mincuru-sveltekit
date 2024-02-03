@@ -100,6 +100,51 @@ export class DeployRole extends Construct {
       resources: ["*"],
     });
     role.addToPolicy(policy7);
+
+    // CDKのデプロイに必要な権限
+    const policy8 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: [
+        // "cloudformation:DescribeChangeSet",
+        // "cloudformation:DescribeStackResources",
+        "cloudformation:DescribeStacks",
+        // "cloudformation:GetTemplate",
+        // "cloudformation:ListStackResources",
+        // "cloudformation:CreateChangeSet",
+        // "cloudformation:ExecuteChangeSet",
+        // "cloudformation:DeleteChangeSet",
+        // "cloudformation:DeleteStack",
+        // "cloudformation:CreateStack",
+        // "cloudformation:UpdateStack",
+        // "cloudformation:ValidateTemplate",
+        // "cloudformation:ListStacks",
+        // "cloudformation:ListExports",
+        // "cloudformation:ListImports",
+        // "cloudformation:GetTemplateSummary",
+        // "cloudformation:ListChangeSets",
+        // "cloudformation:DescribeStackEvents",
+        // "cloudformation:DescribeStacks",
+        // "cloudformation:DescribeStackResources",
+        // "cloudformation:DescribeStackEvents",
+        // "cloudformation:DescribeChangeSet",
+        // "cloudformation:GetTemplate",
+        // "cloudformation:GetTemplateSummary",
+        // "cloudformation:ListStackResources",
+        // "cloudformation:ListStacks",
+        // "cloudformation:ListExports",
+        // "cloudformation:ListImports",
+        // "cloudformation:ListChangeSets",
+        // "cloudformation:CreateChangeSet",
+        // "cloudformation:ExecuteChangeSet",
+        // "cloudformation:DeleteChangeSet",
+        // "cloudformation:DeleteStack",
+        // "cloudformation:CreateStack",
+        // "cloudformation:UpdateStack",
+        // "cloudformation:ValidateTemplate",
+      ],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy8);
   }
 }
 
