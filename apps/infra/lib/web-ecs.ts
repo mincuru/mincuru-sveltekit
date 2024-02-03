@@ -2,8 +2,10 @@ import * as cdk from "aws-cdk-lib";
 import * as ecsp from "aws-cdk-lib/aws-ecs-patterns";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import { Construct } from "constructs";
+import { Context } from "./infra-stack";
 
 export interface WebEcsProps {
+  context: Context;
   vpc: cdk.aws_ec2.Vpc;
   ecr: cdk.aws_ecr.Repository;
   secretRds: cdk.aws_secretsmanager.Secret;
@@ -53,12 +55,19 @@ export class WebEcs extends Construct {
     );
 
     // タスク定義
+    let cpu = 256;
+    let mem = 512;
+    if (props.context.environment === "prd") {
+      cpu = 1024;
+      mem = 2048;
+    }
+
     const taskDefinition = new cdk.aws_ecs.FargateTaskDefinition(
       this,
       "WebTaskDefinition",
       {
-        cpu: 256,
-        memoryLimitMiB: 512,
+        cpu: cpu,
+        memoryLimitMiB: mem,
         executionRole: this.taskExecutionRole,
         taskRole: this.taskRole,
         family: "WebTaskDefinition",
