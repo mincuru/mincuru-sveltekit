@@ -2,9 +2,6 @@ name: Pipeline
 on:
   push:
 
-env:
-  AWS_CLOUDFRONT_DISTRIBUTION_NAME: d15dl6nco69pbe.cloudfront.net
-
 permissions:
   id-token: write
   contents: read
@@ -25,10 +22,13 @@ jobs:
           aws-region: ap-northeast-1
       - run: npm run db:generate -w packages/database
       - run: npm run test:coverage -w apps/web
+      - name: Describe distribution
+        id: describe-distribution
+        run: echo "distribution=$(aws cloudfront list-distributions | jq -r '.DistributionList.Items[] | select(.Origins.Items[] | .DomainName | contains("mincuru-coverage-report")) | .DomainName')" >> $GITHUB_OUTPUT
       - name: Upload coverage to S3
         run: |
           aws s3 sync ./apps/web/coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
-          echo "* [カバレッジレポート](https://${{ env.AWS_CLOUDFRONT_DISTRIBUTION_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+          echo "* [カバレッジレポート](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
   migrate:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest

@@ -12,6 +12,11 @@ export class CoverageReportS3 extends Construct {
     this.bucket = new cdk.aws_s3.Bucket(this, "CoverageReportS3", {
       bucketName: "mincuru-coverage-report",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+      lifecycleRules: [
+        {
+          expiration: cdk.Duration.days(1),
+        },
+      ],
     });
 
     const oai = new cdk.aws_cloudfront.OriginAccessIdentity(

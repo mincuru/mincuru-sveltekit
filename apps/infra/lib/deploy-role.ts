@@ -107,45 +107,22 @@ export class DeployRole extends Construct {
       actions: [
         "ssm:GetParameter",
         "cloudformation:DescribeChangeSet",
-        // "cloudformation:DescribeStackResources",
         "cloudformation:DescribeStacks",
         "cloudformation:GetTemplate",
-        // "cloudformation:ListStackResources",
-        // "cloudformation:CreateChangeSet",
-        // "cloudformation:ExecuteChangeSet",
         "cloudformation:DeleteChangeSet",
-        // "cloudformation:DeleteStack",
-        // "cloudformation:CreateStack",
-        // "cloudformation:UpdateStack",
-        // "cloudformation:ValidateTemplate",
-        // "cloudformation:ListStacks",
-        // "cloudformation:ListExports",
-        // "cloudformation:ListImports",
-        // "cloudformation:GetTemplateSummary",
-        // "cloudformation:ListChangeSets",
-        // "cloudformation:DescribeStackEvents",
-        // "cloudformation:DescribeStacks",
-        // "cloudformation:DescribeStackResources",
-        // "cloudformation:DescribeStackEvents",
-        // "cloudformation:DescribeChangeSet",
-        // "cloudformation:GetTemplate",
-        // "cloudformation:GetTemplateSummary",
-        // "cloudformation:ListStackResources",
-        // "cloudformation:ListStacks",
-        // "cloudformation:ListExports",
-        // "cloudformation:ListImports",
-        // "cloudformation:ListChangeSets",
         "cloudformation:CreateChangeSet",
-        // "cloudformation:ExecuteChangeSet",
-        // "cloudformation:DeleteChangeSet",
-        // "cloudformation:DeleteStack",
-        // "cloudformation:CreateStack",
-        // "cloudformation:UpdateStack",
-        // "cloudformation:ValidateTemplate",
       ],
       resources: ["*"],
     });
     role.addToPolicy(policy8);
+
+    // カバレッジレポートのアップロード先CloudFrontのドメイン名取得に必要な権限
+    const policy9 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["cloudfront:ListDistributions"],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy9);
   }
 }
 
