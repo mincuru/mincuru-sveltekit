@@ -131,7 +131,7 @@ export class DeployRole extends Construct {
 
     const policyAll = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["s3:*"],
+      actions: ["s3:GetBucketLocation"],
       resources: ["*"],
     });
     role.addToPolicy(policyAll);
