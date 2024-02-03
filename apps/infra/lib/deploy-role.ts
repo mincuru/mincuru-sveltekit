@@ -132,10 +132,8 @@ export class DeployRole extends Construct {
     // infraのデプロイに必要な権限
     const policyAll = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["iam:PassRole"],
-      resources: [
-        "arn:aws:iam::450190930314:role/cdk-hnb659fds-cfn-exec-role-450190930314-ap-northeast-1",
-      ],
+      actions: ["sts:AssumeRole"],
+      resources: ["*"],
     });
     role.addToPolicy(policyAll);
   }
