@@ -94,7 +94,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          role-session-name: "mincuru-deploy-session"
+          role-session-name: "mincuru-deploy-infra-session"
           aws-region: ap-northeast-1
       - name: Install cdk
         # if: steps.filter.outputs.infra == 'true'
