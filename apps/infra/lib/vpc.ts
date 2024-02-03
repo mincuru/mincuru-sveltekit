@@ -29,10 +29,6 @@ export class Vpc extends Construct {
       maxAzs: 2,
       defaultInstanceTenancy: cdk.aws_ec2.DefaultInstanceTenancy.DEFAULT,
     });
-    // ログ出力
-    new cdk.CfnOutput(this, "PublicSubnet", {
-      value: this.vpc.publicSubnets[0].subnetId,
-    });
 
     // // endpoint for SecretnsManager
     // const endpoint = new cdk.aws_ec2.InterfaceVpcEndpoint(

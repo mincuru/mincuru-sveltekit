@@ -105,12 +105,26 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: "mincuru-deploy-infra-session"
           aws-region: ap-northeast-1
-      - name: Deploy infra
+      - name: Install cdk
         # if: steps.filter.outputs.infra == 'true'
         run: |
           npm install -g aws-cdk
           npm install
-          npm run cdk deploy --require-approval never -w apps/infra
+      - name: Diff infra
+        # if: steps.filter.outputs.infra == 'true'
+        run: |
+          result=$(cdk diff -w apps/infra)
+          IFS=$'\n'
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          for line in $result
+          do
+            echo -e $line >> $GITHUB_STEP_SUMMARY
+          done
+          echo '```' >> $GITHUB_STEP_SUMMARY
+      - name: Deploy infra
+        # if: steps.filter.outputs.infra == 'true'
+        run: |
+          npm run cdk deploy -w apps/infra
   deploy-web:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
