@@ -4,16 +4,6 @@ on:
 
 env:
   AWS_CLOUDFRONT_DISTRIBUTION_NAME: d15dl6nco69pbe.cloudfront.net
-  MIGRATE_ECR_REPOSITORY: mincuru/migrate
-  MIGRATE_TASK_DEFINITION: MigrateTaskDefinition
-  MIGRATE_CONTAINER_NAME: MigrateContainer
-  MIGRATE_ECS_SERVICE: MigrateService
-  MIGRATE_ECS_CLUSTER: MigrateCluster
-  WEB_ECR_REPOSITORY: mincuru/web
-  WEB_TASK_DEFINITION: WebTaskDefinition
-  WEB_CONTAINER_NAME: WebContainer
-  WEB_ECS_SERVICE: WebService
-  WEB_ECS_CLUSTER: WebCluster
 
 permissions:
   id-token: write
@@ -66,7 +56,7 @@ jobs:
         with:
           push: true
           file: ./apps/migrate/docker/Dockerfile
-          tags: ${{ secrets.ECR_REGISTRY }}/${{ env.MIGRATE_ECR_REPOSITORY }}:latest
+          tags: ${{ secrets.ECR_REGISTRY }}/mincuru/migrate:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
       - name: Move cache
@@ -82,14 +72,14 @@ jobs:
       - name: Run Migration
         uses: noelzubin/aws-ecs-run-task@v1.0
         with:
-          cluster: ${{ env.MIGRATE_ECS_CLUSTER }}
-          task-definition: ${{ env.MIGRATE_TASK_DEFINITION}}
+          cluster: MigrateCluster
+          task-definition: MigrateTaskDefinition
           subnets: ${{ steps.describe-subnet.outputs.public_subnet }}
           security-groups: ${{ steps.describe-security-group.outputs.source_security_group }}
           assign-public-ip: ENABLED
-          override-container: ${{ env.MIGRATE_CONTAINER_NAME }}
+          override-container: MigrateContainer
   deploy-infra:
-    # if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,7 +94,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          role-session-name: "mincuru-deploy-infra-session"
+          role-session-name: "mincuru-deploy-session"
           aws-region: ap-northeast-1
       - name: Install cdk
         if: steps.filter.outputs.infra == 'true'
@@ -145,28 +135,26 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.WEB_ECR_REPOSITORY }}
+          ECR_REPOSITORY: mincuru/web
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -f ./apps/web/docker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
       - name: Download task definition
-        env:
-          WEB_TASK_DEFINITION: ${{ env.WEB_TASK_DEFINITION }}
         run: |
-          aws ecs describe-task-definition --task-definition $WEB_TASK_DEFINITION --query taskDefinition > task-definition.json
+          aws ecs describe-task-definition --task-definition WebTaskDefinition --query taskDefinition > task-definition.json
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
-          container-name: ${{ env.WEB_CONTAINER_NAME }}
+          container-name: WebContainer
           image: ${{ steps.build-image.outputs.image }}
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.WEB_ECS_SERVICE }}
-          cluster: ${{ env.WEB_ECS_CLUSTER }}
+          service: WebService
+          cluster: WebCluster
           wait-for-service-stability: true
