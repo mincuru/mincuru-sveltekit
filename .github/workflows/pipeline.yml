@@ -99,9 +99,11 @@ jobs:
           filters: |
             infra:
               - 'apps/infra/**'
-      - name: deploy infra
+      - name: Deploy infra
         if: steps.filter.outputs.infra == 'true'
-        run: echo "infraフォルダ配下のファイルが変更されました"
+        run: |
+          npm install -g aws-cdk
+          npm run cdk deploy -w apps/infra
   deploy-web:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
