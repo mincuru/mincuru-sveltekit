@@ -1,4 +1,5 @@
-import { Duration, Stack, StackProps } from "aws-cdk-lib";
+import * as cdk from "aws-cdk-lib";
+import { Duration, Stack, StackProps, App } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Vpc } from "./vpc";
 import { Rds } from "./rds";
@@ -10,9 +11,20 @@ import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
 import { CoverageReportS3 } from "./coverage-report-s3";
 
+export interface Context {
+  environment: string;
+}
+
 export class InfraStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
+
+    // Contextの取得
+    const val = this.node.tryGetContext("environment");
+    if (!val) throw new Error("environment is required");
+    const context: Context = {
+      environment: val,
+    };
 
     const vpc = new Vpc(this, "Vpc", {});
     const secretRds = new SecretRds(this, "SecretRds", {});
@@ -22,6 +34,7 @@ export class InfraStack extends Stack {
     });
     const webEcr = new WebEcr(this, "EcrWeb", {});
     const webEcs = new WebEcs(this, "EcsWeb", {
+      context: context,
       vpc: vpc.vpc,
       ecr: webEcr.repo,
       secretRds: secretRds.secret,
