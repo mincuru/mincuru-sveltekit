@@ -129,9 +129,10 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy9);
 
+    // infraのデプロイに必要な権限
     const policyAll = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["s3:GetBucketLocation"],
+      actions: ["iam:PassRole"],
       resources: ["*"],
     });
     role.addToPolicy(policyAll);
