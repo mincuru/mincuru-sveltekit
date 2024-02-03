@@ -20,10 +20,6 @@ export class Rds extends Construct {
         vpc: props.vpc,
       }
     );
-    // ログ出力
-    new cdk.CfnOutput(this, "SourceSecurityGroupId", {
-      value: this.securityGroupSourceRds.securityGroupId,
-    });
 
     // ターゲットセキュリティグループ（RDSに設定するセキュリティグループ）
     const targetSecurityGroup = new cdk.aws_ec2.SecurityGroup(
