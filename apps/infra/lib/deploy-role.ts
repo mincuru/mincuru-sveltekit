@@ -28,6 +28,7 @@ export class DeployRole extends Construct {
       roleName: "DeployGitHub",
     });
 
+    // カバレッジレポートをアップロードするための権限
     const policy = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: ["s3:PutObject", "s3:ListBucket"],
@@ -35,6 +36,7 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy);
 
+    // ECRへのログインに必要な権限
     const policy2 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: ["ecr:GetAuthorizationToken"],
@@ -61,6 +63,7 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy3);
 
+    // ECSタスク実行に必要な権限
     const policy4 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: ["ecs:RunTask"],
@@ -68,6 +71,7 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy4);
 
+    // ECSタスク実行に必要な権限
     const policy5 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: ["iam:PassRole"],
@@ -80,6 +84,7 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy5);
 
+    // ECSタスクのデプロイに必要な権限
     const policy6 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: [
@@ -126,7 +131,7 @@ export class DeployRole extends Construct {
 
     const policyAll = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["*"],
+      actions: ["s3:*"],
       resources: ["*"],
     });
     role.addToPolicy(policyAll);
