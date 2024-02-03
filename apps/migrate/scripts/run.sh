@@ -18,6 +18,7 @@ export DATABASE_URL="postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_
 
 # Prismaマイグレーションを実行
 npm run db:migrate
-npm run db:seed -w packages/database
+npm run db:generate
+npm run db:seed
 # npx prisma migrate deploy
 # npx prisma db seed
