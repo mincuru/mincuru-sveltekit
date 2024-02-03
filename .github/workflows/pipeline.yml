@@ -103,6 +103,7 @@ jobs:
         # if: steps.filter.outputs.infra == 'true'
         run: |
           npm install -g aws-cdk
+          npm install
           npm run cdk deploy -w apps/infra
   deploy-web:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
