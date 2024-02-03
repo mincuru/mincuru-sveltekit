@@ -113,7 +113,7 @@ jobs:
       - name: Diff infra
         # if: steps.filter.outputs.infra == 'true'
         run: |
-          result=$(cdk diff -w apps/infra)
+          result=$(npm run cdk diff -w apps/infra)
           IFS=$'\n'
           echo '```' >> $GITHUB_STEP_SUMMARY
           for line in $result
