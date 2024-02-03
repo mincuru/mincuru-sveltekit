@@ -100,18 +100,19 @@ jobs:
             infra:
               - 'apps/infra/**'
       - name: Configure AWS Credentials
+        if: steps.filter.outputs.infra == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: "mincuru-deploy-infra-session"
           aws-region: ap-northeast-1
       - name: Install cdk
-        # if: steps.filter.outputs.infra == 'true'
+        if: steps.filter.outputs.infra == 'true'
         run: |
           npm install -g aws-cdk
           npm install
       - name: Diff infra
-        # if: steps.filter.outputs.infra == 'true'
+        if: steps.filter.outputs.infra == 'true'
         run: |
           result=$(npm run cdk diff -w apps/infra)
           IFS=$'\n'
@@ -122,7 +123,7 @@ jobs:
           done
           echo '```' >> $GITHUB_STEP_SUMMARY
       - name: Deploy infra
-        # if: steps.filter.outputs.infra == 'true'
+        if: steps.filter.outputs.infra == 'true'
         run: |
           npm run deploy -w apps/infra
   deploy-web:
