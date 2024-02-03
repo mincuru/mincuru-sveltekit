@@ -124,7 +124,7 @@ jobs:
       - name: Deploy infra
         # if: steps.filter.outputs.infra == 'true'
         run: |
-          npm run cdk deploy -w apps/infra
+          npm run deploy -w apps/infra
   deploy-web:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest

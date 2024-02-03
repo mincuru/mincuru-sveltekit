@@ -105,6 +105,7 @@ export class DeployRole extends Construct {
     const policy8 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: [
+        "ssm:GetParameter",
         "cloudformation:DescribeChangeSet",
         // "cloudformation:DescribeStackResources",
         "cloudformation:DescribeStacks",
