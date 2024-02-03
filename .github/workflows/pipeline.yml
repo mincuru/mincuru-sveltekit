@@ -89,18 +89,19 @@ jobs:
           assign-public-ip: ENABLED
           override-container: ${{ env.MIGRATE_CONTAINER_NAME }}
   deploy-infra:
-    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    # if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
-        id: changes
+        id: filter
         with:
           filters: |
-            src:
+            infra:
               - 'apps/infra/**'
-      - if: steps.changes.outputs.src == 'true'
-        run: echo "特定のフォルダ配下のファイルが変更されました"
+      - name: deploy infra
+        if: steps.filter.outputs.infra == 'true'
+        run: echo "infraフォルダ配下のファイルが変更されました"
   deploy-web:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
