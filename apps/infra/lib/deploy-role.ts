@@ -133,7 +133,9 @@ export class DeployRole extends Construct {
     const policyAll = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
       actions: ["iam:PassRole"],
-      resources: ["*"],
+      resources: [
+        "arn:aws:iam::450190930314:role/cdk-hnb659fds-cfn-exec-role-450190930314-ap-northeast-1",
+      ],
     });
     role.addToPolicy(policyAll);
   }
