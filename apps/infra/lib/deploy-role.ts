@@ -108,7 +108,7 @@ export class DeployRole extends Construct {
         // "cloudformation:DescribeChangeSet",
         // "cloudformation:DescribeStackResources",
         "cloudformation:DescribeStacks",
-        // "cloudformation:GetTemplate",
+        "cloudformation:GetTemplate",
         // "cloudformation:ListStackResources",
         // "cloudformation:CreateChangeSet",
         // "cloudformation:ExecuteChangeSet",
