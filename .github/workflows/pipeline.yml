@@ -100,7 +100,7 @@ jobs:
             infra:
               - 'apps/infra/**'
       - name: Deploy infra
-        if: steps.filter.outputs.infra == 'true'
+        # if: steps.filter.outputs.infra == 'true'
         run: |
           npm install -g aws-cdk
           npm run cdk deploy -w apps/infra
