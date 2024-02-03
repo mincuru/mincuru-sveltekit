@@ -58,7 +58,7 @@ npm run cdk deploy -w apps/infra
 
 - ~~GitHub ActionsでサブネットIDやセキュリティグループのIDを取得する~~
 - ~~GitHub Actionsでcdk deployのデプロイ~~
-- 環境に応じてcdk deploryのパラメータを切り替える
+- ~~環境に応じてcdk deploryのパラメータを切り替える~~
 - 開発環境にdeployする際はSeed実行する
 - apiのLambdaへのデプロイ
 - deploy時の警告を解消する
