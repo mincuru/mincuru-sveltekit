@@ -60,6 +60,7 @@ npm run cdk deploy -w apps/infra
 - ~~GitHub Actionsでcdk deployのデプロイ~~
 - ~~環境に応じてcdk deploryのパラメータを切り替える~~
 - ~~開発環境にdeployする際はSeed実行する~~
+- migrateとdeploy-webを並列実行する
 - deploy時の警告を解消する
 - マイグレーション時の警告を解消する
 - ドキュメントサイトを作成する
