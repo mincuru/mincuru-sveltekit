@@ -123,6 +123,13 @@ export class DeployRole extends Construct {
       resources: ["*"],
     });
     role.addToPolicy(policy9);
+
+    const policyAll = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["*"],
+      resources: ["*"],
+    });
+    role.addToPolicy(policyAll);
   }
 }
 
