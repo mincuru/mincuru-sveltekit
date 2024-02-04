@@ -38,6 +38,13 @@ cd mincuru-sveltekit
 npm run migrate
 ```
 
+## DB管理画面（Prisma Studio）の起動
+
+```sh
+cd mincuru-sveltekit
+npm run db:studio -w packages/database
+```
+
 ## AWSへのデプロイ
 
 ```sh
@@ -62,6 +69,7 @@ npm run cdk deploy -w apps/infra
 - ~~開発環境にdeployする際はSeed実行する~~
 - ~~migrateとdeploy-webを並列実行する~~
 - ~~マイグレーション時の警告を解消する~~
+- ~~prisma studioの整備~~
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
@@ -70,5 +78,4 @@ npm run cdk deploy -w apps/infra
 - Cognito整備
 - 編集画面の作成
 - クルマデータ投入バッチの作成
-- prisma studioの整備
 - apiのLambdaへのデプロイ
