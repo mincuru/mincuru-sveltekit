@@ -70,9 +70,9 @@ npm run cdk -w apps/infra -- deploy -c environment=stg
 - ~~migrateとdeploy-webを並列実行する~~
 - ~~マイグレーション時の警告を解消する~~
 - ~~prisma studioの整備~~
+- ~~Nodeを20にする~~
 - Playwrightのテストを整備する
 - apiのテストを整備する
-- ~~Nodeを20にする~~
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
