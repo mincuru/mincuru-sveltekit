@@ -49,7 +49,7 @@ npm run db:studio -w packages/database
 
 ```sh
 cd mincuru-sveltekit
-npm run cdk deploy -w apps/infra
+npm run cdk -w apps/infra -- deploy -c environment=stg
 # コンソール上に表示されるRdsSourceSecurityGroupIdとVpcPublicSubnetIdを、GitHubのSecretsに登録する。
 # ECS Serviceのデプロイ中に対象ECRイメージが見つからないエラーが出るので、GitHub Actionsでdeploy jobを実行すると、その処理中にECSタスク定義が更新されて、cdk deployが成功する。
 ```
@@ -70,6 +70,9 @@ npm run cdk deploy -w apps/infra
 - ~~migrateとdeploy-webを並列実行する~~
 - ~~マイグレーション時の警告を解消する~~
 - ~~prisma studioの整備~~
+- Playwrightのテストを整備する
+- apiのテストを整備する
+- Nodeを20にする
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
