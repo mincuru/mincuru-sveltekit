@@ -72,7 +72,7 @@ npm run cdk -w apps/infra -- deploy -c environment=stg
 - ~~prisma studioの整備~~
 - Playwrightのテストを整備する
 - apiのテストを整備する
-- Nodeを20にする
+- ~~Nodeを20にする~~
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
