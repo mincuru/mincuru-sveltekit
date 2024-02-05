@@ -38,11 +38,18 @@ cd mincuru-sveltekit
 npm run migrate
 ```
 
+## DB管理画面（Prisma Studio）の起動
+
+```sh
+cd mincuru-sveltekit
+npm run db:studio -w packages/database
+```
+
 ## AWSへのデプロイ
 
 ```sh
 cd mincuru-sveltekit
-npm run cdk deploy -w apps/infra
+npm run cdk -w apps/infra -- deploy -c environment=stg
 # コンソール上に表示されるRdsSourceSecurityGroupIdとVpcPublicSubnetIdを、GitHubのSecretsに登録する。
 # ECS Serviceのデプロイ中に対象ECRイメージが見つからないエラーが出るので、GitHub Actionsでdeploy jobを実行すると、その処理中にECSタスク定義が更新されて、cdk deployが成功する。
 ```
@@ -61,8 +68,12 @@ npm run cdk deploy -w apps/infra
 - ~~環境に応じてcdk deploryのパラメータを切り替える~~
 - ~~開発環境にdeployする際はSeed実行する~~
 - ~~migrateとdeploy-webを並列実行する~~
+- ~~マイグレーション時の警告を解消する~~
+- ~~prisma studioの整備~~
+- Playwrightのテストを整備する
+- apiのテストを整備する
+- Nodeを20にする
 - deploy時の警告を解消する
-- マイグレーション時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
 - ログ整備
@@ -70,5 +81,4 @@ npm run cdk deploy -w apps/infra
 - Cognito整備
 - 編集画面の作成
 - クルマデータ投入バッチの作成
-- prisma studioの整備
 - apiのLambdaへのデプロイ

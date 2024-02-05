@@ -1,4 +1,4 @@
-FROM node:18.19.0 as builder
+FROM node:20.11.0 as builder
 
 # app
 COPY ./package.json .
