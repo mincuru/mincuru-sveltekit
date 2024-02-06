@@ -71,6 +71,7 @@ npm run cdk -w apps/infra -- deploy -c environment=stg
 - ~~マイグレーション時の警告を解消する~~
 - ~~prisma studioの整備~~
 - ~~Nodeを20にする~~
+- ~~Auth.jsによるGoogle認証実装~~
 - Playwrightのテストを整備する
 - apiのテストを整備する
 - deploy時の警告を解消する
@@ -78,7 +79,6 @@ npm run cdk -w apps/infra -- deploy -c environment=stg
 - ドキュメントサイトをデプロイする
 - ログ整備
 - アラート整備
-- Cognito整備
 - 編集画面の作成
 - クルマデータ投入バッチの作成
 - apiのLambdaへのデプロイ
