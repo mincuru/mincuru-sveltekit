@@ -47,7 +47,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_TEST_ROLE_ARN }}
           aws-region: ap-northeast-1
       - run: npm run db:generate -w packages/database
-      - run: npm run db:migrate dev -w packages/database
+      - run: npm run db:migrate -w packages/database
+      - run: npm run db:seed -w packages/database
       - run: npx playwright install
       - run: npm run test -w apps/web
       - name: Describe distribution
