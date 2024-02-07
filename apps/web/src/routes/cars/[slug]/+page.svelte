@@ -19,6 +19,10 @@
   const car = new CarDisplay(data.car);
 </script>
 
+<svelte:head>
+  <title>みんクル / クルマ詳細</title>
+</svelte:head>
+
 <div class="prose mx-auto">
   <div class="breadcrumbs text-sm">
     <ul>
