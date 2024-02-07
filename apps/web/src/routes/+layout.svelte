@@ -17,11 +17,7 @@
 
 <!-- header -->
 <div class="navbar bg-base-100 fixed left-0 right-0 top-0 z-50 shadow">
-  <div class="flex-none">
-    <label for="my-drawer-2" class="show btn btn-square btn-ghost drawer-button lg:hidden">
-      <Icon src={Menu} size="24" />
-    </label>
-  </div>
+  <div class="flex-none"></div>
   <div class="flex-1">
     <p class="btn btn-ghost text-xl">みんクル</p>
   </div>
