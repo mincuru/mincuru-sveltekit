@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import type { Account } from '$lib/model/Account';
   import { signIn, signOut } from '@auth/sveltekit/client';
-  import { Menu } from '@steeze-ui/material-design-icons';
-  import { Icon } from '@steeze-ui/svelte-icon';
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import '../app.css';
