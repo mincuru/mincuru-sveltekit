@@ -8,6 +8,9 @@ permissions:
 
 jobs:
   test-web:
+    env:
+      DATABASE_URL: postgresql://postgres:password@localhost:5432/mincuru?schema=public
+
     runs-on: ubuntu-latest
 
     # Service containers to run with `container-job`
