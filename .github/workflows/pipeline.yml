@@ -41,7 +41,8 @@ jobs:
           role-to-assume: ${{ secrets.AWS_TEST_ROLE_ARN }}
           aws-region: ap-northeast-1
       - run: npm run db:generate -w packages/database
-      - run: npm run test:coverage -w apps/web
+      - run: npm run db:migrate dev -w packages/database
+      - run: npm run test -w apps/web
       - name: Describe distribution
         id: describe-distribution
         run: echo "distribution=$(aws cloudfront list-distributions | jq -r '.DistributionList.Items[] | select(.Origins.Items[] | .DomainName | contains("mincuru-coverage-report")) | .DomainName')" >> $GITHUB_OUTPUT
