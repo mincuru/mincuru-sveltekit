@@ -98,7 +98,7 @@ jobs:
       - name: Deploy infra
         # if: steps.filter.outputs.infra == 'true'
         run: |
-          npm run cdk -w apps/infra -- deploy --require-approval never -c environment=$BRANCH_NAME
+          npm run cdk -w apps/infra -- deploy InfraStack --require-approval never -c environment=$BRANCH_NAME
   migrate:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest

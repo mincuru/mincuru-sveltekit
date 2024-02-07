@@ -45,11 +45,18 @@ cd mincuru-sveltekit
 npm run db:studio -w packages/database
 ```
 
-## AWSへのデプロイ
+## GitHub Actionsでのテストに必要なインフラのデプロイ
 
 ```sh
 cd mincuru-sveltekit
-npm run cdk -w apps/infra -- deploy -c environment=stg
+npm run cdk -w apps/infra -- deploy TestStack -c environment=stg
+```
+
+## アプリケーション実行に必要なインフラのデプロイ
+
+```sh
+cd mincuru-sveltekit
+npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 # コンソール上に表示されるRdsSourceSecurityGroupIdとVpcPublicSubnetIdを、GitHubのSecretsに登録する。
 # ECS Serviceのデプロイ中に対象ECRイメージが見つからないエラーが出るので、GitHub Actionsでdeploy jobを実行すると、その処理中にECSタスク定義が更新されて、cdk deployが成功する。
 ```
@@ -72,7 +79,7 @@ npm run cdk -w apps/infra -- deploy -c environment=stg
 - ~~prisma studioの整備~~
 - ~~Nodeを20にする~~
 - ~~Auth.jsによるGoogle認証実装~~
-- Playwrightのテストを整備する
+- ~~Playwrightのテストを整備する~~
 - apiのテストを整備する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する

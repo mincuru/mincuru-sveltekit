@@ -9,8 +9,6 @@ import { WebEcs } from "./web-ecs";
 import { MigrateEcr } from "./migrate-ecr";
 import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
-import { TestRole } from "./test-role";
-import { CoverageReportS3 } from "./coverage-report-s3";
 
 export interface Context {
   environment: string;
@@ -27,39 +25,34 @@ export class InfraStack extends Stack {
       environment: val,
     };
 
-    // const vpc = new Vpc(this, "Vpc", {});
-    // const secretRds = new SecretRds(this, "SecretRds", {});
-    // const rds = new Rds(this, "Rds", {
-    //   vpc: vpc.vpc,
-    //   secret: secretRds.secret,
-    // });
-    // const webEcr = new WebEcr(this, "EcrWeb", {});
-    // const webEcs = new WebEcs(this, "EcsWeb", {
-    //   context: context,
-    //   vpc: vpc.vpc,
-    //   ecr: webEcr.repo,
-    //   secretRds: secretRds.secret,
-    //   securityGroupSourceRds: rds.securityGroupSourceRds,
-    // });
-    // const migrateEcr = new MigrateEcr(this, "MigrateEcr", {});
-    // const migrateEcs = new MigrateEcs(this, "MigrateEcs", {
-    //   vpc: vpc.vpc,
-    //   ecr: migrateEcr.repo,
-    //   secretRds: secretRds.secret,
-    // });
+    const vpc = new Vpc(this, "Vpc", {});
+    const secretRds = new SecretRds(this, "SecretRds", {});
+    const rds = new Rds(this, "Rds", {
+      vpc: vpc.vpc,
+      secret: secretRds.secret,
+    });
+    const webEcr = new WebEcr(this, "EcrWeb", {});
+    const webEcs = new WebEcs(this, "EcsWeb", {
+      context: context,
+      vpc: vpc.vpc,
+      ecr: webEcr.repo,
+      secretRds: secretRds.secret,
+      securityGroupSourceRds: rds.securityGroupSourceRds,
+    });
+    const migrateEcr = new MigrateEcr(this, "MigrateEcr", {});
+    const migrateEcs = new MigrateEcs(this, "MigrateEcs", {
+      vpc: vpc.vpc,
+      ecr: migrateEcr.repo,
+      secretRds: secretRds.secret,
+    });
 
-    // new DeployRole(this, "DeployRole", {
-    //   migrateTaskExecutionRole: migrateEcs.taskExecutionRole,
-    //   migrateTaskRole: migrateEcs.taskRole,
-    //   migrateRepository: migrateEcr.repo,
-    //   webTaskExecutionRole: webEcs.taskExecutionRole,
-    //   webTaskRole: webEcs.taskRole,
-    //   webRepository: webEcr.repo,
-    // });
-
-    const coverageReportS3 = new CoverageReportS3(this, "CoverageReportS3", {});
-    new TestRole(this, "TestRole", {
-      coverageReportBucket: coverageReportS3.bucket,
+    new DeployRole(this, "DeployRole", {
+      migrateTaskExecutionRole: migrateEcs.taskExecutionRole,
+      migrateTaskRole: migrateEcs.taskRole,
+      migrateRepository: migrateEcr.repo,
+      webTaskExecutionRole: webEcs.taskExecutionRole,
+      webTaskRole: webEcs.taskRole,
+      webRepository: webEcr.repo,
     });
   }
 }
