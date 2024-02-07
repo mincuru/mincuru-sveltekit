@@ -1,7 +1,6 @@
-export type OutPutData = {
-  value: number;
-};
+import { redirect } from '@sveltejs/kit';
 
-export const load = async (): Promise<OutPutData> => {
-  return { value: 1 };
+export const load = async () => {
+  // /carsに無条件リダイレクト
+  redirect(301, '/cars');
 };

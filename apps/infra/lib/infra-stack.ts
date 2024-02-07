@@ -9,7 +9,6 @@ import { WebEcs } from "./web-ecs";
 import { MigrateEcr } from "./migrate-ecr";
 import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
-import { CoverageReportS3 } from "./coverage-report-s3";
 
 export interface Context {
   environment: string;
@@ -47,9 +46,7 @@ export class InfraStack extends Stack {
       secretRds: secretRds.secret,
     });
 
-    const coverageReportS3 = new CoverageReportS3(this, "CoverageReportS3", {});
     new DeployRole(this, "DeployRole", {
-      coverageReportBucket: coverageReportS3.bucket,
       migrateTaskExecutionRole: migrateEcs.taskExecutionRole,
       migrateTaskRole: migrateEcs.taskRole,
       migrateRepository: migrateEcr.repo,

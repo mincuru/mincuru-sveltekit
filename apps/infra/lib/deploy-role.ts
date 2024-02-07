@@ -2,7 +2,6 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 export interface DeployRoleProps {
-  coverageReportBucket: cdk.aws_s3.Bucket;
   migrateTaskExecutionRole: cdk.aws_iam.Role;
   migrateTaskRole: cdk.aws_iam.Role;
   migrateRepository: cdk.aws_ecr.Repository;
@@ -27,14 +26,6 @@ export class DeployRole extends Construct {
       }),
       roleName: "DeployGitHub",
     });
-
-    // カバレッジレポートをアップロードするための権限
-    const policy = new cdk.aws_iam.PolicyStatement({
-      effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["s3:PutObject", "s3:ListBucket"],
-      resources: ["*"],
-    });
-    role.addToPolicy(policy);
 
     // ECRへのログインに必要な権限
     const policy2 = new cdk.aws_iam.PolicyStatement({
@@ -120,14 +111,6 @@ export class DeployRole extends Construct {
       resources: ["*"],
     });
     role.addToPolicy(policy8);
-
-    // カバレッジレポートのアップロード先CloudFrontのドメイン名取得に必要な権限
-    const policy9 = new cdk.aws_iam.PolicyStatement({
-      effect: cdk.aws_iam.Effect.ALLOW,
-      actions: ["cloudfront:ListDistributions"],
-      resources: ["*"],
-    });
-    role.addToPolicy(policy9);
 
     // infraのデプロイに必要な権限
     const policyAll = new cdk.aws_iam.PolicyStatement({

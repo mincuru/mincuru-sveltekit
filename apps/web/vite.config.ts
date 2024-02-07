@@ -9,6 +9,7 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       exclude: [
+        'build/**',
         'coverage/**',
         'dist/**',
         '**/[.]**',
