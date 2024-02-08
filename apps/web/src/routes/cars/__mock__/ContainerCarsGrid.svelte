@@ -1,6 +1,6 @@
 <script lang="ts">
+  import type { KVPair } from '$lib/__mock__/KVPair';
   import { setContext } from 'svelte';
-  import type { KVPair } from './KVPair';
 
   export let Component: any;
   export let KVPairs: KVPair[];

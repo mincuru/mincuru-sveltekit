@@ -1,6 +1,6 @@
 // https://svelte-recipes.netlify.app/testing/
 import { render } from '@testing-library/svelte';
-import ContainerTagArea from '$lib/__mock__/ContainerTagArea.svelte';
+import ContainerTagArea from './__mock__/ContainerTagArea.svelte';
 
 import { writable } from 'svelte/store';
 import type { CarsFilter } from './CarsFilter';

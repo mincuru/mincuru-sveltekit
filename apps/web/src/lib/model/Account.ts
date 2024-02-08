@@ -1,9 +1,7 @@
-import type { Session } from '@auth/sveltekit';
-
 export interface Account {
-  id: number;
+  id: string;
   name: string;
   email: string;
+  image: string | null;
   favorites: number[];
-  session: Session | null;
 }

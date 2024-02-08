@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/svelte';
 import type { Car, PowerTrain } from '$lib/model/CarDisplay';
-import ContainerPage from '$lib/__mock__/ContainerPage.svelte';
+import ContainerPage from './__mock__/ContainerPage.svelte';
 import Page from './+page.svelte';
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
@@ -87,10 +87,11 @@ const carNormal: Car = {
 
 describe('+page.svelte', async () => {
   const account: Account = {
-    id: 1,
+    id: 'xxxx-xxxx-xxxx-xxxx',
     name: 'test',
     email: '',
-    favorites: [1, 2]
+    favorites: [1, 2],
+    image: ''
   };
   const mockAccount = writable<Account>(account);
 

@@ -31,11 +31,12 @@ cd mincuru-sveltekit
 npm run dev
 ```
 
-## DBマイグレーション
+## DBマイグレーション&シード
 
 ```sh
 cd mincuru-sveltekit
-npm run migrate
+npm run db:migrate
+npm run db:seed
 ```
 
 ## DB管理画面（Prisma Studio）の起動
@@ -80,6 +81,9 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - ~~Nodeを20にする~~
 - ~~Auth.jsによるGoogle認証実装~~
 - ~~Playwrightのテストを整備する~~
+- ~~ログイン状態でアバターとヘッダメニューを表示する~~
+- ユーザーテーブルを作成し、お気に入り情報を保存する
+- サインアップ機能を実装する
 - apiのテストを整備する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する

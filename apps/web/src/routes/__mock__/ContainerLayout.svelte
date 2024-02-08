@@ -1,9 +1,10 @@
 <script lang="ts">
+  import type { KVPair } from '$lib/__mock__/KVPair';
   import { setContext } from 'svelte';
-  import type { KVPair } from './KVPair';
+  import type { LayoutData } from '../$types';
 
   export let Component: any;
-  export let handleChangeFilter: any;
+  export let data: LayoutData;
   export let KVPairs: KVPair[];
 
   KVPairs.forEach((kv) => {
@@ -11,4 +12,4 @@
   });
 </script>
 
-<svelte:component this={Component} {handleChangeFilter} />
+<svelte:component this={Component} {data} />

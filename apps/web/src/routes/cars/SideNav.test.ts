@@ -1,7 +1,6 @@
 // https://svelte-recipes.netlify.app/testing/
 import { render } from '@testing-library/svelte';
-import ContainerSideNav from '$lib/__mock__/ContainerSideNav.svelte';
-
+import ContainerSideNav from './__mock__/ContainerSideNav.svelte';
 import { writable } from 'svelte/store';
 import type { CarsFilter } from './CarsFilter';
 import SideNav from './SideNav.svelte';

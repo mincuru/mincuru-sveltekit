@@ -1,10 +1,7 @@
 <script lang="ts">
-  import type { Account } from '$lib/model/Account';
+  import type { KVPair } from '$lib/__mock__/KVPair';
   import { setContext } from 'svelte';
-  import type { PageData } from '../../routes/cars/[slug]/$types';
-  import type { KVPair } from './KVPair';
-  // import { PageData } from '../../routes/cars/$types';
-  // import { PageData } from '../../routes/$types';
+  import type { PageData } from '../$types';
 
   export let Component: any;
   export let data: PageData;
