@@ -1,6 +1,9 @@
 import { render, fireEvent } from '@testing-library/svelte';
 import CarItem from './CarItem.svelte';
 import { CarDisplay } from '$lib/model/CarDisplay';
+import ContainerCarItem from './__mock__/ContainerCarItem.svelte';
+import type { Account } from '$lib/model/Account';
+import { writable } from 'svelte/store';
 
 describe('CarItem.svelte', async () => {
   const carNormal = new CarDisplay({
@@ -143,14 +146,37 @@ describe('CarItem.svelte', async () => {
     fuelEfficiency: []
   });
 
+  const account: Account = {
+    id: 'xxxx-xxxx-xxxx-xxxx',
+    name: 'test',
+    email: '',
+    favorites: [1, 2],
+    image: ''
+  };
+  const mockAccount = writable<Account>(account);
+  const contextValues = [{ key: 'account', value: mockAccount }];
+
+  // vi.mock('$lib/component/__mock__/Favorite.svelte', () => {
+  //   return {
+  //     // Mockとして使用するComponentを返します
+  //     default: {
+  //       // Svelte Componentは通常のオブジェクトとしてMock化できます
+  //       render: () => ({ component: { $$render: () => 'Mocked Content' } })
+  //     }
+  //   };
+  // });
+
   test('render with normal value', async () => {
     // Arrange
-    const updateFavoriteMock = vi.fn();
     // Act
-    const { getByTestId } = render(CarItem, {
-      car: carNormal,
-      favorite: true,
-      updateFavorite: updateFavoriteMock
+    const { getByTestId } = render(ContainerCarItem, {
+      props: {
+        Component: CarItem,
+        car: carNormal,
+        favorite: true,
+        updateFavorite: vi.fn(),
+        ContextValues: contextValues
+      }
     });
     // Assert
     expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/1');
@@ -169,12 +195,15 @@ describe('CarItem.svelte', async () => {
 
   test('render with null value', async () => {
     // Arrange
-    const updateFavoriteMock = vi.fn();
     // Act
-    const { getByTestId } = render(CarItem, {
-      car: carNull,
-      favorite: true,
-      updateFavorite: updateFavoriteMock
+    const { getByTestId } = render(ContainerCarItem, {
+      props: {
+        Component: CarItem,
+        car: carNull,
+        favorite: true,
+        updateFavorite: vi.fn(),
+        ContextValues: contextValues
+      }
     });
     // Assert
     expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/7');
@@ -190,10 +219,14 @@ describe('CarItem.svelte', async () => {
   test('click favorite from true', async () => {
     // Arrange
     const updateFavoriteMock = vi.fn();
-    const { getByLabelText } = render(CarItem, {
-      car: carNull,
-      favorite: true,
-      updateFavorite: updateFavoriteMock
+    const { getByLabelText } = render(ContainerCarItem, {
+      props: {
+        Component: CarItem,
+        car: carNull,
+        favorite: true,
+        updateFavorite: updateFavoriteMock,
+        ContextValues: contextValues
+      }
     });
     const button1 = getByLabelText('お気に入り');
     // Act
@@ -206,10 +239,14 @@ describe('CarItem.svelte', async () => {
   test('click favorite from false', async () => {
     // Arrange
     const updateFavoriteMock = vi.fn();
-    const { getByLabelText } = render(CarItem, {
-      car: carNull,
-      favorite: false,
-      updateFavorite: updateFavoriteMock
+    const { getByLabelText } = render(ContainerCarItem, {
+      props: {
+        Component: CarItem,
+        car: carNull,
+        favorite: false,
+        updateFavorite: updateFavoriteMock,
+        ContextValues: contextValues
+      }
     });
     const button1 = getByLabelText('お気に入り');
     // Act

@@ -19,7 +19,7 @@
   };
 </script>
 
-<form method="POST" use:enhance action="/cars?/addFavorite">
+<form method="POST" use:enhance action="/cars?/updateFavorite">
   <input name="userId" type="hidden" value={$account.id} />
   <input name="favorite" type="hidden" value={favorite} />
   <input name="carId" type="hidden" value={carId} />

@@ -82,7 +82,7 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - ~~Auth.jsによるGoogle認証実装~~
 - ~~Playwrightのテストを整備する~~
 - ~~ログイン状態でアバターとヘッダメニューを表示する~~
-- ユーザーテーブルを作成し、お気に入り情報を保存する
+- ~~ユーザーテーブルを作成し、お気に入り情報を保存する~~
 - サインアップ機能を実装する
 - apiのテストを整備する
 - deploy時の警告を解消する
@@ -94,3 +94,4 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - クルマデータ投入バッチの作成
 - apiのLambdaへのデプロイ
 - cars画面の中央寄せを左寄せにする
+- SideNavのメニューに件数表示
