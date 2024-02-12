@@ -15,13 +15,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: []
     };
     const mockFilterEmpty = writable<CarsFilter>(filterEmpty);
-    const kvPairs = [{ key: 'filter', value: mockFilterEmpty }];
+    const contextValues = [{ key: 'filter', value: mockFilterEmpty }];
     // Act
     const { getByTestId } = render(ContainerSideNav, {
       props: {
         Component: SideNav,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -37,13 +37,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const contextValues = [{ key: 'filter', value: mockFilterMakers }];
     // Act
     const { getByTestId } = render(ContainerSideNav, {
       props: {
         Component: SideNav,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -62,13 +62,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const contextValues = [{ key: 'filter', value: mockFilterMakers }];
     // Act
     const { getByTestId } = render(ContainerSideNav, {
       props: {
         Component: SideNav,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -87,13 +87,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: [{ title: 'AWD', value: 'AWD', checked: true }]
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const contextValues = [{ key: 'filter', value: mockFilterMakers }];
     // Act
     const { getByTestId } = render(ContainerSideNav, {
       props: {
         Component: SideNav,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert

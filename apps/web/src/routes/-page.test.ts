@@ -16,12 +16,12 @@ describe('+page.svelte', () => {
       image: ''
     };
     const mockAccount = writable<Account>(account);
-    const kvPairs = [{ key: 'account', value: mockAccount }];
+    const contextValues = [{ key: 'account', value: mockAccount }];
     // Act
     const { getByTestId, getByTitle } = render(ContainerPage, {
       props: {
         Component: Page,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert

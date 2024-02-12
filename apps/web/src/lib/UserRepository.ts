@@ -24,4 +24,52 @@ export class UserRepository {
     }
     return ret;
   }
+
+  async addFavorite(userId: string, favorite: number): Promise<string> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId }
+    });
+    if (user != null) {
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          favorites: {
+            push: favorite
+          }
+        }
+      });
+      return user.id;
+    }
+    return '';
+  }
+
+  async removeFavorite(userId: string, favorite: number): Promise<string> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId }
+    });
+    if (user != null) {
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          favorites: {
+            set: user.favorites.filter((x) => x !== favorite)
+          }
+        }
+      });
+      return user.id;
+    }
+    return '';
+  }
+
+  async updateAccount(account: Account): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: account.id },
+      data: {
+        name: account.name,
+        email: account.email,
+        image: account.image,
+        favorites: account.favorites
+      }
+    });
+  }
 }

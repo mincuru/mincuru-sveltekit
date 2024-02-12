@@ -16,13 +16,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: []
     };
     const mockFilterEmpty = writable<CarsFilter>(filterEmpty);
-    const kvPairs = [{ key: 'filter', value: mockFilterEmpty }];
+    const contextValues = [{ key: 'filter', value: mockFilterEmpty }];
     // Act
     const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -38,13 +38,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const contextValues = [{ key: 'filter', value: mockFilterMakers }];
     // Act
     const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -60,13 +60,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const contextValues = [{ key: 'filter', value: mockFilterMakers }];
     // Act
     const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -82,13 +82,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: [{ title: 'AWD', value: 'AWD', checked: true }]
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const contextValues = [{ key: 'filter', value: mockFilterMakers }];
     // Act
     const { getByTestId } = render(ContainerTagArea, {
       props: {
         Component: TagArea,
         handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert

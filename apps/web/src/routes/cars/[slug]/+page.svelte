@@ -5,12 +5,14 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { PageData } from './$types';
+
   export let data: PageData;
+
   type Context = Writable<Account>;
   let account = getContext<Context>('account');
-  const toggleFavorite = (newFav: boolean) => {
-    console.log('toggleFavorite', newFav);
-    if (newFav) {
+
+  const toggleFavorite = (favorite: boolean) => {
+    if (favorite) {
       $account.favorites.push(car.id);
     } else {
       $account.favorites = $account.favorites.filter((item) => item !== car.id);
@@ -36,7 +38,11 @@
       <h2 data-testid="model-name-label">{car.modelName}</h2>
     </div>
     <div class="flex-none">
-      <Favorite favorite={$account.favorites.includes(car.id)} toggle={toggleFavorite} />
+      <Favorite
+        favorite={$account.favorites.includes(car.id)}
+        carId={car.id}
+        toggle={toggleFavorite}
+      />
     </div>
   </div>
   <div class="flex flex-col md:flex-row">

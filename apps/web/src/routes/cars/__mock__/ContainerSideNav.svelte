@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { KVPair } from '$lib/__mock__/KVPair';
+  import type { ContextValues } from '$lib/__mock__/ContextValues';
   import { setContext } from 'svelte';
 
   export let Component: any;
   export let handleChangeFilter: any;
-  export let KVPairs: KVPair[];
+  export let ContextValues: ContextValues[];
 
-  KVPairs.forEach((kv) => {
+  ContextValues.forEach((kv) => {
     setContext(kv.key, kv.value);
   });
 </script>

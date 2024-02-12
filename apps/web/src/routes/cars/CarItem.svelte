@@ -22,7 +22,7 @@
         />
       </a>
       <div class="absolute bottom-1 right-1">
-        <Favorite bind:favorite toggle={toggleFavorite} />
+        <Favorite bind:favorite carId={car.id} toggle={toggleFavorite} />
       </div>
     </div>
   </figure>

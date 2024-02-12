@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { ContextValues } from '$lib/__mock__/ContextValues';
   import { setContext } from 'svelte';
-  import type { LayoutData } from '../$types';
 
   export let Component: any;
-  export let data: LayoutData;
+  export let toggle: any;
+  export let carId: any;
+  export let favorite: any;
   export let ContextValues: ContextValues[];
 
   ContextValues.forEach((kv) => {
@@ -12,4 +13,4 @@
   });
 </script>
 
-<svelte:component this={Component} {data} />
+<svelte:component this={Component} {carId} {favorite} {toggle} />

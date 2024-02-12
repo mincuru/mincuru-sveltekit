@@ -97,13 +97,13 @@ describe('+page.svelte', async () => {
 
   test('render with normal value', async () => {
     // Arrange
-    const kvPairs = [{ key: 'account', value: mockAccount }];
+    const contextValues = [{ key: 'account', value: mockAccount }];
     // Act
     const { getByTestId, getAllByTestId } = render(ContainerPage, {
       props: {
         Component: Page,
         data: { car: carNormal, account: account },
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert

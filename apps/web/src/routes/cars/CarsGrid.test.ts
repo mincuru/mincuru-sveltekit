@@ -467,7 +467,7 @@ describe('CarsGrid.svelte', async () => {
 
   test('render with normal value', async () => {
     // Arrange
-    const kvPairs = [
+    const contextValues = [
       { key: 'account', value: mockAccount },
       { key: 'cars', value: mockCarsNormal }
     ];
@@ -475,7 +475,7 @@ describe('CarsGrid.svelte', async () => {
     const { getByTestId, getAllByTestId } = render(ContainerCarsGrid, {
       props: {
         Component: CarsGrid,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -484,7 +484,7 @@ describe('CarsGrid.svelte', async () => {
 
   test('render with empty value', async () => {
     // Arrange
-    const kvPairs = [
+    const contextValues = [
       { key: 'account', value: mockAccount },
       { key: 'cars', value: mockCarsEmpty }
     ];
@@ -492,7 +492,7 @@ describe('CarsGrid.svelte', async () => {
     const { getByTestId } = render(ContainerCarsGrid, {
       props: {
         Component: CarsGrid,
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert

@@ -17,13 +17,13 @@ describe('+layout.svelte', () => {
       image: 'https://example.com/hoge.png'
     };
     const mockAccount = writable<Account>(account);
-    const kvPairs = [{ key: 'account', value: mockAccount }];
+    const contextValues = [{ key: 'account', value: mockAccount }];
     // Act
     const { getByText } = render(ContainerLayout, {
       props: {
         Component: Layout,
         data: { account: account },
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert
@@ -40,13 +40,13 @@ describe('+layout.svelte', () => {
       image: ''
     };
     const mockAccount = writable<Account>(account);
-    const kvPairs = [{ key: 'account', value: mockAccount }];
+    const contextValues = [{ key: 'account', value: mockAccount }];
     // Act
     const { getByText } = render(ContainerLayout, {
       props: {
         Component: Layout,
         data: { account: account },
-        KVPairs: kvPairs
+        ContextValues: contextValues
       }
     });
     // Assert

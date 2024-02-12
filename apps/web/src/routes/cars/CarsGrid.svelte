@@ -7,7 +7,6 @@
 
   type Context = Writable<Account>;
   let account = getContext<Context>('account');
-
   type CarContext = Writable<Car[]>;
   let cars = getContext<CarContext>('cars');
 
