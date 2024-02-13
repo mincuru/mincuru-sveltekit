@@ -95,3 +95,6 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - apiのLambdaへのデプロイ
 - cars画面の中央寄せを左寄せにする
 - SideNavのメニューに件数表示
+- Formを使うとUnit Testの難易度が上がる
+  - クライアントサイドのテスト時にFormをMock化が困難
+  - ComponentをホストするContainer\*クラスを大量作成する必要がある
