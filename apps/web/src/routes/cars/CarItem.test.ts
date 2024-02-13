@@ -155,6 +155,25 @@ describe('CarItem.svelte', async () => {
   const mockAccount = writable<Account>(account);
   const mockContext = new Map([['account', mockAccount]]);
 
+  // `$app/forms` の `enhance` 関数を Mock 化
+  vi.mock('$app/forms', () => ({
+    enhance: vi.fn(() => {
+      // Mock 処理。例えば、フォーム送信が成功したときの動作を模倣する
+      if (
+        typeof window !== 'undefined' &&
+        window.HTMLFormElement &&
+        !window.HTMLFormElement.prototype.requestSubmit
+      ) {
+        window.HTMLFormElement.prototype.requestSubmit = function () {
+          // ここに必要ならダミーの処理を追加
+          // 例えば、submit イベントを手動で発火させることも可能
+          const event = new Event('submit', { bubbles: true, cancelable: true });
+          this.dispatchEvent(event);
+        };
+      }
+    })
+  }));
+
   // vi.mock('$lib/component/__mock__/Favorite.svelte', () => {
   //   return {
   //     default: vi.fn().mockImplementation(({ favorite, toggle }) => {
@@ -215,25 +234,24 @@ describe('CarItem.svelte', async () => {
     expect(getByTestId('other-text').textContent).toEqual('クーペ エンジン AWD N/A');
   });
 
-  // test('click favorite from true', async () => {
-  //   // Arrange
-  //   const updateFavoriteMock = vi.fn();
-  //   const { getByLabelText } = render(ContainerCarItem, {
-  //     props: {
-  //       Component: CarItem,
-  //       car: carNull,
-  //       favorite: true,
-  //       updateFavorite: updateFavoriteMock,
-  //       ContextValues: contextValues
-  //     }
-  //   });
-  //   const button1 = getByLabelText('お気に入り');
-  //   // Act
-  //   await fireEvent.click(button1);
-  //   // Assert
-  //   expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
-  //   expect(updateFavoriteMock).toHaveBeenCalledWith(7, false);
-  // });
+  test('click favorite from true', async () => {
+    // Arrange
+    const updateFavoriteMock = vi.fn();
+    const { getByLabelText } = render(CarItem, {
+      props: {
+        car: carNull,
+        favorite: true,
+        updateFavorite: updateFavoriteMock
+      },
+      context: mockContext
+    });
+    const button1 = getByLabelText('お気に入り');
+    // Act
+    await fireEvent.click(button1);
+    // Assert
+    expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
+    expect(updateFavoriteMock).toHaveBeenCalledWith(7, false);
+  });
 
   // test('click favorite from false', async () => {
   //   // Arrange
