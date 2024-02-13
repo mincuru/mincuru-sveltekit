@@ -174,18 +174,6 @@ describe('CarItem.svelte', async () => {
     })
   }));
 
-  // vi.mock('$lib/component/__mock__/Favorite.svelte', () => {
-  //   return {
-  //     default: vi.fn().mockImplementation(({ favorite, toggle }) => {
-  //       return {
-  //         // Mock コンポーネントの内容
-  //         render: () =>
-  //           `<button data-testid="mock-favorite" class="${favorite ? 'favorited' : ''}" onclick="${() => toggle(!favorite)}">Mock Favorite</button>`
-  //       };
-  //     })
-  //   };
-  // });
-
   test('render with normal value', async () => {
     // Arrange
     // Act
@@ -253,23 +241,22 @@ describe('CarItem.svelte', async () => {
     expect(updateFavoriteMock).toHaveBeenCalledWith(7, false);
   });
 
-  // test('click favorite from false', async () => {
-  //   // Arrange
-  //   const updateFavoriteMock = vi.fn();
-  //   const { getByLabelText } = render(ContainerCarItem, {
-  //     props: {
-  //       Component: CarItem,
-  //       car: carNull,
-  //       favorite: false,
-  //       updateFavorite: updateFavoriteMock,
-  //       ContextValues: contextValues
-  //     }
-  //   });
-  //   const button1 = getByLabelText('お気に入り');
-  //   // Act
-  //   await fireEvent.click(button1);
-  //   // Assert
-  //   expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
-  //   expect(updateFavoriteMock).toHaveBeenCalledWith(7, true);
-  // });
+  test('click favorite from false', async () => {
+    // Arrange
+    const updateFavoriteMock = vi.fn();
+    const { getByLabelText } = render(CarItem, {
+      props: {
+        car: carNull,
+        favorite: false,
+        updateFavorite: updateFavoriteMock
+      },
+      context: mockContext
+    });
+    const button1 = getByLabelText('お気に入り');
+    // Act
+    await fireEvent.click(button1);
+    // Assert
+    expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
+    expect(updateFavoriteMock).toHaveBeenCalledWith(7, true);
+  });
 });

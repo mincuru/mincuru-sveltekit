@@ -110,33 +110,32 @@ describe('Favorite.svelte', async () => {
     expect(button3.innerHTML).not.toContain('text-yellow-500');
   });
 
-  // test('click favorite from true', async () => {
-  //   // Arrange
-  //   const toggleMock = vi.fn();
-  //   const { getByLabelText } = render(ContainerFavorite, {
-  //     props: {
-  //       Component: Favorite,
-  //       carId: 1,
-  //       favorite: true,
-  //       toggle: toggleMock,
-  //       ContextValues: contextValues
-  //     }
-  //   });
-  //   const button1 = getByLabelText('お気に入り');
-  //   expect(button1.innerHTML).toContain('text-yellow-500');
-  //   // Act1
-  //   await fireEvent.click(button1);
-  //   // Assert1
-  //   expect(toggleMock).toHaveBeenCalledTimes(1);
-  //   expect(toggleMock).toHaveBeenCalledWith(false);
-  //   const button2 = getByLabelText('お気に入り');
-  //   expect(button2.innerHTML).not.toContain('text-yellow-500');
-  //   // Act2
-  //   await fireEvent.click(button2);
-  //   // Assert2
-  //   expect(toggleMock).toHaveBeenCalledTimes(2);
-  //   expect(toggleMock).toHaveBeenCalledWith(true);
-  //   const button3 = getByLabelText('お気に入り');
-  //   expect(button3.innerHTML).toContain('text-yellow-500');
-  // });
+  test('click favorite from true', async () => {
+    // Arrange
+    const toggleMock = vi.fn();
+    const { getByLabelText } = render(Favorite, {
+      props: {
+        carId: 1,
+        favorite: true,
+        toggle: toggleMock
+      },
+      context: mockContext
+    });
+    const button1 = getByLabelText('お気に入り');
+    expect(button1.innerHTML).toContain('text-yellow-500');
+    // Act1
+    await fireEvent.click(button1);
+    // Assert1
+    expect(toggleMock).toHaveBeenCalledTimes(1);
+    expect(toggleMock).toHaveBeenCalledWith(false);
+    const button2 = getByLabelText('お気に入り');
+    expect(button2.innerHTML).not.toContain('text-yellow-500');
+    // Act2
+    await fireEvent.click(button2);
+    // Assert2
+    expect(toggleMock).toHaveBeenCalledTimes(2);
+    expect(toggleMock).toHaveBeenCalledWith(true);
+    const button3 = getByLabelText('お気に入り');
+    expect(button3.innerHTML).toContain('text-yellow-500');
+  });
 });
