@@ -3,6 +3,25 @@ import Favorite from '$lib/component/Favorite.svelte';
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
 
+// `$app/forms` の `enhance` 関数を Mock 化
+// vi.mock('$app/forms', () => ({
+//   enhance: vi.fn(() => {
+//     // Mock 処理。例えば、フォーム送信が成功したときの動作を模倣する
+//     if (
+//       typeof window !== 'undefined' &&
+//       window.HTMLFormElement &&
+//       !window.HTMLFormElement.prototype.requestSubmit
+//     ) {
+//       window.HTMLFormElement.prototype.requestSubmit = function () {
+//         // ここに必要ならダミーの処理を追加
+//         // 例えば、submit イベントを手動で発火させることも可能
+//         const event = new Event('submit', { bubbles: true, cancelable: true });
+//         this.dispatchEvent(event);
+//       };
+//     }
+//   })
+// }));
+
 describe('Favorite.svelte', async () => {
   const account: Account = {
     id: 'xxxx-xxxx-xxxx-xxxx',
