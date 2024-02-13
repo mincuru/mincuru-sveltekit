@@ -156,17 +156,17 @@ describe('CarItem.svelte', async () => {
   const mockAccount = writable<Account>(account);
   const contextValues = [{ key: 'account', value: mockAccount }];
 
-  vi.mock('$lib/component/__mock__/Favorite.svelte', () => {
-    return {
-      default: vi.fn().mockImplementation(({ favorite, toggle }) => {
-        return {
-          // Mock コンポーネントの内容
-          render: () =>
-            `<button data-testid="mock-favorite" class="${favorite ? 'favorited' : ''}" onclick="${() => toggle(!favorite)}">Mock Favorite</button>`
-        };
-      })
-    };
-  });
+  // vi.mock('$lib/component/__mock__/Favorite.svelte', () => {
+  //   return {
+  //     default: vi.fn().mockImplementation(({ favorite, toggle }) => {
+  //       return {
+  //         // Mock コンポーネントの内容
+  //         render: () =>
+  //           `<button data-testid="mock-favorite" class="${favorite ? 'favorited' : ''}" onclick="${() => toggle(!favorite)}">Mock Favorite</button>`
+  //       };
+  //     })
+  //   };
+  // });
 
   test('render with normal value', async () => {
     // Arrange
