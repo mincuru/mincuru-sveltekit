@@ -1,7 +1,6 @@
 import { render, fireEvent } from '@testing-library/svelte';
 import CarItem from './CarItem.svelte';
 import { CarDisplay } from '$lib/model/CarDisplay';
-import ContainerCarItem from './__mock__/ContainerCarItem.svelte';
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
 
@@ -154,7 +153,7 @@ describe('CarItem.svelte', async () => {
     image: ''
   };
   const mockAccount = writable<Account>(account);
-  const contextValues = [{ key: 'account', value: mockAccount }];
+  const mockContext = new Map([['account', mockAccount]]);
 
   // vi.mock('$lib/component/__mock__/Favorite.svelte', () => {
   //   return {
@@ -171,14 +170,13 @@ describe('CarItem.svelte', async () => {
   test('render with normal value', async () => {
     // Arrange
     // Act
-    const { getByTestId } = render(ContainerCarItem, {
+    const { getByTestId } = render(CarItem, {
       props: {
-        Component: CarItem,
         car: carNormal,
         favorite: true,
-        updateFavorite: vi.fn(),
-        ContextValues: contextValues
-      }
+        updateFavorite: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/1');
@@ -198,14 +196,13 @@ describe('CarItem.svelte', async () => {
   test('render with null value', async () => {
     // Arrange
     // Act
-    const { getByTestId } = render(ContainerCarItem, {
+    const { getByTestId } = render(CarItem, {
       props: {
-        Component: CarItem,
         car: carNull,
         favorite: true,
-        updateFavorite: vi.fn(),
-        ContextValues: contextValues
-      }
+        updateFavorite: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/7');

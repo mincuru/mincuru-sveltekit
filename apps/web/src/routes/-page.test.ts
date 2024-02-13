@@ -2,7 +2,6 @@ import { describe, test } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Page from './+page.svelte';
 import type { Account } from '$lib/model/Account';
-import ContainerPage from './__mock__/ContainerPage.svelte';
 import { writable } from 'svelte/store';
 
 describe('+page.svelte', () => {
@@ -16,13 +15,11 @@ describe('+page.svelte', () => {
       image: ''
     };
     const mockAccount = writable<Account>(account);
-    const contextValues = [{ key: 'account', value: mockAccount }];
+    const mockContext = new Map([['account', mockAccount]]);
     // Act
-    const { getByTestId, getByTitle } = render(ContainerPage, {
-      props: {
-        Component: Page,
-        ContextValues: contextValues
-      }
+    const { getByTestId, getByTitle } = render(Page, {
+      props: {},
+      context: mockContext
     });
     // Assert
     // expect(getByTestId('test-label').innerHTML).toBe('うんこ 1');

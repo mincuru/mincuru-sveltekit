@@ -3,7 +3,6 @@ import { describe, test } from 'vitest';
 import { render } from '@testing-library/svelte';
 import Layout from './+layout.svelte';
 import type { Account } from '$lib/model/Account';
-import ContainerLayout from './__mock__/ContainerLayout.svelte';
 import { writable } from 'svelte/store';
 
 describe('+layout.svelte', () => {
@@ -17,14 +16,13 @@ describe('+layout.svelte', () => {
       image: 'https://example.com/hoge.png'
     };
     const mockAccount = writable<Account>(account);
-    const contextValues = [{ key: 'account', value: mockAccount }];
+    const mockContext = new Map<any, any>([['account', mockAccount]]);
     // Act
-    const { getByText } = render(ContainerLayout, {
+    const { getByText } = render(Layout, {
       props: {
-        Component: Layout,
-        data: { account: account },
-        ContextValues: contextValues
-      }
+        data: { account: account }
+      },
+      context: mockContext
     });
     // Assert
     expect(getByText('ログアウト')).toBeInTheDocument();
@@ -40,14 +38,13 @@ describe('+layout.svelte', () => {
       image: ''
     };
     const mockAccount = writable<Account>(account);
-    const contextValues = [{ key: 'account', value: mockAccount }];
+    const mockContext = new Map([['account', mockAccount]]);
     // Act
-    const { getByText } = render(ContainerLayout, {
+    const { getByText } = render(Layout, {
       props: {
-        Component: Layout,
-        data: { account: account },
-        ContextValues: contextValues
-      }
+        data: { account: account }
+      },
+      context: mockContext
     });
     // Assert
     expect(getByText('ログイン')).toBeInTheDocument();

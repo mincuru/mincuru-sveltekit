@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/svelte';
 import type { Car, PowerTrain } from '$lib/model/CarDisplay';
-import ContainerPage from './__mock__/ContainerPage.svelte';
 import Page from './+page.svelte';
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
@@ -97,14 +96,13 @@ describe('+page.svelte', async () => {
 
   test('render with normal value', async () => {
     // Arrange
-    const contextValues = [{ key: 'account', value: mockAccount }];
+    const mockContext = new Map<any, any>([['account', mockAccount]]);
     // Act
-    const { getByTestId, getAllByTestId } = render(ContainerPage, {
+    const { getByTestId, getAllByTestId } = render(Page, {
       props: {
-        Component: Page,
-        data: { car: carNormal, account: account },
-        ContextValues: contextValues
-      }
+        data: { car: carNormal, account: account }
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('bread-crumb-root').innerHTML).toBe('<a href="/cars">クルマ</a>');

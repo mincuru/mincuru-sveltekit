@@ -2,7 +2,6 @@
 import { render } from '@testing-library/svelte';
 import CarsGrid from './CarsGrid.svelte';
 import type { Car } from '$lib/model/CarDisplay';
-import ContainerCarsGrid from './__mock__/ContainerCarsGrid.svelte';
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
 
@@ -467,16 +466,14 @@ describe('CarsGrid.svelte', async () => {
 
   test('render with normal value', async () => {
     // Arrange
-    const contextValues = [
-      { key: 'account', value: mockAccount },
-      { key: 'cars', value: mockCarsNormal }
-    ];
+    const mockContext = new Map<any, any>([
+      ['account', mockAccount],
+      ['cars', mockCarsNormal]
+    ]);
     // Act
-    const { getByTestId, getAllByTestId } = render(ContainerCarsGrid, {
-      props: {
-        Component: CarsGrid,
-        ContextValues: contextValues
-      }
+    const { getByTestId, getAllByTestId } = render(CarsGrid, {
+      props: {},
+      context: mockContext
     });
     // Assert
     expect(getAllByTestId('card-car').length).toBe(6);
@@ -484,16 +481,14 @@ describe('CarsGrid.svelte', async () => {
 
   test('render with empty value', async () => {
     // Arrange
-    const contextValues = [
-      { key: 'account', value: mockAccount },
-      { key: 'cars', value: mockCarsEmpty }
-    ];
+    const mockContext = new Map<any, any>([
+      ['account', mockAccount],
+      ['cars', mockCarsEmpty]
+    ]);
     // Act
-    const { getByTestId } = render(ContainerCarsGrid, {
-      props: {
-        Component: CarsGrid,
-        ContextValues: contextValues
-      }
+    const { getByTestId } = render(CarsGrid, {
+      props: {},
+      context: mockContext
     });
     // Assert
     expect(getByTestId('car-items').innerHTML).toBe('該当するデータが見つかりませんでした。');
