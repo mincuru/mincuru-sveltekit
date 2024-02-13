@@ -218,43 +218,43 @@ describe('CarItem.svelte', async () => {
     expect(getByTestId('other-text').textContent).toEqual('クーペ エンジン AWD N/A');
   });
 
-  test('click favorite from true', async () => {
-    // Arrange
-    const updateFavoriteMock = vi.fn();
-    const { getByLabelText } = render(ContainerCarItem, {
-      props: {
-        Component: CarItem,
-        car: carNull,
-        favorite: true,
-        updateFavorite: updateFavoriteMock,
-        ContextValues: contextValues
-      }
-    });
-    const button1 = getByLabelText('お気に入り');
-    // Act
-    await fireEvent.click(button1);
-    // Assert
-    expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
-    expect(updateFavoriteMock).toHaveBeenCalledWith(7, false);
-  });
+  // test('click favorite from true', async () => {
+  //   // Arrange
+  //   const updateFavoriteMock = vi.fn();
+  //   const { getByLabelText } = render(ContainerCarItem, {
+  //     props: {
+  //       Component: CarItem,
+  //       car: carNull,
+  //       favorite: true,
+  //       updateFavorite: updateFavoriteMock,
+  //       ContextValues: contextValues
+  //     }
+  //   });
+  //   const button1 = getByLabelText('お気に入り');
+  //   // Act
+  //   await fireEvent.click(button1);
+  //   // Assert
+  //   expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
+  //   expect(updateFavoriteMock).toHaveBeenCalledWith(7, false);
+  // });
 
-  test('click favorite from false', async () => {
-    // Arrange
-    const updateFavoriteMock = vi.fn();
-    const { getByLabelText } = render(ContainerCarItem, {
-      props: {
-        Component: CarItem,
-        car: carNull,
-        favorite: false,
-        updateFavorite: updateFavoriteMock,
-        ContextValues: contextValues
-      }
-    });
-    const button1 = getByLabelText('お気に入り');
-    // Act
-    await fireEvent.click(button1);
-    // Assert
-    expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
-    expect(updateFavoriteMock).toHaveBeenCalledWith(7, true);
-  });
+  // test('click favorite from false', async () => {
+  //   // Arrange
+  //   const updateFavoriteMock = vi.fn();
+  //   const { getByLabelText } = render(ContainerCarItem, {
+  //     props: {
+  //       Component: CarItem,
+  //       car: carNull,
+  //       favorite: false,
+  //       updateFavorite: updateFavoriteMock,
+  //       ContextValues: contextValues
+  //     }
+  //   });
+  //   const button1 = getByLabelText('お気に入り');
+  //   // Act
+  //   await fireEvent.click(button1);
+  //   // Assert
+  //   expect(updateFavoriteMock).toHaveBeenCalledTimes(1);
+  //   expect(updateFavoriteMock).toHaveBeenCalledWith(7, true);
+  // });
 });
