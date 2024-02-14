@@ -83,6 +83,10 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - ~~Playwrightのテストを整備する~~
 - ~~ログイン状態でアバターとヘッダメニューを表示する~~
 - ~~ユーザーテーブルを作成し、お気に入り情報を保存する~~
+- ~~Formを使うとUnit Testの難易度が上がる~~
+  - ~~クライアントサイドのテスト時にFormをMock化が困難~~
+  - ~~ComponentをホストするContainer\*クラスを大量作成する必要がある~~
+- ~~cars画面の中央寄せを左寄せにする~~
 - サインアップ機能を実装する
 - apiのテストを整備する
 - deploy時の警告を解消する
@@ -93,8 +97,4 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - 編集画面の作成
 - クルマデータ投入バッチの作成
 - apiのLambdaへのデプロイ
-- cars画面の中央寄せを左寄せにする
 - SideNavのメニューに件数表示
-- Formを使うとUnit Testの難易度が上がる
-  - クライアントサイドのテスト時にFormをMock化が困難
-  - ComponentをホストするContainer\*クラスを大量作成する必要がある

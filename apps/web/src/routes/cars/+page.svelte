@@ -48,7 +48,7 @@
 
 <div class="drawer lg:drawer-open">
   <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content flex flex-col items-center justify-center">
+  <div class="drawer-content items-left flex flex-col justify-center">
     <!-- Page content here -->
     <div class="flex-auto">
       <div class="flex flex-col p-2.5">
