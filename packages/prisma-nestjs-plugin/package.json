@@ -14,8 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^10.3.0",
-    "@repo/database": "*",
-    "@repo/typescript-config": "*"
+    "@repo/typescript-config": "*",
+    "@prisma/client": "^5.9.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^10.3.0",
