@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@repo/prisma-nestjs-plugin';
+// import { PrismaService } from '@repo/prisma-nestjs-plugin';
 
 @Injectable()
 export class AppService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(/*private readonly prisma: PrismaService*/) {}
 
   getHello(): string {
     return 'Hello World!';
   }
 
   // Usersを取得するクエリ
-  async getUsers() {
-    return await this.prisma.user.findMany();
-  }
+  // async getUsers() {
+  //   return await this.prisma.user.findMany();
+  // }
 }
