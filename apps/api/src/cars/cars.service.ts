@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@repo/prisma-nestjs-plugin';
-import { Car } from '@prisma/client';
+import { PrismaService } from '../prisma.service';
+import { Prisma, Car } from '@prisma/client';
 
 @Injectable()
 export class CarsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async get(): Promise<Car[]> {
+  async getCars(): Promise<Car[]> {
     const cars = await this.prisma.car.findMany();
     return cars;
   }
 
-  async post(car: Car): Promise<Car> {
+  async post(car: Prisma.CarCreateInput): Promise<Car> {
     const newCar = await this.prisma.car.create({
       data: car,
     });
@@ -26,10 +26,10 @@ export class CarsService {
     return updatedCar;
   }
 
-  async delete(id: number): Promise<Car> {
+  async delete(id: number): Promise<number> {
     const deletedCar = await this.prisma.car.delete({
       where: { id },
     });
-    return deletedCar;
+    return deletedCar.id;
   }
 }

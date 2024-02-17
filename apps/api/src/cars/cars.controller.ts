@@ -8,7 +8,7 @@ export class CarsController {
 
   @Get()
   async getCars(): Promise<Car[]> {
-    return await this.carsService.get();
+    return await this.carsService.getCars();
   }
 
   @Post()
@@ -22,7 +22,7 @@ export class CarsController {
   }
 
   @Delete()
-  async deleteCar(id: number): Promise<Car> {
+  async deleteCar(id: number): Promise<number> {
     return await this.carsService.delete(id);
   }
 }
