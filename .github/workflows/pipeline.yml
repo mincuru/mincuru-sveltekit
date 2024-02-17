@@ -13,9 +13,7 @@ jobs:
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-
     runs-on: ubuntu-latest
-
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
@@ -34,7 +32,6 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -57,7 +54,32 @@ jobs:
       - name: Upload coverage to S3
         run: |
           aws s3 sync ./apps/web/coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
-          echo "* [カバレッジレポート](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+          echo "* [カバレッジレポート web](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+  test-api:
+    env:
+      DATABASE_URL: postgresql://postgres:password@localhost:5432/mincuru?schema=public
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_TEST_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - run: npm run db:generate -w packages/database
+      - run: npm run test:cov -w apps/api
+      - name: Describe distribution
+        id: describe-distribution
+        run: echo "distribution=$(aws cloudfront list-distributions | jq -r '.DistributionList.Items[] | select(.Origins.Items[] | .DomainName | contains("mincuru-coverage-report")) | .DomainName')" >> $GITHUB_OUTPUT
+      - name: Upload coverage to S3
+        run: |
+          aws s3 sync ./apps/api/coverage/lcov-report s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/ --delete
+          echo "* [カバレッジレポート api](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+
   deploy-infra:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     needs: [test-web]

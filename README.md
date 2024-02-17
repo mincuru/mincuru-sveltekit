@@ -87,8 +87,8 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
   - ~~クライアントサイドのテスト時にFormをMock化が困難~~
   - ~~ComponentをホストするContainer\*クラスを大量作成する必要がある~~
 - ~~cars画面の中央寄せを左寄せにする~~
+- ~~apiのテストを整備する~~
 - サインアップ機能を実装する
-- apiのテストを整備する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
@@ -98,3 +98,5 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - クルマデータ投入バッチの作成
 - apiのLambdaへのデプロイ
 - SideNavのメニューに件数表示
+- apiテストのGitHub Actions組み込み
+- schema.prismaファイル分割
