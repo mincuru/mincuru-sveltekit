@@ -7,7 +7,6 @@
 
   type Context = Writable<Account>;
   let account = getContext<Context>('account');
-
   type CarContext = Writable<Car[]>;
   let cars = getContext<CarContext>('cars');
 
@@ -21,7 +20,7 @@
   };
 </script>
 
-<div class="flex flex-row flex-wrap gap-2.5 p-2.5" data-testid="car-items">
+<div class="flex flex-row flex-wrap gap-2.5" data-testid="car-items">
   {#if $cars.length > 0}
     {#each $cars as car}
       <CarItem

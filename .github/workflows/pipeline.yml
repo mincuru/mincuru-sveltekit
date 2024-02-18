@@ -8,27 +8,56 @@ permissions:
 
 jobs:
   test-web:
+    env:
+      DATABASE_URL: postgresql://postgres:password@localhost:5432/mincuru?schema=public
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
     runs-on: ubuntu-latest
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: password
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
       - run: npm install
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_TEST_ROLE_ARN }}
           aws-region: ap-northeast-1
       - run: npm run db:generate -w packages/database
-      - run: npm run test:coverage -w apps/web
+      - run: npm run db:migrate -w packages/database
+      - run: npm run db:seed -w packages/database
+      - run: npx playwright install
+      - run: npm run test -w apps/web
+      - run: npm run test:cov -w apps/api
       - name: Describe distribution
         id: describe-distribution
         run: echo "distribution=$(aws cloudfront list-distributions | jq -r '.DistributionList.Items[] | select(.Origins.Items[] | .DomainName | contains("mincuru-coverage-report")) | .DomainName')" >> $GITHUB_OUTPUT
       - name: Upload coverage to S3
         run: |
-          aws s3 sync ./apps/web/coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/ --delete
-          echo "* [カバレッジレポート](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+          aws s3 sync ./apps/web/coverage s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/web/${{ github.sha }}/ --delete
+          echo "* [カバレッジレポート web](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/web/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+          aws s3 sync ./apps/api/coverage/lcov-report s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/ --delete
+          echo "* [カバレッジレポート api](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
   deploy-infra:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     needs: [test-web]
@@ -45,7 +74,7 @@ jobs:
         # if: steps.filter.outputs.infra == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           role-session-name: "mincuru-deploy-infra-session"
           aws-region: ap-northeast-1
       - name: Install cdk
@@ -69,7 +98,7 @@ jobs:
       - name: Deploy infra
         # if: steps.filter.outputs.infra == 'true'
         run: |
-          npm run cdk -w apps/infra -- deploy --require-approval never -c environment=$BRANCH_NAME
+          npm run cdk -w apps/infra -- deploy InfraStack --require-approval never -c environment=$BRANCH_NAME
   migrate:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
@@ -86,7 +115,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           role-session-name: "mincuru-migrate-session"
           aws-region: ap-northeast-1
       - name: Login to Amazon ECR
@@ -127,7 +156,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           role-session-name: "mincuru-deploy-session"
           aws-region: ap-northeast-1
       - name: Login to Amazon ECR

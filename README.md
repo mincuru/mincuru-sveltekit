@@ -31,11 +31,12 @@ cd mincuru-sveltekit
 npm run dev
 ```
 
-## DBマイグレーション
+## DBマイグレーション&シード
 
 ```sh
 cd mincuru-sveltekit
-npm run migrate
+npm run db:migrate
+npm run db:seed
 ```
 
 ## DB管理画面（Prisma Studio）の起動
@@ -45,11 +46,18 @@ cd mincuru-sveltekit
 npm run db:studio -w packages/database
 ```
 
-## AWSへのデプロイ
+## GitHub Actionsでのテストに必要なインフラのデプロイ
 
 ```sh
 cd mincuru-sveltekit
-npm run cdk -w apps/infra -- deploy -c environment=stg
+npm run cdk -w apps/infra -- deploy TestStack -c environment=stg
+```
+
+## アプリケーション実行に必要なインフラのデプロイ
+
+```sh
+cd mincuru-sveltekit
+npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 # コンソール上に表示されるRdsSourceSecurityGroupIdとVpcPublicSubnetIdを、GitHubのSecretsに登録する。
 # ECS Serviceのデプロイ中に対象ECRイメージが見つからないエラーが出るので、GitHub Actionsでdeploy jobを実行すると、その処理中にECSタスク定義が更新されて、cdk deployが成功する。
 ```
@@ -70,15 +78,25 @@ npm run cdk -w apps/infra -- deploy -c environment=stg
 - ~~migrateとdeploy-webを並列実行する~~
 - ~~マイグレーション時の警告を解消する~~
 - ~~prisma studioの整備~~
-- Playwrightのテストを整備する
-- apiのテストを整備する
-- Nodeを20にする
+- ~~Nodeを20にする~~
+- ~~Auth.jsによるGoogle認証実装~~
+- ~~Playwrightのテストを整備する~~
+- ~~ログイン状態でアバターとヘッダメニューを表示する~~
+- ~~ユーザーテーブルを作成し、お気に入り情報を保存する~~
+- ~~Formを使うとUnit Testの難易度が上がる~~
+  - ~~クライアントサイドのテスト時にFormをMock化が困難~~
+  - ~~ComponentをホストするContainer\*クラスを大量作成する必要がある~~
+- ~~cars画面の中央寄せを左寄せにする~~
+- ~~apiのテストを整備する~~
+- ~~apiテストのGitHub Actions組み込み~~
+- サインアップ機能を実装する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
 - ログ整備
 - アラート整備
-- Cognito整備
 - 編集画面の作成
 - クルマデータ投入バッチの作成
 - apiのLambdaへのデプロイ
+- SideNavのメニューに件数表示
+- schema.prismaファイル分割

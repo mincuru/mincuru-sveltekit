@@ -1,6 +1,7 @@
 export interface Account {
-  id: number;
+  id: string;
   name: string;
   email: string;
+  image: string | null;
   favorites: number[];
 }

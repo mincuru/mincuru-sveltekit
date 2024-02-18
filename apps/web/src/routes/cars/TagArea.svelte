@@ -46,7 +46,7 @@
   };
 </script>
 
-<div class="join mx-2.5 mt-2.5 flex flex-row flex-wrap gap-2.5" data-testid="filter-items">
+<div class="join mb-2.5 flex flex-row flex-wrap gap-2.5" data-testid="filter-items">
   {#each $filter.makers.filter((item) => item.checked).map((item) => item) as item}
     <Tag title={item.title} value={item.value} removeTag={removeMakerTag} />
   {/each}

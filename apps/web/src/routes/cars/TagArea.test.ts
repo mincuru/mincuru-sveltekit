@@ -1,7 +1,5 @@
 // https://svelte-recipes.netlify.app/testing/
 import { render } from '@testing-library/svelte';
-import ContainerTagArea from '$lib/__mock__/ContainerTagArea.svelte';
-
 import { writable } from 'svelte/store';
 import type { CarsFilter } from './CarsFilter';
 import TagArea from './TagArea.svelte';
@@ -16,14 +14,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: []
     };
     const mockFilterEmpty = writable<CarsFilter>(filterEmpty);
-    const kvPairs = [{ key: 'filter', value: mockFilterEmpty }];
+    const mockContext = new Map<any, any>([['filter', mockFilterEmpty]]);
     // Act
-    const { getByTestId } = render(ContainerTagArea, {
+    const { getByTestId } = render(TagArea, {
       props: {
-        Component: TagArea,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('filter-items').childElementCount).toEqual(0);
@@ -38,14 +35,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const mockContext = new Map<any, any>([['filter', mockFilterMakers]]);
     // Act
-    const { getByTestId } = render(ContainerTagArea, {
+    const { getByTestId } = render(TagArea, {
       props: {
-        Component: TagArea,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('filter-items').childElementCount).toEqual(0);
@@ -60,14 +56,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const mockContext = new Map<any, any>([['filter', mockFilterMakers]]);
     // Act
-    const { getByTestId } = render(ContainerTagArea, {
+    const { getByTestId } = render(TagArea, {
       props: {
-        Component: TagArea,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('filter-items').childElementCount).toEqual(1);
@@ -82,14 +77,13 @@ describe('TagArea.svelte', async () => {
       driveSystems: [{ title: 'AWD', value: 'AWD', checked: true }]
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const mockContext = new Map<any, any>([['filter', mockFilterMakers]]);
     // Act
-    const { getByTestId } = render(ContainerTagArea, {
+    const { getByTestId } = render(TagArea, {
       props: {
-        Component: TagArea,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('filter-items').childElementCount).toEqual(4);

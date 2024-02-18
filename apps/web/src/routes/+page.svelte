@@ -1,7 +1,5 @@
-<script lang="ts">
-  import type { PageData } from './$types';
+<svelte:head>
+  <title>みんクル / トップ</title>
+</svelte:head>
 
-  export let data: PageData;
-</script>
-
-<div data-testid="test-label">うんこ {data.value}</div>
+<!-- <div data-testid="unko">unko</div> -->

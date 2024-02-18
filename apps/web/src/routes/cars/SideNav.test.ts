@@ -1,7 +1,5 @@
 // https://svelte-recipes.netlify.app/testing/
 import { render } from '@testing-library/svelte';
-import ContainerSideNav from '$lib/__mock__/ContainerSideNav.svelte';
-
 import { writable } from 'svelte/store';
 import type { CarsFilter } from './CarsFilter';
 import SideNav from './SideNav.svelte';
@@ -16,14 +14,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: []
     };
     const mockFilterEmpty = writable<CarsFilter>(filterEmpty);
-    const kvPairs = [{ key: 'filter', value: mockFilterEmpty }];
+    const mockContext = new Map<any, any>([['filter', mockFilterEmpty]]);
     // Act
-    const { getByTestId } = render(ContainerSideNav, {
+    const { getByTestId } = render(SideNav, {
       props: {
-        Component: SideNav,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('ul-makers').childElementCount).toEqual(0);
@@ -38,14 +35,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const mockContext = new Map<any, any>([['filter', mockFilterMakers]]);
     // Act
-    const { getByTestId } = render(ContainerSideNav, {
+    const { getByTestId } = render(SideNav, {
       props: {
-        Component: SideNav,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('ul-makers').childElementCount).toEqual(1);
@@ -63,14 +59,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: []
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const mockContext = new Map<any, any>([['filter', mockFilterMakers]]);
     // Act
-    const { getByTestId } = render(ContainerSideNav, {
+    const { getByTestId } = render(SideNav, {
       props: {
-        Component: SideNav,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('ul-makers').childElementCount).toEqual(1);
@@ -88,14 +83,13 @@ describe('SideNav.svelte', async () => {
       driveSystems: [{ title: 'AWD', value: 'AWD', checked: true }]
     };
     const mockFilterMakers = writable<CarsFilter>(filterMakers);
-    const kvPairs = [{ key: 'filter', value: mockFilterMakers }];
+    const mockContext = new Map<any, any>([['filter', mockFilterMakers]]);
     // Act
-    const { getByTestId } = render(ContainerSideNav, {
+    const { getByTestId } = render(SideNav, {
       props: {
-        Component: SideNav,
-        handleChangeFilter: vi.fn().mock,
-        KVPairs: kvPairs
-      }
+        handleChangeFilter: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('ul-makers').childElementCount).toEqual(1);

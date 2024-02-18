@@ -1,20 +1,17 @@
 // https://svelte-recipes.netlify.app/testing/
-import { render, fireEvent } from '@testing-library/svelte';
+import { render } from '@testing-library/svelte';
 import CarsGrid from './CarsGrid.svelte';
-import { CarDisplay } from '$lib/model/CarDisplay';
-import type { Car, PowerTrain } from '$lib/model/CarDisplay';
-import ContainerCarsGrid from '$lib/__mock__/ContainerCarsGrid.svelte';
-
+import type { Car } from '$lib/model/CarDisplay';
 import type { Account } from '$lib/model/Account';
 import { writable } from 'svelte/store';
-import { setContext } from 'svelte';
 
 describe('CarsGrid.svelte', async () => {
   const account: Account = {
-    id: 1,
+    id: 'xxxx-xxxx-xxxx-xxxx',
     name: 'test',
     email: '',
-    favorites: [1, 2]
+    favorites: [1, 2],
+    image: ''
   };
   const mockAccount = writable<Account>(account);
 
@@ -469,16 +466,14 @@ describe('CarsGrid.svelte', async () => {
 
   test('render with normal value', async () => {
     // Arrange
-    const kvPairs = [
-      { key: 'account', value: mockAccount },
-      { key: 'cars', value: mockCarsNormal }
-    ];
+    const mockContext = new Map<any, any>([
+      ['account', mockAccount],
+      ['cars', mockCarsNormal]
+    ]);
     // Act
-    const { getByTestId, getAllByTestId } = render(ContainerCarsGrid, {
-      props: {
-        Component: CarsGrid,
-        KVPairs: kvPairs
-      }
+    const { getByTestId, getAllByTestId } = render(CarsGrid, {
+      props: {},
+      context: mockContext
     });
     // Assert
     expect(getAllByTestId('card-car').length).toBe(6);
@@ -486,16 +481,14 @@ describe('CarsGrid.svelte', async () => {
 
   test('render with empty value', async () => {
     // Arrange
-    const kvPairs = [
-      { key: 'account', value: mockAccount },
-      { key: 'cars', value: mockCarsEmpty }
-    ];
+    const mockContext = new Map<any, any>([
+      ['account', mockAccount],
+      ['cars', mockCarsEmpty]
+    ]);
     // Act
-    const { getByTestId } = render(ContainerCarsGrid, {
-      props: {
-        Component: CarsGrid,
-        KVPairs: kvPairs
-      }
+    const { getByTestId } = render(CarsGrid, {
+      props: {},
+      context: mockContext
     });
     // Assert
     expect(getByTestId('car-items').innerHTML).toBe('該当するデータが見つかりませんでした。');

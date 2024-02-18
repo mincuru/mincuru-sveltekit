@@ -1,6 +1,8 @@
 import { render, fireEvent } from '@testing-library/svelte';
 import CarItem from './CarItem.svelte';
 import { CarDisplay } from '$lib/model/CarDisplay';
+import type { Account } from '$lib/model/Account';
+import { writable } from 'svelte/store';
 
 describe('CarItem.svelte', async () => {
   const carNormal = new CarDisplay({
@@ -143,14 +145,45 @@ describe('CarItem.svelte', async () => {
     fuelEfficiency: []
   });
 
+  const account: Account = {
+    id: 'xxxx-xxxx-xxxx-xxxx',
+    name: 'test',
+    email: '',
+    favorites: [1, 2],
+    image: ''
+  };
+  const mockAccount = writable<Account>(account);
+  const mockContext = new Map([['account', mockAccount]]);
+
+  // `$app/forms` の `enhance` 関数を Mock 化
+  vi.mock('$app/forms', () => ({
+    enhance: vi.fn(() => {
+      // Mock 処理。例えば、フォーム送信が成功したときの動作を模倣する
+      if (
+        typeof window !== 'undefined' &&
+        window.HTMLFormElement &&
+        !window.HTMLFormElement.prototype.requestSubmit
+      ) {
+        window.HTMLFormElement.prototype.requestSubmit = function () {
+          // ここに必要ならダミーの処理を追加
+          // 例えば、submit イベントを手動で発火させることも可能
+          const event = new Event('submit', { bubbles: true, cancelable: true });
+          this.dispatchEvent(event);
+        };
+      }
+    })
+  }));
+
   test('render with normal value', async () => {
     // Arrange
-    const updateFavoriteMock = vi.fn();
     // Act
     const { getByTestId } = render(CarItem, {
-      car: carNormal,
-      favorite: true,
-      updateFavorite: updateFavoriteMock
+      props: {
+        car: carNormal,
+        favorite: true,
+        updateFavorite: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/1');
@@ -169,12 +202,14 @@ describe('CarItem.svelte', async () => {
 
   test('render with null value', async () => {
     // Arrange
-    const updateFavoriteMock = vi.fn();
     // Act
     const { getByTestId } = render(CarItem, {
-      car: carNull,
-      favorite: true,
-      updateFavorite: updateFavoriteMock
+      props: {
+        car: carNull,
+        favorite: true,
+        updateFavorite: vi.fn()
+      },
+      context: mockContext
     });
     // Assert
     expect(getByTestId('item-page-link').getAttribute('href')).toBe('/cars/7');
@@ -191,9 +226,12 @@ describe('CarItem.svelte', async () => {
     // Arrange
     const updateFavoriteMock = vi.fn();
     const { getByLabelText } = render(CarItem, {
-      car: carNull,
-      favorite: true,
-      updateFavorite: updateFavoriteMock
+      props: {
+        car: carNull,
+        favorite: true,
+        updateFavorite: updateFavoriteMock
+      },
+      context: mockContext
     });
     const button1 = getByLabelText('お気に入り');
     // Act
@@ -207,9 +245,12 @@ describe('CarItem.svelte', async () => {
     // Arrange
     const updateFavoriteMock = vi.fn();
     const { getByLabelText } = render(CarItem, {
-      car: carNull,
-      favorite: false,
-      updateFavorite: updateFavoriteMock
+      props: {
+        car: carNull,
+        favorite: false,
+        updateFavorite: updateFavoriteMock
+      },
+      context: mockContext
     });
     const button1 = getByLabelText('お気に入り');
     // Act
