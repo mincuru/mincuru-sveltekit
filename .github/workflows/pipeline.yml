@@ -153,6 +153,7 @@ jobs:
     env:
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
     needs: [test-web]
@@ -174,7 +175,7 @@ jobs:
           ECR_REPOSITORY: mincuru/web
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -f ./apps/web/docker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build --build-arg GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID --build-arg GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET --build-arg AUTH_SECRET=$AUTH_SECRET -f ./apps/web/docker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
       - name: Download task definition
