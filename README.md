@@ -88,6 +88,7 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
   - ~~ComponentをホストするContainer\*クラスを大量作成する必要がある~~
 - ~~cars画面の中央寄せを左寄せにする~~
 - ~~apiのテストを整備する~~
+- ~~apiテストのGitHub Actions組み込み~~
 - サインアップ機能を実装する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
@@ -98,5 +99,4 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - クルマデータ投入バッチの作成
 - apiのLambdaへのデプロイ
 - SideNavのメニューに件数表示
-- apiテストのGitHub Actions組み込み
 - schema.prismaファイル分割
