@@ -6,13 +6,15 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+
 jobs:
   test-web:
     env:
       DATABASE_URL: postgresql://postgres:password@localhost:5432/mincuru?schema=public
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
     runs-on: ubuntu-latest
     # Service containers to run with `container-job`
     services:

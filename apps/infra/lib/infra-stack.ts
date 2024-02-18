@@ -9,6 +9,7 @@ import { WebEcs } from "./web-ecs";
 import { MigrateEcr } from "./migrate-ecr";
 import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
+import { ApiLambda } from "./api-lambda";
 
 export interface Context {
   environment: string;
@@ -31,8 +32,8 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       secret: secretRds.secret,
     });
-    const webEcr = new WebEcr(this, "EcrWeb", {});
-    const webEcs = new WebEcs(this, "EcsWeb", {
+    const webEcr = new WebEcr(this, "WebEcr", {});
+    const webEcs = new WebEcs(this, "WebEcs", {
       context: context,
       vpc: vpc.vpc,
       ecr: webEcr.repo,
@@ -44,6 +45,12 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       ecr: migrateEcr.repo,
       secretRds: secretRds.secret,
+    });
+
+    new ApiLambda(this, "ApiLambda", {
+      vpc: vpc.vpc,
+      secretRds: secretRds.secret,
+      securityGroupSourceRds: rds.securityGroupSourceRds,
     });
 
     new DeployRole(this, "DeployRole", {
