@@ -121,7 +121,3 @@ export class DeployRole extends Construct {
     role.addToPolicy(policyAll);
   }
 }
-
-// # updatetest
-// updatetest2
-// updatetest3
