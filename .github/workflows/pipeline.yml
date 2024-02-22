@@ -6,6 +6,11 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+
 jobs:
   test:
     env:
@@ -145,10 +150,6 @@ jobs:
             --launch-type FARGATE \
             --network-configuration "awsvpcConfiguration={subnets=[${{ steps.describe-subnet.outputs.public_subnet }}],securityGroups=[${{ steps.describe-security-group.outputs.source_security_group }}],assignPublicIp=ENABLED}"
   deploy-web:
-    env:
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     runs-on: ubuntu-latest
     needs: [test]
