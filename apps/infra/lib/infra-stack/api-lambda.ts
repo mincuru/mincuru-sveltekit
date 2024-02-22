@@ -13,20 +13,20 @@ export class ApiLambda extends Construct {
     super(scope, id);
 
     // Lambda layer
-    const lambdaLayer = new cdk.aws_lambda.LayerVersion(
-      this,
-      `ApiLambdaLayer`,
-      {
-        code: cdk.aws_lambda.Code.fromAsset("../../node_modules"),
-        compatibleRuntimes: [cdk.aws_lambda.Runtime.NODEJS_20_X],
-      }
-    );
+    // const lambdaLayer = new cdk.aws_lambda.LayerVersion(
+    //   this,
+    //   `ApiLambdaLayer`,
+    //   {
+    //     code: cdk.aws_lambda.Code.fromAsset("../../node_modules"),
+    //     compatibleRuntimes: [cdk.aws_lambda.Runtime.NODEJS_20_X],
+    //   }
+    // );
     // Lambda
     this.function = new cdk.aws_lambda.Function(this, "ApiLambda", {
       runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
       code: cdk.aws_lambda.Code.fromAsset("../api/dist"),
       handler: "lambda.handler",
-      layers: [lambdaLayer],
+      // layers: [lambdaLayer],
       timeout: cdk.Duration.seconds(60),
       functionName: "api",
       memorySize: 128,
