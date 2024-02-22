@@ -53,6 +53,13 @@ cd mincuru-sveltekit
 npm run cdk -w apps/infra -- deploy TestStack -c environment=stg
 ```
 
+## ECR手動作成
+
+## ECRに最初のイメージを手動プッシュ
+
+> github actionsでECSへのデプロイは、1.ECRにWebイメージプッシュ、2.サービス名を指定してTask定義をデプロイ、の2ステップで行う。
+> そのため、最初のデプロイ時には、ECRにイメージを手動でプッシュし、その後、cdkでクラスター、サービス、Task定義（ECRを指定）をデプロイすることができる。
+
 ## アプリケーション実行に必要なインフラのデプロイ
 
 ```sh

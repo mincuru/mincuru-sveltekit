@@ -15,7 +15,6 @@ export interface WebEcsProps {
 export class WebEcs extends Construct {
   public readonly taskExecutionRole: cdk.aws_iam.Role;
   public readonly taskRole: cdk.aws_iam.Role;
-  // public readonly taskDefinition: cdk.aws_ecs.FargateTaskDefinition;
   constructor(scope: Construct, id: string, props: WebEcsProps) {
     super(scope, id);
 
@@ -120,19 +119,6 @@ export class WebEcs extends Construct {
     });
 
     // サービス
-    // new cdk.aws_ecs.FargateService(this, "WebService", {
-    //   cluster: cluster,
-    //   taskDefinition: taskDefinition,
-    //   taskDefinitionRevision: cdk.aws_ecs.TaskDefinitionRevision.LATEST,
-    //   desiredCount: 1,
-    //   assignPublicIp: true,
-    //   serviceName: "WebService",
-    //   vpcSubnets: {
-    //     subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
-    //   },
-    //   securityGroups: [props.securityGroupSourceRds],
-    // });
-
     const webAlbFargateService =
       new cdk.aws_ecs_patterns.ApplicationLoadBalancedFargateService(
         this,
@@ -150,6 +136,9 @@ export class WebEcs extends Construct {
           securityGroups: [props.securityGroupSourceRds],
         }
       );
+    webAlbFargateService.targetGroup.configureHealthCheck({
+      path: "/cars",
+    });
     new cdk.CfnOutput(this, "WebServiceUrl", {
       value: webAlbFargateService.loadBalancer.loadBalancerDnsName,
     });
