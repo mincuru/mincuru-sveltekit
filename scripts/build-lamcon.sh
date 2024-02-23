@@ -1,0 +1,1 @@
+docker build -f ./apps/lamcon/docker/Dockerfile --platform linux/amd64 -t lamcon:test .
