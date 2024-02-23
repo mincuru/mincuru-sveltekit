@@ -9,24 +9,22 @@ export interface ApiLambdaProps {
 
 export class ApiLambda extends Construct {
   public readonly function: cdk.aws_lambda.Function;
+  public readonly repo: cdk.aws_ecr.Repository;
   constructor(scope: Construct, id: string, props: ApiLambdaProps) {
     super(scope, id);
 
-    // Lambda layer
-    // const lambdaLayer = new cdk.aws_lambda.LayerVersion(
-    //   this,
-    //   `ApiLambdaLayer`,
-    //   {
-    //     code: cdk.aws_lambda.Code.fromAsset("../../node_modules"),
-    //     compatibleRuntimes: [cdk.aws_lambda.Runtime.NODEJS_20_X],
-    //   }
-    // );
+    // ECR
+    this.repo = new cdk.aws_ecr.Repository(this, "ApiEcr", {
+      repositoryName: "mincuru/api",
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+    this.repo.addLifecycleRule({ maxImageCount: 3 });
+
     // Lambda
     this.function = new cdk.aws_lambda.Function(this, "ApiLambda", {
       runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      code: cdk.aws_lambda.Code.fromAsset("../api/dist"),
+      code: cdk.aws_lambda.EcrImageCode.fromEcrImage(this.repo),
       handler: "lambda.handler",
-      // layers: [lambdaLayer],
       timeout: cdk.Duration.seconds(60),
       functionName: "api",
       memorySize: 128,
@@ -39,8 +37,8 @@ export class ApiLambda extends Construct {
       },
     });
     // Api Gateway
-    const restApi = new cdk.aws_apigateway.RestApi(this, `NestAppApiGateway`, {
-      restApiName: `NestAppApiGw`,
+    const restApi = new cdk.aws_apigateway.RestApi(this, `ApiApiGateway`, {
+      restApiName: `ApiApiGw`,
       deployOptions: {
         stageName: "v1",
       },
@@ -56,7 +54,7 @@ export class ApiLambda extends Construct {
 
     restApi.root.addProxy({
       defaultIntegration: new cdk.aws_apigateway.LambdaIntegration(
-        this.function,
+        this.function
       ),
       anyMethod: true,
     });
