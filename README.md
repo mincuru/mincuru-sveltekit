@@ -13,6 +13,15 @@ cd mincuru-sveltekit
 npm install
 ```
 
+## 環境変数設定
+
+`.env`ファイルを作成し、以下の環境変数を設定する。
+
+```sh
+cd monorepo-template
+cp .env.example .env
+```
+
 ## ビルド
 
 すべてのappsとpackagesをビルドするには、次のコマンドを実行します。

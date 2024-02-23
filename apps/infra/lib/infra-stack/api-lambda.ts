@@ -56,7 +56,7 @@ export class ApiLambda extends Construct {
 
     restApi.root.addProxy({
       defaultIntegration: new cdk.aws_apigateway.LambdaIntegration(
-        this.function
+        this.function,
       ),
       anyMethod: true,
     });

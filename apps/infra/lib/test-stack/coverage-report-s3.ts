@@ -33,7 +33,7 @@ export class CoverageReportS3 extends Construct {
           signingProtocol: "sigv4",
           description: "Access Control",
         },
-      }
+      },
     );
 
     // Distribution
@@ -52,7 +52,7 @@ export class CoverageReportS3 extends Construct {
           origin: new cdk.aws_cloudfront_origins.S3Origin(this.bucket),
         },
         priceClass: cdk.aws_cloudfront.PriceClass.PRICE_CLASS_ALL,
-      }
+      },
     );
 
     const cfnDistribution = distribution.node
@@ -60,12 +60,12 @@ export class CoverageReportS3 extends Construct {
     // OAI削除
     cfnDistribution.addPropertyOverride(
       "DistributionConfig.Origins.0.S3OriginConfig.OriginAccessIdentity",
-      ""
+      "",
     );
     // OAC設定
     cfnDistribution.addPropertyOverride(
       "DistributionConfig.Origins.0.OriginAccessControlId",
-      oac.attrId
+      oac.attrId,
     );
 
     // Bucket Policy
@@ -87,7 +87,7 @@ export class CoverageReportS3 extends Construct {
       sources: [
         cdk.aws_s3_deployment.Source.data(
           "/index.html",
-          "<html><body><h1>Test</h1></body></html>"
+          "<html><body><h1>Test</h1></body></html>",
         ),
       ],
       destinationBucket: this.bucket,

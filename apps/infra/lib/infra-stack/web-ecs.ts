@@ -47,10 +47,10 @@ export class WebEcs extends Construct {
         assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
         managedPolicies: [
           cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
-            "service-role/AmazonECSTaskExecutionRolePolicy"
+            "service-role/AmazonECSTaskExecutionRolePolicy",
           ),
         ],
-      }
+      },
     );
 
     // タスク定義
@@ -70,26 +70,26 @@ export class WebEcs extends Construct {
         executionRole: this.taskExecutionRole,
         taskRole: this.taskRole,
         family: "WebTaskDefinition",
-      }
+      },
     );
     taskDefinition.addContainer("WebContainer", {
       image: cdk.aws_ecs.ContainerImage.fromRegistry(
-        props.ecr.repositoryUri // + ":latest"
+        props.ecr.repositoryUri, // + ":latest"
       ),
       secrets: {
         DB_USERNAME: cdk.aws_ecs.Secret.fromSecretsManager(
           props.secretRds,
-          "username"
+          "username",
         ),
         DB_PASSWORD: cdk.aws_ecs.Secret.fromSecretsManager(
           props.secretRds,
-          "password"
+          "password",
         ),
         DB_HOST: cdk.aws_ecs.Secret.fromSecretsManager(props.secretRds, "host"),
         DB_PORT: cdk.aws_ecs.Secret.fromSecretsManager(props.secretRds, "port"),
         DB_NAME: cdk.aws_ecs.Secret.fromSecretsManager(
           props.secretRds,
-          "dbname"
+          "dbname",
         ),
       },
       portMappings: [
@@ -134,7 +134,7 @@ export class WebEcs extends Construct {
             subnetType: cdk.aws_ec2.SubnetType.PUBLIC,
           },
           securityGroups: [props.securityGroupSourceRds],
-        }
+        },
       );
     webAlbFargateService.targetGroup.configureHealthCheck({
       path: "/cars",
