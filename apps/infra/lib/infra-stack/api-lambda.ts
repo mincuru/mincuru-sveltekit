@@ -14,16 +14,27 @@ export class ApiLambda extends Construct {
     super(scope, id);
 
     // ECR
-    // this.repo = new cdk.aws_ecr.Repository(this, "ApiEcr", {
-    //   repositoryName: "mincuru/api",
-    //   removalPolicy: cdk.RemovalPolicy.DESTROY,
-    // });
-    // this.repo.addLifecycleRule({ maxImageCount: 3 });
     this.repo = cdk.aws_ecr.Repository.fromRepositoryName(
       this,
       "ApiEcr",
       "mincuru/api"
     );
+
+    // Role and Policy
+    const role = new cdk.aws_iam.Role(this, "ApiLambdaRole", {
+      assumedBy: new cdk.aws_iam.ServicePrincipal("lambda.amazonaws.com"),
+      roleName: "ApiLambdaRole",
+    });
+    const policy = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:CreateLogGroup",
+      ],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy);
 
     // Lambda
     this.function = new cdk.aws_lambda.Function(this, "ApiLambda", {
@@ -32,6 +43,7 @@ export class ApiLambda extends Construct {
       handler: cdk.aws_lambda.Handler.FROM_IMAGE,
       timeout: cdk.Duration.seconds(60),
       functionName: "mincuru-api",
+      role: role,
       memorySize: 128,
       vpc: props.vpc,
       vpcSubnets: { subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED },
@@ -41,6 +53,7 @@ export class ApiLambda extends Construct {
           "postgresql://postgres:password@localhost:5432/mincuru?schema=public",
       },
     });
+
     // Api Gateway
     const restApi = new cdk.aws_apigateway.RestApi(this, `ApiApiGateway`, {
       restApiName: `ApiApiGw`,
