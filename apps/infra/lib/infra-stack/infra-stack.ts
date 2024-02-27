@@ -47,7 +47,7 @@ export class InfraStack extends Stack {
       secretRds: secretRds.secret,
     });
 
-    new ApiLambda(this, "ApiLambda", {
+    const apiLambda = new ApiLambda(this, "ApiLambda", {
       vpc: vpc.vpc,
       secretRds: secretRds.secret,
       securityGroupSourceRds: rds.securityGroupSourceRds,
@@ -60,6 +60,7 @@ export class InfraStack extends Stack {
       webTaskExecutionRole: webEcs.taskExecutionRole,
       webTaskRole: webEcs.taskRole,
       webRepository: webEcr.repo,
+      apiRepository: apiLambda.repo,
     });
   }
 }
