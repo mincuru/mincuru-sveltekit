@@ -13,6 +13,15 @@ cd mincuru-sveltekit
 npm install
 ```
 
+## 環境変数設定
+
+`.env`ファイルを作成し、以下の環境変数を設定する。
+
+```sh
+cd monorepo-template
+cp .env.example .env
+```
+
 ## ビルド
 
 すべてのappsとpackagesをビルドするには、次のコマンドを実行します。
@@ -107,3 +116,10 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - apiのLambdaへのデプロイ
 - SideNavのメニューに件数表示
 - schema.prismaファイル分割
+- 作業状況
+  - apiコンテナイメージのビルドを実行（./scripts/1build-api.sh）
+  - api Lambda用ECR作成（./scripts/2create-repo-api.sh）
+  - api Lambda用ECRにイメージをプッシュ（./scripts/3push-api.sh）
+  - TODO このあとの手順(2024/2/23)
+  - 開発環境でcdk deployを行ってapi Lambdaを作成する（イメージはECRから取得）
+  - GitHubにコミットしてGitHub Actionsでapi Lambdaのデプロイを行う

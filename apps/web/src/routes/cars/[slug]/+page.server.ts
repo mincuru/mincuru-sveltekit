@@ -9,8 +9,8 @@ export const load: PageServerLoad = (async ({ params }) => {
   });
   if (!car) {
     error(404, {
-            message: 'Not found'
-          });
+      message: 'Not found'
+    });
   }
 
   return { car };

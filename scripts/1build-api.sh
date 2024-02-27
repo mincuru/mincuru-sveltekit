@@ -1,0 +1,1 @@
+docker build -f ./apps/api/docker/Dockerfile --platform linux/amd64 -t mincuru/api:test .

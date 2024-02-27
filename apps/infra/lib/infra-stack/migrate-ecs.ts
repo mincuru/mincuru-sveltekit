@@ -51,10 +51,10 @@ export class MigrateEcs extends Construct {
         assumedBy: new cdk.aws_iam.ServicePrincipal("ecs-tasks.amazonaws.com"),
         managedPolicies: [
           cdk.aws_iam.ManagedPolicy.fromAwsManagedPolicyName(
-            "service-role/AmazonECSTaskExecutionRolePolicy"
+            "service-role/AmazonECSTaskExecutionRolePolicy",
           ),
         ],
-      }
+      },
     );
 
     // タスク定義
@@ -67,27 +67,27 @@ export class MigrateEcs extends Construct {
         executionRole: this.taskExecutionRole,
         taskRole: this.taskRole,
         family: "MigrateTaskDefinition",
-      }
+      },
     );
     taskDefinition.addContainer("MigrateContainer", {
       containerName: "MigrateContainer",
       image: cdk.aws_ecs.ContainerImage.fromRegistry(
-        props.ecr.repositoryUri + ":latest"
+        props.ecr.repositoryUri + ":latest",
       ),
       secrets: {
         DB_USERNAME: cdk.aws_ecs.Secret.fromSecretsManager(
           props.secretRds,
-          "username"
+          "username",
         ),
         DB_PASSWORD: cdk.aws_ecs.Secret.fromSecretsManager(
           props.secretRds,
-          "password"
+          "password",
         ),
         DB_HOST: cdk.aws_ecs.Secret.fromSecretsManager(props.secretRds, "host"),
         DB_PORT: cdk.aws_ecs.Secret.fromSecretsManager(props.secretRds, "port"),
         DB_NAME: cdk.aws_ecs.Secret.fromSecretsManager(
           props.secretRds,
-          "dbname"
+          "dbname",
         ),
       },
       environment: {
