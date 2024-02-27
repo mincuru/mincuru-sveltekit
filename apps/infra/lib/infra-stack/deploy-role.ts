@@ -91,6 +91,14 @@ export class DeployRole extends Construct {
     });
     role.addToPolicy(policy6);
 
+    // Lambda Functionのでプロイに必要な権限
+    const policy9 = new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.ALLOW,
+      actions: ["lambda:UpdateFunctionCode"],
+      resources: ["*"],
+    });
+    role.addToPolicy(policy9);
+
     // VPC関連情報の取得
     const policy7 = new cdk.aws_iam.PolicyStatement({
       effect: cdk.aws_iam.Effect.ALLOW,
