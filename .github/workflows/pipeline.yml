@@ -218,4 +218,4 @@ jobs:
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
       - name: Deploy Lambda
         run: |
-          aws lambda update-function-code --function-name mincuru/api --image-uri ${{ steps.build-image.outputs.image }}
+          aws lambda update-function-code --function-name mincuru-api --image-uri ${{ steps.build-image.outputs.image }}

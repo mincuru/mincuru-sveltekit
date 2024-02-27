@@ -8,6 +8,7 @@ export interface DeployRoleProps {
   webTaskExecutionRole: cdk.aws_iam.Role;
   webTaskRole: cdk.aws_iam.Role;
   webRepository: cdk.aws_ecr.Repository;
+  apiRepository: cdk.aws_ecr.IRepository;
 }
 
 export class DeployRole extends Construct {
@@ -50,6 +51,7 @@ export class DeployRole extends Construct {
       resources: [
         props.migrateRepository.repositoryArn,
         props.webRepository.repositoryArn,
+        props.apiRepository.repositoryArn,
       ],
     });
     role.addToPolicy(policy3);

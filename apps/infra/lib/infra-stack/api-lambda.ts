@@ -9,7 +9,7 @@ export interface ApiLambdaProps {
 
 export class ApiLambda extends Construct {
   public readonly function: cdk.aws_lambda.Function;
-  public readonly repo: cdk.aws_ecr.Repository;
+  public readonly repo: cdk.aws_ecr.IRepository;
   constructor(scope: Construct, id: string, props: ApiLambdaProps) {
     super(scope, id);
 
@@ -19,7 +19,7 @@ export class ApiLambda extends Construct {
     //   removalPolicy: cdk.RemovalPolicy.DESTROY,
     // });
     // this.repo.addLifecycleRule({ maxImageCount: 3 });
-    const repo = cdk.aws_ecr.Repository.fromRepositoryName(
+    this.repo = cdk.aws_ecr.Repository.fromRepositoryName(
       this,
       "ApiEcr",
       "mincuru/api"
@@ -27,7 +27,7 @@ export class ApiLambda extends Construct {
 
     // Lambda
     this.function = new cdk.aws_lambda.Function(this, "ApiLambda", {
-      code: cdk.aws_lambda.EcrImageCode.fromEcrImage(repo),
+      code: cdk.aws_lambda.EcrImageCode.fromEcrImage(this.repo),
       runtime: cdk.aws_lambda.Runtime.FROM_IMAGE,
       handler: cdk.aws_lambda.Handler.FROM_IMAGE,
       timeout: cdk.Duration.seconds(60),
