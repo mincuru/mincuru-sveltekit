@@ -14,19 +14,24 @@ export class ApiLambda extends Construct {
     super(scope, id);
 
     // ECR
-    this.repo = new cdk.aws_ecr.Repository(this, "ApiEcr", {
-      repositoryName: "mincuru/api",
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-    });
-    this.repo.addLifecycleRule({ maxImageCount: 3 });
+    // this.repo = new cdk.aws_ecr.Repository(this, "ApiEcr", {
+    //   repositoryName: "mincuru/api",
+    //   removalPolicy: cdk.RemovalPolicy.DESTROY,
+    // });
+    // this.repo.addLifecycleRule({ maxImageCount: 3 });
+    const repo = cdk.aws_ecr.Repository.fromRepositoryName(
+      this,
+      "ApiEcr",
+      "mincuru/api"
+    );
 
     // Lambda
     this.function = new cdk.aws_lambda.Function(this, "ApiLambda", {
-      runtime: cdk.aws_lambda.Runtime.NODEJS_20_X,
-      code: cdk.aws_lambda.EcrImageCode.fromEcrImage(this.repo),
-      handler: "lambda.handler",
+      code: cdk.aws_lambda.EcrImageCode.fromEcrImage(repo),
+      runtime: cdk.aws_lambda.Runtime.FROM_IMAGE,
+      handler: cdk.aws_lambda.Handler.FROM_IMAGE,
       timeout: cdk.Duration.seconds(60),
-      functionName: "api",
+      functionName: "mincuru-api",
       memorySize: 128,
       vpc: props.vpc,
       vpcSubnets: { subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED },
