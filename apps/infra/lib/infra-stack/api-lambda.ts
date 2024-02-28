@@ -31,6 +31,10 @@ export class ApiLambda extends Construct {
         "logs:CreateLogStream",
         "logs:PutLogEvents",
         "logs:CreateLogGroup",
+        "ec2:CreateNetworkInterface",
+        "ec2:DetachNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DeleteNetworkInterface",
       ],
       resources: ["*"],
     });
@@ -55,8 +59,8 @@ export class ApiLambda extends Construct {
     });
 
     // Api Gateway
-    const restApi = new cdk.aws_apigateway.RestApi(this, `ApiApiGateway`, {
-      restApiName: `ApiApiGw`,
+    const restApi = new cdk.aws_apigateway.RestApi(this, `ApiGateway`, {
+      restApiName: `ApiGateway`,
       deployOptions: {
         stageName: "v1",
       },
