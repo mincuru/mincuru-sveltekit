@@ -117,9 +117,9 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - SideNavのメニューに件数表示
 - schema.prismaファイル分割
 - 作業状況
-  - apiコンテナイメージのビルドを実行（./scripts/1build-api.sh）
-  - api Lambda用ECR作成（./scripts/2create-repo-api.sh）
-  - api Lambda用ECRにイメージをプッシュ（./scripts/3push-api.sh）
-  - TODO このあとの手順(2024/2/23)
-  - 開発環境でcdk deployを行ってapi Lambdaを作成する（イメージはECRから取得）
-  - GitHubにコミットしてGitHub Actionsでapi Lambdaのデプロイを行う
+  - ~~apiコンテナイメージのビルドを実行（./scripts/1build-api.sh）~~
+  - ~~api Lambda用ECR作成（./scripts/2create-repo-api.sh）~~
+  - ~~api Lambda用ECRにイメージをプッシュ（./scripts/3push-api.sh）~~
+  - ~~開発環境でcdk deployを行ってapi Lambdaを作成する（イメージはECRから取得）~~
+  - ~~GitHubにコミットしてGitHub Actionsでapi Lambdaのデプロイを行う~~
+  - TODO Lambdaにデプロイ後、テスト実行するとcars.moduleが見つからないエラーが出る。コンテナイメージを確認したところ、cars.moduleは./carsフォルダ配下ではなく、フラットなディレクトリにある。これが原因でLambdaが起動しないと思われる。これを解消する。

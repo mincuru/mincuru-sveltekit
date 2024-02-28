@@ -14,6 +14,6 @@ RUN npm run build -w apps/api
 
 FROM public.ecr.aws/lambda/nodejs:18
 WORKDIR ${LAMBDA_TASK_ROOT}
-COPY --from=builder /src/apps/api/dist/* ./
-COPY --from=builder /src/node_modules ./
+COPY --from=builder /src/apps/api/dist .
+COPY --from=builder /src/node_modules ./node_modules
 CMD ["lambda.handler"]
