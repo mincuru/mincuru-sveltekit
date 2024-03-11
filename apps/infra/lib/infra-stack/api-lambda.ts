@@ -52,10 +52,7 @@ export class ApiLambda extends Construct {
       vpc: props.vpc,
       vpcSubnets: { subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED },
       securityGroups: [props.securityGroupSourceRds],
-      environment: {
-        DATABASE_URL:
-          "postgresql://postgres:password@localhost:5432/mincuru?schema=public",
-      },
+      environment: {},
     });
 
     // Api Gateway
@@ -74,11 +71,9 @@ export class ApiLambda extends Construct {
       },
     });
 
-    restApi.root.addProxy({
-      defaultIntegration: new cdk.aws_apigateway.LambdaIntegration(
-        this.function
-      ),
-      anyMethod: true,
-    });
+    restApi.root.addMethod(
+      "ANY",
+      new cdk.aws_apigateway.LambdaIntegration(this.function)
+    );
   }
 }
