@@ -30,6 +30,6 @@ async function getDatabaseUrlFromSecretsManager() {
   );
   console.log(response);
   const secrets = JSON.parse(response.SecretString);
-  return `postgresql://${secrets.username}:${secrets.password}@localhost:5432/mincuru?schema=public`; //response.SecretString.
+  return `postgresql://${secrets.username}:${secrets.password}@${secrets.host}:${secrets.port}/${secrets.dbname}?schema=public`; //response.SecretString.
 }
 bootstrap();
