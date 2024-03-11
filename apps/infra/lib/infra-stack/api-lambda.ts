@@ -35,6 +35,7 @@ export class ApiLambda extends Construct {
         "ec2:DetachNetworkInterface",
         "ec2:DescribeNetworkInterfaces",
         "ec2:DeleteNetworkInterface",
+        "secretsmanager:GetSecretValue",
       ],
       resources: ["*"],
     });
@@ -50,7 +51,10 @@ export class ApiLambda extends Construct {
       role: role,
       memorySize: 128,
       vpc: props.vpc,
-      vpcSubnets: { subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED },
+      vpcSubnets: {
+        subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED,
+      },
+      allowPublicSubnet: true,
       securityGroups: [props.securityGroupSourceRds],
       environment: {},
     });
