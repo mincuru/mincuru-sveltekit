@@ -60,7 +60,9 @@ export class ApiLambda extends Construct {
     });
 
     // Api Gateway
-    const restApi = new cdk.aws_apigateway.RestApi(this, `ApiGateway`, {
+    const restApi = new cdk.aws_apigateway.LambdaRestApi(this, `ApiGateway`, {
+      handler: this.function,
+      proxy: true,
       restApiName: `ApiGateway`,
       deployOptions: {
         stageName: "v1",
@@ -74,10 +76,5 @@ export class ApiLambda extends Construct {
         statusCode: 200,
       },
     });
-
-    restApi.root.addMethod(
-      "ANY",
-      new cdk.aws_apigateway.LambdaIntegration(this.function)
-    );
   }
 }
