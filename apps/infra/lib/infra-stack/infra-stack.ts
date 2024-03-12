@@ -51,6 +51,7 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       secretRds: secretRds.secret,
       securityGroupSourceRds: rds.securityGroupSourceRds,
+      proxyRds: rds.proxyRds,
     });
 
     new DeployRole(this, "DeployRole", {
