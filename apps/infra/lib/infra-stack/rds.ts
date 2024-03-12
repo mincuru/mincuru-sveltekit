@@ -8,6 +8,7 @@ export interface RdsProps {
 
 export class Rds extends Construct {
   public readonly securityGroupSourceRds: cdk.aws_ec2.SecurityGroup;
+  public readonly proxyRds: cdk.aws_rds.DatabaseProxy;
   constructor(scope: Construct, id: string, props: RdsProps) {
     super(scope, id);
 
@@ -18,7 +19,7 @@ export class Rds extends Construct {
       {
         securityGroupName: "SourceSecurityGroup",
         vpc: props.vpc,
-      },
+      }
     );
 
     // ターゲットセキュリティグループ（RDSに設定するセキュリティグループ）
@@ -29,21 +30,21 @@ export class Rds extends Construct {
         vpc: props.vpc,
         securityGroupName: "RdsSecurityGroup",
         allowAllOutbound: true,
-      },
+      }
     );
     targetSecurityGroup.addIngressRule(
       cdk.aws_ec2.Peer.securityGroupId(
-        this.securityGroupSourceRds.securityGroupId,
+        this.securityGroupSourceRds.securityGroupId
       ),
       cdk.aws_ec2.Port.tcp(5432),
-      "",
+      ""
     );
 
-    new cdk.aws_rds.DatabaseInstance(this, "Rds", {
+    const instance = new cdk.aws_rds.DatabaseInstance(this, "Rds", {
       engine: cdk.aws_rds.DatabaseInstanceEngine.POSTGRES,
       instanceType: cdk.aws_ec2.InstanceType.of(
         cdk.aws_ec2.InstanceClass.T4G,
-        cdk.aws_ec2.InstanceSize.MICRO,
+        cdk.aws_ec2.InstanceSize.MICRO
       ),
       multiAz: false,
       storageType: cdk.aws_rds.StorageType.STANDARD,
@@ -58,6 +59,14 @@ export class Rds extends Construct {
       securityGroups: [targetSecurityGroup],
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       deletionProtection: false,
+    });
+
+    this.proxyRds = new cdk.aws_rds.DatabaseProxy(this, "Proxy", {
+      proxyTarget: cdk.aws_rds.ProxyTarget.fromInstance(instance),
+      secrets: [props.secret],
+      vpc: props.vpc,
+      clientPasswordAuthType:
+        cdk.aws_rds.ClientPasswordAuthType.POSTGRES_SCRAM_SHA_256,
     });
   }
 }

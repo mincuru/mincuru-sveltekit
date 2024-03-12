@@ -5,6 +5,7 @@ export interface ApiLambdaProps {
   vpc: cdk.aws_ec2.Vpc;
   secretRds: cdk.aws_secretsmanager.Secret;
   securityGroupSourceRds: cdk.aws_ec2.SecurityGroup;
+  proxyRds: cdk.aws_rds.DatabaseProxy;
 }
 
 export class ApiLambda extends Construct {
@@ -56,7 +57,9 @@ export class ApiLambda extends Construct {
       },
       allowPublicSubnet: true,
       securityGroups: [props.securityGroupSourceRds],
-      environment: {},
+      environment: {
+        PROXY_RDS: props.proxyRds.endpoint,
+      },
     });
 
     // Api Gateway
