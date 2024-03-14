@@ -4,7 +4,7 @@ import { Construct } from "constructs";
 export interface ApiLambdaProps {
   vpc: cdk.aws_ec2.Vpc;
   secretRds: cdk.aws_secretsmanager.Secret;
-  securityGroupSourceRds: cdk.aws_ec2.SecurityGroup;
+  securityGroupApiLambda: cdk.aws_ec2.SecurityGroup;
   proxyRds: cdk.aws_rds.DatabaseProxy;
 }
 
@@ -56,7 +56,7 @@ export class ApiLambda extends Construct {
         subnetType: cdk.aws_ec2.SubnetType.PRIVATE_ISOLATED,
       },
       allowPublicSubnet: true,
-      securityGroups: [props.securityGroupSourceRds],
+      securityGroups: [props.securityGroupApiLambda],
       environment: {
         PROXY_RDS: props.proxyRds.endpoint,
       },
