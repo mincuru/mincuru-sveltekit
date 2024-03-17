@@ -59,6 +59,7 @@ export class ApiLambda extends Construct {
       securityGroups: [props.securityGroupApiLambda],
       environment: {
         PROXY_RDS: props.proxyRds.endpoint,
+        NO_COLOR: "true",
       },
       logFormat: cdk.aws_lambda.LogFormat.JSON,
     });
