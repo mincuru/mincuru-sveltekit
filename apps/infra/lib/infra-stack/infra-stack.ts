@@ -50,7 +50,7 @@ export class InfraStack extends Stack {
     const apiLambda = new ApiLambda(this, "ApiLambda", {
       vpc: vpc.vpc,
       secretRds: secretRds.secret,
-      securityGroupSourceRds: rds.securityGroupSourceRds,
+      securityGroupApiLambda: rds.securityGroupApiLambda,
       proxyRds: rds.proxyRds,
     });
 

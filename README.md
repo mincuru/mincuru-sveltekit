@@ -105,6 +105,14 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - ~~cars画面の中央寄せを左寄せにする~~
 - ~~apiのテストを整備する~~
 - ~~apiテストのGitHub Actions組み込み~~
+- ~~apiのLambdaへのデプロイ~~
+- ~~作業状況~~
+  - ~~apiコンテナイメージのビルドを実行（./scripts/1build-api.sh）~~
+  - ~~api Lambda用ECR作成（./scripts/2create-repo-api.sh）~~
+  - ~~api Lambda用ECRにイメージをプッシュ（./scripts/3push-api.sh）~~
+  - ~~開発環境でcdk deployを行ってapi Lambdaを作成する（イメージはECRから取得）~~
+  - ~~GitHubにコミットしてGitHub Actionsでapi Lambdaのデプロイを行う~~
+  - ~~Lambdaにデプロイ後、テスト実行するとcars.moduleが見つからないエラーが出る。コンテナイメージを確認したところ、cars.moduleは./carsフォルダ配下ではなく、フラットなディレクトリにある。これが原因でLambdaが起動しないと思われる。これを解消する。~~
 - サインアップ機能を実装する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
@@ -113,13 +121,9 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - アラート整備
 - 編集画面の作成
 - クルマデータ投入バッチの作成
-- apiのLambdaへのデプロイ
 - SideNavのメニューに件数表示
-- schema.prismaファイル分割
-- 作業状況
-  - ~~apiコンテナイメージのビルドを実行（./scripts/1build-api.sh）~~
-  - ~~api Lambda用ECR作成（./scripts/2create-repo-api.sh）~~
-  - ~~api Lambda用ECRにイメージをプッシュ（./scripts/3push-api.sh）~~
-  - ~~開発環境でcdk deployを行ってapi Lambdaを作成する（イメージはECRから取得）~~
-  - ~~GitHubにコミットしてGitHub Actionsでapi Lambdaのデプロイを行う~~
-  - TODO Lambdaにデプロイ後、テスト実行するとcars.moduleが見つからないエラーが出る。コンテナイメージを確認したところ、cars.moduleは./carsフォルダ配下ではなく、フラットなディレクトリにある。これが原因でLambdaが起動しないと思われる。これを解消する。
+- Database Repository的なpackage作成(非NestJSプラグイン)
+  - webとbatchからimportして利用
+- batchのサンプルコード作成
+  - フレームワークなし板
+- APIクライアントの生成
