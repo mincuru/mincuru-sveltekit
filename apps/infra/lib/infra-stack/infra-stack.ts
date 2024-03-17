@@ -10,6 +10,7 @@ import { MigrateEcr } from "./migrate-ecr";
 import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
 import { ApiLambda } from "./api-lambda";
+import { BatchLambda } from "./batch-lambda";
 
 export interface Context {
   environment: string;
@@ -51,6 +52,13 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       secretRds: secretRds.secret,
       securityGroupApiLambda: rds.securityGroupApiLambda,
+      proxyRds: rds.proxyRds,
+    });
+
+    const batchLambda = new BatchLambda(this, "BatchLambda", {
+      vpc: vpc.vpc,
+      secretRds: secretRds.secret,
+      securityGroupBatchLambda: rds.securityGroupBatchLambda,
       proxyRds: rds.proxyRds,
     });
 
