@@ -60,6 +60,7 @@ export class ApiLambda extends Construct {
       environment: {
         PROXY_RDS: props.proxyRds.endpoint,
       },
+      logFormat: cdk.aws_lambda.LogFormat.JSON,
     });
 
     // Api Gateway
