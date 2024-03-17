@@ -10,6 +10,7 @@ export class Rds extends Construct {
   public readonly securityGroupSourceRds: cdk.aws_ec2.SecurityGroup;
   public readonly securityGroupRdsProxy: cdk.aws_ec2.SecurityGroup;
   public readonly securityGroupApiLambda: cdk.aws_ec2.SecurityGroup;
+  public readonly securityGroupBatchLambda: cdk.aws_ec2.SecurityGroup;
   public readonly proxyRds: cdk.aws_rds.DatabaseProxy;
   constructor(scope: Construct, id: string, props: RdsProps) {
     super(scope, id);
@@ -29,8 +30,19 @@ export class Rds extends Construct {
       this,
       "SecurityGroupApiLambda",
       {
-        securityGroupName: "lambda-rdsproxy-z",
+        securityGroupName: "lambda-rdsproxy-1",
         vpc: props.vpc,
+      }
+    );
+
+    // Batch Lambda用セキュリティグループ
+    this.securityGroupBatchLambda = new cdk.aws_ec2.SecurityGroup(
+      this,
+      "SecurityGroupBatchLambda",
+      {
+        vpc: props.vpc,
+        securityGroupName: "batch-lambda-1",
+        allowAllOutbound: true,
       }
     );
 
@@ -40,7 +52,7 @@ export class Rds extends Construct {
       "SecurityGroupRdsProxy",
       {
         vpc: props.vpc,
-        securityGroupName: "rdsproxy-lambda-z",
+        securityGroupName: "rdsproxy-lambda-1",
         allowAllOutbound: true,
       }
     );
@@ -57,7 +69,7 @@ export class Rds extends Construct {
       "RdsSecurityGroup",
       {
         vpc: props.vpc,
-        securityGroupName: "rds-rdsproxy-z",
+        securityGroupName: "rds-rdsproxy-1",
         allowAllOutbound: true,
       }
     );
@@ -74,6 +86,13 @@ export class Rds extends Construct {
       ),
       cdk.aws_ec2.Port.tcp(5432),
       "from rds proxy"
+    );
+    securityGroupRds.addIngressRule(
+      cdk.aws_ec2.Peer.securityGroupId(
+        this.securityGroupBatchLambda.securityGroupId
+      ),
+      cdk.aws_ec2.Port.tcp(5432),
+      "from batch lambda"
     );
 
     const instance = new cdk.aws_rds.DatabaseInstance(this, "Rds", {
