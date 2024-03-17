@@ -51,6 +51,7 @@ jobs:
       - run: npx playwright install
       - run: npm run test -w apps/web
       - run: npm run test:cov -w apps/api
+      - run: npm run test -w apps/batch
       - name: Describe distribution
         id: describe-distribution
         run: echo "distribution=$(aws cloudfront list-distributions | jq -r '.DistributionList.Items[] | select(.Origins.Items[] | .DomainName | contains("mincuru-coverage-report")) | .DomainName')" >> $GITHUB_OUTPUT
