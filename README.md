@@ -116,6 +116,7 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - ~~batchのサンプルコード作成~~
   - ~~フレームワークなし板~~
 - ~~ログ整備~~
+- ~~APIクライアントの生成~~
 - サインアップ機能を実装する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
@@ -126,4 +127,3 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - SideNavのメニューに件数表示
 - Database Repository的なpackage作成(非NestJSプラグイン)
   - webとbatchからimportして利用
-- APIクライアントの生成

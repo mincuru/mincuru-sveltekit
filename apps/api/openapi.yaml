@@ -1,0 +1,50 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /cars:
+    get:
+      operationId: CarsController_getCars
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    post:
+      operationId: CarsController_postCar
+      parameters: []
+      responses:
+        '201':
+          description: ''
+    patch:
+      operationId: CarsController_patchCar
+      parameters: []
+      responses:
+        '200':
+          description: ''
+    delete:
+      operationId: CarsController_deleteCar
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /users:
+    get:
+      operationId: UsersController_getUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+info:
+  title: Mincuru API
+  description: みんクルAPI
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas: {}
