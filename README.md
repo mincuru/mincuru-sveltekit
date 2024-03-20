@@ -113,17 +113,15 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
   - ~~開発環境でcdk deployを行ってapi Lambdaを作成する（イメージはECRから取得）~~
   - ~~GitHubにコミットしてGitHub Actionsでapi Lambdaのデプロイを行う~~
   - ~~Lambdaにデプロイ後、テスト実行するとcars.moduleが見つからないエラーが出る。コンテナイメージを確認したところ、cars.moduleは./carsフォルダ配下ではなく、フラットなディレクトリにある。これが原因でLambdaが起動しないと思われる。これを解消する。~~
+- ~~batchのサンプルコード作成~~
+  - ~~フレームワークなし板~~
+- ~~ログ整備~~
+- ~~APIクライアントの生成~~
 - サインアップ機能を実装する
 - deploy時の警告を解消する
 - ドキュメントサイトを作成する
 - ドキュメントサイトをデプロイする
-- ログ整備
 - アラート整備
 - 編集画面の作成
 - クルマデータ投入バッチの作成
 - SideNavのメニューに件数表示
-- Database Repository的なpackage作成(非NestJSプラグイン)
-  - webとbatchからimportして利用
-- batchのサンプルコード作成
-  - フレームワークなし板
-- APIクライアントの生成
