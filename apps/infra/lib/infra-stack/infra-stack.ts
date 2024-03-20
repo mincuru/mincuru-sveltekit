@@ -11,6 +11,7 @@ import { MigrateEcs } from "./migrate-ecs";
 import { DeployRole } from "./deploy-role";
 import { ApiLambda } from "./api-lambda";
 import { BatchLambda } from "./batch-lambda";
+import { MigrateLambda } from "./migrate-lambda";
 
 export interface Context {
   environment: string;
@@ -46,6 +47,11 @@ export class InfraStack extends Stack {
       vpc: vpc.vpc,
       ecr: migrateEcr.repo,
       secretRds: secretRds.secret,
+    });
+    const migrateLambda = new MigrateLambda(this, "MigrateLambda", {
+      vpc: vpc.vpc,
+      secretRds: secretRds.secret,
+      securityGroupMigrateLambda: rds.securityGroupSourceRds,
     });
 
     const apiLambda = new ApiLambda(this, "ApiLambda", {

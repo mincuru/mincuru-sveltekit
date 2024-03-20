@@ -5,7 +5,7 @@ export interface MigrateLambdaProps {
   vpc: cdk.aws_ec2.Vpc;
   secretRds: cdk.aws_secretsmanager.Secret;
   securityGroupMigrateLambda: cdk.aws_ec2.SecurityGroup;
-  proxyRds: cdk.aws_rds.DatabaseProxy;
+  // proxyRds: cdk.aws_rds.DatabaseProxy;
 }
 
 export class MigrateLambda extends Construct {
