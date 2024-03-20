@@ -1,0 +1,1 @@
+{"errorType":"Error","errorMessage":"migration failed with exit code 1","trace":["Error: migration failed with exit code 1","    at Runtime.sz [as handler] (/var/task/index.js:41:100667)","    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"]}
