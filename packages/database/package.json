@@ -1,12 +1,7 @@
 {
   "name": "@repo/database",
   "version": "0.0.1",
-  "main": "index.js",
   "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
-    "postbuild": "cd dist && cp -r ../prisma . && cp -r ../src . && cp ../package.json . && npm i --omit=dev && chmod 777 ./node_modules && zip -r migrate-lambda.zip index.js* node_modules/ src/ prisma/",
-    "test": "jest",
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate",
     "db:migrate": "prisma migrate deploy",
@@ -17,18 +12,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.136",
-    "@types/node": "^20.11.28",
-    "esbuild": "^0.20.2",
-    "jest": "^29.7.0",
-    "prisma": "^5.9.1",
-    "ts-jest": "^29.1.2",
-    "typescript": "^5.4.2"
+    "prisma": "^5.9.1"
   },
   "dependencies": {
-    "@aws-sdk/client-lambda": "^3.533.0",
-    "@aws-sdk/client-secrets-manager": "^3.535.0",
-    "@prisma/client": "^5.9.1"
+    "@prisma/client": "^5.9.1",
+    "@repo/typescript-config": "*"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/seed.ts"
