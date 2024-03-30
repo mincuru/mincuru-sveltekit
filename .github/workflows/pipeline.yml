@@ -21,7 +21,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          ref: "stg"
+          base: "stg"
           filters: |
             docs:
               - 'apps/docs/**'
