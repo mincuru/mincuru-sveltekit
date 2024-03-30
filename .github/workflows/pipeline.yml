@@ -61,6 +61,21 @@ jobs:
           echo "* [カバレッジレポート web](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/web/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
           aws s3 sync ./apps/api/coverage/lcov-report s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/ --delete
           echo "* [カバレッジレポート api](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
+  deploy:
+    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            docs:
+              - 'apps/docs/**'
+      - name: call deploy docs
+        if: steps.filter.outputs.docs == 'true'
+        uses: ./.github/workflows/deploy-docs.yml
   deploy-infra:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     needs: [test]
@@ -252,11 +267,16 @@ jobs:
           filters: |
             docs:
               - 'apps/docs/**'
-      - uses: actions/setup-node@v4
+      - name: setup node
+        if: steps.filter.outputs.docs == 'true'
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+      - name: npm install
+        if: steps.filter.outputs.docs == 'true'
+        run: npm install
       - name: Configure AWS Credentials
+        if: steps.filter.outputs.docs == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_DEPLOY_DOCS_ROLE_ARN }}
