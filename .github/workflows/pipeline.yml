@@ -1,9 +1,6 @@
 name: Pipeline
 on:
   push:
-  pull_request:
-    branches:
-      - stg
 
 permissions:
   id-token: write
@@ -15,6 +12,18 @@ env:
   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            docs:
+              - 'apps/docs/**'
   test:
     env:
       DATABASE_URL: postgresql://postgres:password@localhost:5432/mincuru?schema=public
