@@ -7,11 +7,12 @@ export interface DocsS3Props {
 }
 
 export class DocsS3 extends Construct {
+  readonly bucket: cdk.aws_s3.Bucket;
   constructor(scope: Construct, id: string, props: DocsS3Props) {
     super(scope, id);
 
     // Bucket
-    const docsBucket = new cdk.aws_s3.Bucket(this, "DocsBucket", {
+    this.bucket = new cdk.aws_s3.Bucket(this, "DocsBucket", {
       bucketName: `mincuru-docs-${props.context.environment}`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
@@ -51,7 +52,7 @@ export class DocsS3 extends Construct {
         defaultBehavior: {
           viewerProtocolPolicy:
             cdk.aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          origin: new cdk.aws_cloudfront_origins.S3Origin(docsBucket),
+          origin: new cdk.aws_cloudfront_origins.S3Origin(this.bucket),
         },
         priceClass: cdk.aws_cloudfront.PriceClass.PRICE_CLASS_100,
       }
@@ -63,12 +64,12 @@ export class DocsS3 extends Construct {
       principals: [
         new cdk.aws_iam.ServicePrincipal("cloudfront.amazonaws.com"),
       ],
-      resources: [`${docsBucket.bucketArn}/*`],
+      resources: [`${this.bucket.bucketArn}/*`],
     });
     docsBucketPolicyStatement.addCondition("StringEquals", {
       "AWS:SourceArn": `arn:aws:cloudfront::${cdk.Stack.of(this).account}:distribution/${distribution.distributionId}`,
     });
-    docsBucket.addToResourcePolicy(docsBucketPolicyStatement);
+    this.bucket.addToResourcePolicy(docsBucketPolicyStatement);
 
     const cfnDistribution = distribution.node
       .defaultChild as cdk.aws_cloudfront.CfnDistribution;
@@ -78,7 +79,7 @@ export class DocsS3 extends Construct {
     );
     cfnDistribution.addPropertyOverride(
       "DistributionConfig.Origins.0.DomainName",
-      docsBucket.bucketRegionalDomainName
+      this.bucket.bucketRegionalDomainName
     );
     cfnDistribution.addOverride(
       "Properties.DistributionConfig.Origins.0.S3OriginConfig.OriginAccessIdentity",
