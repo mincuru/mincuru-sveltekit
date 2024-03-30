@@ -119,7 +119,7 @@ npm run cdk -w apps/infra -- deploy InfraStack -c environment=stg
 - ~~APIクライアントの生成~~
 - ~~ドキュメントサイトを作成する~~
   - Markdownファイルでコンテンツを作成する
-- ドキュメントサイトをデプロイする
+- ~~ドキュメントサイトをデプロイする~~
 - サインアップ機能を実装する
 - deploy時の警告を解消する
 - アラート整備
