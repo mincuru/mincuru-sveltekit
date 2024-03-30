@@ -15,7 +15,12 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
+      api: ${{ steps.filter.outputs.api }}
+      batch: ${{ steps.filter.outputs.batch }}
+      migrate: ${{ steps.filter.outputs.migrate }}
+      infra: ${{ steps.filter.outputs.infra }}
       docs: ${{ steps.filter.outputs.docs }}
+      web: ${{ steps.filter.outputs.web }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -23,8 +28,20 @@ jobs:
         with:
           base: ${{ github.ref }}
           filters: |
+            api:
+              - 'apps/api/**'
+              - 'packages/database/**'
+            batch:
+              - 'apps/batch/**'
+            migrate:
+              - 'apps/migrate/**'
+            infra:
+              - 'apps/infra/**'
             docs:
               - 'apps/docs/**'
+            web:
+              - 'apps/web/**'
+              - 'apps/api/**'
   test:
     needs: [changes]
     env:
@@ -76,7 +93,7 @@ jobs:
           aws s3 sync ./apps/api/coverage/lcov-report s3://${{ secrets.AWS_S3_COVERAGEREPORT_BUCKET_NAME }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/ --delete
           echo "* [カバレッジレポート api](https://${{ steps.describe-distribution.outputs.distribution }}/${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}/api/${{ github.sha }}/index.html)" >> $GITHUB_STEP_SUMMARY
   deploy-infra:
-    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd') && needs.changes.outputs.infra == 'true' }}
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -117,7 +134,7 @@ jobs:
         run: |
           npm run cdk -w apps/infra -- deploy InfraStack --require-approval never -c environment=$BRANCH_NAME
   migrate:
-    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd') && needs.changes.outputs.migrate == 'true' }}
     runs-on: ubuntu-latest
     needs: [test]
     steps:
@@ -165,7 +182,7 @@ jobs:
             --launch-type FARGATE \
             --network-configuration "awsvpcConfiguration={subnets=[${{ steps.describe-subnet.outputs.public_subnet }}],securityGroups=[${{ steps.describe-security-group.outputs.source_security_group }}],assignPublicIp=ENABLED}"
   deploy-web:
-    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd') && needs.changes.outputs.web == 'true' }}
     runs-on: ubuntu-latest
     needs: [test]
     steps:
@@ -207,7 +224,7 @@ jobs:
           cluster: WebCluster
           wait-for-service-stability: true
   deploy-api:
-    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd') && needs.changes.outputs.api == 'true' }}
     runs-on: ubuntu-latest
     needs: [test]
     steps:
@@ -235,7 +252,7 @@ jobs:
         run: |
           aws lambda update-function-code --function-name mincuru-api --image-uri ${{ steps.build-image.outputs.image }}
   deploy-batch:
-    if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
+    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd') && needs.changes.outputs.batch == 'true' }}
     runs-on: ubuntu-latest
     needs: [test]
     steps:
@@ -255,7 +272,7 @@ jobs:
           npm run build -w apps/batch
           aws lambda update-function-code --function-name mincuru-batch --zip-file fileb://apps/batch/dist/mincuru-batch.zip --publish --query Version --output text
   deploy-docs:
-    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' ) && needs.changes.outputs.docs == 'true'}}
+    if: ${{ (github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' ) && needs.changes.outputs.docs == 'true' }}
     runs-on: ubuntu-latest
     needs: [test]
     steps:
