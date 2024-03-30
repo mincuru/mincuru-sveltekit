@@ -261,10 +261,4 @@ jobs:
           npm run build -w apps/docs
       - name: Deploy docs
         run: |
-          aws s3 sync ./apps/docs/dist s3://{{}}
-
-      - name: Build nuxt.js
-        run: export NEWT_TOKEN=${{ secrets.NEWT_TOKEN }}; yarn generate
-      - name: Deploy to S3
-        run: |
           aws s3 sync ./dist s3://${{ secrets.AWS_S3_DOCS_BUCKET_NAME }}
