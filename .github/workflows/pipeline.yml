@@ -247,10 +247,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
-        id: changes
+        id: filter
         with:
           filters: |
-            src:
+            docs:
               - 'apps/docs/**'
       - uses: actions/setup-node@v4
         with:
@@ -263,8 +263,10 @@ jobs:
           role-session-name: "mincuru-deploy-docs-session"
           aws-region: ap-northeast-1
       - name: Build next.js
+        if: steps.filter.outputs.docs == 'true'
         run: |
           npm run build -w apps/docs
       - name: Deploy docs
+        if: steps.filter.outputs.docs == 'true'
         run: |
           aws s3 sync ./apps/docs/dist s3://${{ secrets.AWS_S3_DOCS_BUCKET_NAME }}
