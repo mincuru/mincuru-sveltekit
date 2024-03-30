@@ -1,4 +1,5 @@
 aws s3 rm s3://mincuru-coverage-report --recursive
+aws s3 rm s3://mincuru-docs-stg --recursive
 REPOSITORY_NAME=mincuru/migrate
 IMAGE_DIGESTS_MIGRATE=$(aws ecr describe-images --repository-name "${REPOSITORY_NAME}" --query 'imageDetails[*].imageDigest' --output text)
 for DIGEST in $IMAGE_DIGESTS_MIGRATE; do
