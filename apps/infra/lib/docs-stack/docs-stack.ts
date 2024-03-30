@@ -18,6 +18,8 @@ export class DocsStack extends Stack {
       environment: val,
     };
 
-    const docsS3 = new DocsS3(this, "DocsS3", {});
+    const docsS3 = new DocsS3(this, "DocsS3", {
+      context: context,
+    });
   }
 }

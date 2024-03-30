@@ -1,7 +1,10 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
+import { Context } from "../infra-stack/infra-stack";
 
-export interface DocsS3Props {}
+export interface DocsS3Props {
+  context: Context;
+}
 
 export class DocsS3 extends Construct {
   constructor(scope: Construct, id: string, props: DocsS3Props) {
@@ -9,6 +12,7 @@ export class DocsS3 extends Construct {
 
     // Bucket
     const docsBucket = new cdk.aws_s3.Bucket(this, "DocsBucket", {
+      bucketName: `mincuru-docs-${props.context.environment}`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
 
