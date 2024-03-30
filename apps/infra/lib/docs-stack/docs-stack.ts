@@ -2,6 +2,7 @@ import * as cdk from "aws-cdk-lib";
 import { Duration, Stack, StackProps, App } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { DocsS3 } from "./docs-s3";
+import { DeployDocsRole } from "./deploy-docs-role";
 
 export interface Context {
   environment: string;
@@ -21,5 +22,7 @@ export class DocsStack extends Stack {
     const docsS3 = new DocsS3(this, "DocsS3", {
       context: context,
     });
+
+    new DeployDocsRole(this, "DeployDocsRole", {});
   }
 }
