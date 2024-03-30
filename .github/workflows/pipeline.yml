@@ -1,6 +1,9 @@
 name: Pipeline
 on:
   push:
+  pull_request:
+    branches:
+      - stg
 
 permissions:
   id-token: write
@@ -65,6 +68,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/stg' || github.ref == 'refs/heads/prd' }}
     needs: [test]
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
