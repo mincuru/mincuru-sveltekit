@@ -21,7 +21,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          base: "stg"
+          base: ${{ github.ref }}
           filters: |
             docs:
               - 'apps/docs/**'
