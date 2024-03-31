@@ -29,17 +29,23 @@ jobs:
           base: ${{ github.ref }}
           filters: |
             api:
+              - '.update.md'
               - 'apps/api/**'
               - 'packages/database/**'
             batch:
+              - '.update.md'
               - 'apps/batch/**'
             migrate:
+              - '.update.md'
               - 'apps/migrate/**'
             infra:
+              - '.update.md'
               - 'apps/infra/**'
             docs:
+              - '.update.md'
               - 'apps/docs/**'
             web:
+              - '.update.md'
               - 'apps/web/**'
               - 'apps/api/**'
   test:
